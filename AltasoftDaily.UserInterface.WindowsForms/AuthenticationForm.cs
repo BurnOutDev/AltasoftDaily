@@ -16,6 +16,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
     public partial class AuthenticationForm : MetroForm
     {
         private User _user { get; set; }
+        private int _deptId { get; set; }
 
         public AuthenticationForm()
         {
@@ -24,7 +25,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            DailyManagement.GetDailyByUserId(5);
+            Application.Exit();
         }
 
         private void btnEnter_Click(object sender, EventArgs e)
@@ -42,6 +43,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         public User GetUser()
         {
             return _user;
+        }
+        public int GetDeptId()
+        {
+            return _deptId;
+        }
+
+        private void AuthenticationForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxDept_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _deptId = cbxDept.SelectedIndex;
         }
     }
 }

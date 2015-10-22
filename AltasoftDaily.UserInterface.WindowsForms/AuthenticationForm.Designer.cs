@@ -32,6 +32,7 @@
             this.tbxPassword = new MetroFramework.Controls.MetroTextBox();
             this.btnEnter = new MetroFramework.Controls.MetroButton();
             this.btnExit = new MetroFramework.Controls.MetroButton();
+            this.cbxDept = new MetroFramework.Controls.MetroComboBox();
             this.SuspendLayout();
             // 
             // tbxUsername
@@ -65,7 +66,7 @@
             // 
             // btnEnter
             // 
-            this.btnEnter.Location = new System.Drawing.Point(23, 165);
+            this.btnEnter.Location = new System.Drawing.Point(23, 200);
             this.btnEnter.Name = "btnEnter";
             this.btnEnter.Size = new System.Drawing.Size(215, 29);
             this.btnEnter.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(23, 200);
+            this.btnExit.Location = new System.Drawing.Point(23, 235);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(215, 29);
             this.btnExit.TabIndex = 3;
@@ -83,17 +84,39 @@
             this.btnExit.UseSelectable = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // cbxDept
+            // 
+            this.cbxDept.FormattingEnabled = true;
+            this.cbxDept.ItemHeight = 23;
+            this.cbxDept.Items.AddRange(new object[] {
+            "შპს ბიზნეს კრედიტი",
+            "ცენტრალური სერვის ცენტრი",
+            "ისნის სერვის ცენტრი",
+            "ოკრიბა სერვის ცენტრი",
+            "ლილოს სერვის ცენტრი",
+            "ელიავა სერვის ცენტრი",
+            "ვაგზლის სერვის ცენტრი",
+            "გლდანის სერვის ცენტრი"});
+            this.cbxDept.Location = new System.Drawing.Point(23, 165);
+            this.cbxDept.Name = "cbxDept";
+            this.cbxDept.Size = new System.Drawing.Size(215, 29);
+            this.cbxDept.TabIndex = 4;
+            this.cbxDept.UseSelectable = true;
+            this.cbxDept.SelectedIndexChanged += new System.EventHandler(this.cbxDept_SelectedIndexChanged);
+            // 
             // AuthenticationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(261, 251);
+            this.ClientSize = new System.Drawing.Size(261, 287);
+            this.Controls.Add(this.cbxDept);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.tbxPassword);
             this.Controls.Add(this.tbxUsername);
             this.Name = "AuthenticationForm";
             this.Text = "ავტენტიფიკაცია";
+            this.Load += new System.EventHandler(this.AuthenticationForm_Load);
             this.ResumeLayout(false);
 
         }
@@ -104,5 +127,6 @@
         private MetroFramework.Controls.MetroTextBox tbxPassword;
         private MetroFramework.Controls.MetroButton btnEnter;
         private MetroFramework.Controls.MetroButton btnExit;
+        private MetroFramework.Controls.MetroComboBox cbxDept;
     }
 }

@@ -16,7 +16,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DailyForm());
+            Application.Run(new MainForm());
         }
     }
 }

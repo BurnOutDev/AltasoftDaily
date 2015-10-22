@@ -20,6 +20,8 @@ namespace AltasoftDaily.Domain
         public bool CanViewDaily { get; set; }
 
         public Branch Branch { get; set; }
+        public int DeptId { get; set; }
+        public int AltasoftUserID { get; set; }
 
         public virtual ICollection<User> VisibleUsers { get; set; }
     }

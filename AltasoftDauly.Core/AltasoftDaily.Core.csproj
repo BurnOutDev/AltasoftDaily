@@ -52,6 +52,14 @@
   <ItemGroup>
     <Compile Include="AltasoftDailyContext.cs" />
     <Compile Include="DailyManagement.cs" />
+    <Compile Include="Migrations\201510210929155_AddedDepartmentId.cs" />
+    <Compile Include="Migrations\201510210929155_AddedDepartmentId.Designer.cs">
+      <DependentUpon>201510210929155_AddedDepartmentId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510211440130_AddedAltasoftUserId.cs" />
+    <Compile Include="Migrations\201510211440130_AddedAltasoftUserId.Designer.cs">
+      <DependentUpon>201510211440130_AddedAltasoftUserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.Designer.cs">
@@ -84,6 +92,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510101437567_AddedUsernameAndPasswordToUser.resx">
       <DependentUpon>201510101437567_AddedUsernameAndPasswordToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510210929155_AddedDepartmentId.resx">
+      <DependentUpon>201510210929155_AddedDepartmentId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510211440130_AddedAltasoftUserId.resx">
+      <DependentUpon>201510211440130_AddedAltasoftUserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
