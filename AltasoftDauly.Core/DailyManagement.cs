@@ -9,7 +9,7 @@ namespace AltasoftDaily.Core
 {
     public class DailyManagement
     {
-        public static List<DailyModel> GetDailyByUserId(int deptId, int userId)
+        public static List<DailyModel> GetDailyByDeptId(int deptId)
         {
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
@@ -36,13 +36,13 @@ namespace AltasoftDaily.Core
             var loansIds = (from x in l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } })
                             select x.Id.Value).ToList().OrderBy(x => x);
 
-            var l1 = l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue } });
+            //var l1 = l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue } });
 
             foreach (var loanId in loansIds)
             {
                 var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts | AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
-                if (loan.BranchId == deptId && loan.Authorities[0].UserId == userId)
+                if (loan.BranchId == deptId)
                 {
                     var item = new DailyModel()
                     {
@@ -168,7 +168,7 @@ namespace AltasoftDaily.Core
             {
                 DeptId = deptId,
                 DeptIdSpecified = true,
-                UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = 21, IdSpecified = true }
+                UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = userId, IdSpecified = true }
             }, 0, false,
                    new Guid().ToString(),
                    true, true, false, true, Order, out id, out specified);

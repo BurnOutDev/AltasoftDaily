@@ -15,6 +15,7 @@ namespace AltasoftDaily.Domain
         public string Password { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        public string PrivateNumber { get; set; }
         public bool IsLockedOut { get; set; }
         public bool CanSubmit { get; set; }
         public bool CanViewDaily { get; set; }
@@ -24,5 +25,6 @@ namespace AltasoftDaily.Domain
         public int AltasoftUserID { get; set; }
 
         public virtual ICollection<User> VisibleUsers { get; set; }
+        public virtual ICollection<int> VisibleDepts { get; set; }
     }
 }

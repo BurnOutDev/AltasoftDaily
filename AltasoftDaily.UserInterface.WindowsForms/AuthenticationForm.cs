@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AltasoftDaily.Core;
 using AltasoftDaily.Domain;
+using log4net;
+using System.Reflection;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class AuthenticationForm : MetroForm
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private User _user { get; set; }
         private int _deptId { get; set; }
 
@@ -25,19 +28,39 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            //Log
+            log.Info("Application exited.");
+
             Application.Exit();
         }
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            bool authenticated;
-            string response;
-            _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, out authenticated, out response);
+            try
+            {
+                bool authenticated;
+                string response;
+                _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
 
-            if (!authenticated)
-                MessageBox.Show(response);
-            else
+                if (!authenticated)
+                {
+                    MessageBox.Show(response);
+
+                    //Log
+                    log.Warn("User: " + tbxUsername.Text + " " + response);
+
+                    return;
+                }
+
+                //Log
+                log.Info("User: " + tbxUsername.Text + " logged in successfuly.");
+
                 Close();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Authentication Error: ", ex);
+            }
         }
 
         public User GetUser()

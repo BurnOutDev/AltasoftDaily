@@ -1,10 +1,12 @@
 ﻿using AltasoftDaily.Domain;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,6 +17,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
     {
         public User User { get; set; }
         public int DeptId { get; set; }
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,6 +33,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            //Log
+            log.Info("Application started.");
+
             var form = new AuthenticationForm();
             form.ShowDialog();
 

@@ -9,7 +9,7 @@ namespace AltasoftDaily.Core
 {
     public static class UserManagement
     {
-        public static User Authenticate(string username, string password, out bool authenticated, out string message)
+        public static User Authenticate(string username, string password, int deptId, out bool authenticated, out string message)
         {
             using (var db = new AltasoftDailyContext())
             {
@@ -25,6 +25,12 @@ namespace AltasoftDaily.Core
                 {
                     authenticated = false;
                     message = "მომხმარებლის პაროლი არასწორია!";
+                    return null;
+                }
+                else if (userByName.DeptId != deptId)
+                {
+                    authenticated = false;
+                    message = "მომხმარებელი ფილიალში არ მოიძებნა!";
                     return null;
                 }
 

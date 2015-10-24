@@ -31,7 +31,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gridDaily = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.button1 = new MetroFramework.Controls.MetroButton();
+            this.btnStats = new MetroFramework.Controls.MetroButton();
+            this.lblSum = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridDaily)).BeginInit();
             this.panel1.SuspendLayout();
@@ -40,15 +43,15 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.gridDaily, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(20, 60);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.42056F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.579439F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(551, 428);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
@@ -58,17 +61,33 @@
             this.gridDaily.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridDaily.Location = new System.Drawing.Point(3, 3);
             this.gridDaily.Name = "gridDaily";
-            this.gridDaily.Size = new System.Drawing.Size(545, 381);
+            this.gridDaily.Size = new System.Drawing.Size(545, 387);
             this.gridDaily.TabIndex = 0;
+            this.gridDaily.SelectionChanged += new System.EventHandler(this.gridDaily_SelectionChanged);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblSum);
+            this.panel1.Controls.Add(this.btnStats);
+            this.panel1.Controls.Add(this.metroButton1);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 390);
+            this.panel1.Location = new System.Drawing.Point(3, 396);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(545, 35);
+            this.panel1.Size = new System.Drawing.Size(545, 29);
             this.panel1.TabIndex = 1;
+            // 
+            // metroButton1
+            // 
+            this.metroButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.metroButton1.Location = new System.Drawing.Point(3, 3);
+            this.metroButton1.Name = "metroButton1";
+            this.metroButton1.Size = new System.Drawing.Size(149, 23);
+            this.metroButton1.TabIndex = 1;
+            this.metroButton1.Text = "სშო-ს დაგენერირება";
+            this.metroButton1.UseSelectable = true;
+            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
             // button1
             // 
@@ -76,11 +95,32 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Location = new System.Drawing.Point(467, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 29);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "შენახვა";
             this.button1.UseSelectable = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btnStats
+            // 
+            this.btnStats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnStats.Location = new System.Drawing.Point(158, 3);
+            this.btnStats.Name = "btnStats";
+            this.btnStats.Size = new System.Drawing.Size(93, 23);
+            this.btnStats.TabIndex = 1;
+            this.btnStats.Text = "სტაისტიკა";
+            this.btnStats.UseSelectable = true;
+            this.btnStats.Click += new System.EventHandler(this.btnStats_Click);
+            // 
+            // lblSum
+            // 
+            this.lblSum.AutoSize = true;
+            this.lblSum.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblSum.Location = new System.Drawing.Point(257, 5);
+            this.lblSum.Name = "lblSum";
+            this.lblSum.Size = new System.Drawing.Size(0, 21);
+            this.lblSum.TabIndex = 2;
             // 
             // DailyForm
             // 
@@ -95,6 +135,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridDaily)).EndInit();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -105,6 +146,9 @@
         private System.Windows.Forms.DataGridView gridDaily;
         private System.Windows.Forms.Panel panel1;
         private MetroFramework.Controls.MetroButton button1;
+        private MetroFramework.Controls.MetroButton metroButton1;
+        private MetroFramework.Controls.MetroButton btnStats;
+        private System.Windows.Forms.Label lblSum;
     }
 }
 

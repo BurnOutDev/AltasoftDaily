@@ -17,7 +17,7 @@ namespace AltasoftDaily.Core
 
         public DbSet<User> Users { get; set; }
         public DbSet<Branch> Branches { get; set; }
-        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Domain.Action> Transaction { get; set; }
     }
 
     

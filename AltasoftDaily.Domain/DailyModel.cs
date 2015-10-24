@@ -23,7 +23,7 @@
         public string ProblemManageDate { get; set; }
         public string ProblemManager { get; set; }
         public string DateOfEnforcement { get; set; }
-        public double CourtAndEnforcementFee { get; set; }
+        public decimal CourtAndEnforcementFee { get; set; }
         public string ClientAccountIban { get; set; }
         public string ClientAccountDescrip { get; set; }
         public string ClientAccountBranchCode { get; set; }
