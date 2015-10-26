@@ -17,9 +17,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
-            using (var db = new AltasoftDailyContext())
-            {
-                var artura = db.Users.FirstOrDefault(x => x.Username == "atumaniani");
+            //using (var db = new AltasoftDailyContext())
+            //{
+                //var artura = db.Users.FirstOrDefault(x => x.Username == "atumaniani");
                 //var filter = new Filter();
                 //filter.Enabled = true;
                 //filter.IsDeptFilterEnabled = true;
@@ -29,11 +29,11 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 //artura.Filter = filter;
 
                 //artura.Filter.DeptIDs = new List<int>();
-                artura.Filter.FilterData = new List<Domain.FilterData>();
-                artura.Filter.FilterData.Add(new Domain.FilterData() { DeptID = 2 });
+                //artura.Filter.FilterData = new List<Domain.FilterData>();
+                //artura.Filter.FilterData.Add(new Domain.FilterData() { DeptID = 3 });
 
-                db.SaveChanges();
-            }
+                //db.SaveChanges();
+            //}
 
             XmlConfigurator.Configure();
             Application.EnableVisualStyles();
