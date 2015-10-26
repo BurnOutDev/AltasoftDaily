@@ -49,10 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Branch.cs" />
-    <Compile Include="DailyModel.cs" />
+    <Compile Include="DailyPayment.cs" />
+    <Compile Include="DailyPaymentAndLoan.cs" />
     <Compile Include="DailyStats.cs" />
-    <Compile Include="Actions.cs" />
+    <Compile Include="FilterInfo.cs" />
+    <Compile Include="UserAction.cs" />
+    <Compile Include="Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaxOrder.cs" />
     <Compile Include="User.cs" />

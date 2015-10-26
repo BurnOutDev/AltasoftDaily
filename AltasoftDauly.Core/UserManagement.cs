@@ -1,4 +1,4 @@
-﻿using AltasoftDaily.Domain;
+﻿using AltasoftDaily.Domain.POCO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace AltasoftDaily.Core
                     message = "მომხმარებლის პაროლი არასწორია!";
                     return null;
                 }
-                else if (userByName.DeptId != deptId)
+                else if (userByName.DeptID != deptId)
                 {
                     authenticated = false;
                     message = "მომხმარებელი ფილიალში არ მოიძებნა!";

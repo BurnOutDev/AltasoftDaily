@@ -1,5 +1,6 @@
 ﻿using AltasoftDaily.Core;
 using AltasoftDaily.Domain;
+using AltasoftDaily.Domain.POCO;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -28,20 +29,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void DailyForm_Load(object sender, EventArgs e)
         {
             button1.Enabled = User.CanSubmit;
-            gridDaily.DataSource = DailyManagement.GetDailyByDeptId(User.DeptId);
+            gridDaily.DataSource = DailyManagement.GetDailyByUser(User.AltasoftUserID);
             LoadingForm = new LoadingForm();
             LoadingForm.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var data = ((List<DailyModel>)gridDaily.DataSource).Where(x => x.Payment > 0);
+            var data = ((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0);
 
             string message = "starting count: " + data.Count() + "\n";
             message += "ids: ";
             foreach (var item in data)
             {
-                message += DailyManagement.Add(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", User.AltasoftUserID, User.DeptId) + "\n";
+                message += DailyManagement.SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", User.AltasoftUserID, User.DeptID) + "\n";
             }
 
             MessageBox.Show(message);
@@ -55,7 +56,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            var list = (List<DailyModel>)gridDaily.DataSource;
+            var list = (List<DailyPayment>)gridDaily.DataSource;
             List<TaxOrder> orders = new List<TaxOrder>();
             int count = 1;
             foreach (var item in list)
@@ -80,7 +81,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void btnStats_Click(object sender, EventArgs e)
         {
-            var data = (List<DailyModel>)gridDaily.DataSource;
+            var data = (List<DailyPayment>)gridDaily.DataSource;
             var resData = new List<DailyStats>();
             
 

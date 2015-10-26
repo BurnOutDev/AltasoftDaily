@@ -88,6 +88,14 @@
     <Compile Include="Migrations\201510241338264_RenamedTransactionToActionAndEdited.Designer.cs">
       <DependentUpon>201510241338264_RenamedTransactionToActionAndEdited.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs" />
+    <Compile Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.Designer.cs">
+      <DependentUpon>201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs" />
+    <Compile Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.Designer.cs">
+      <DependentUpon>201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -137,6 +145,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510241338264_RenamedTransactionToActionAndEdited.resx">
       <DependentUpon>201510241338264_RenamedTransactionToActionAndEdited.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.resx">
+      <DependentUpon>201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.resx">
+      <DependentUpon>201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

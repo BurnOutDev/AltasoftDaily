@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AltasoftDaily.Domain
+namespace AltasoftDaily.Domain.POCO
 {
-    public class Action
+    public class UserAction
     {
         [Key]
         public int ActionID { get; set; }
         public string RequestID { get; set; }
         public decimal OrderID { get; set; }
         public string DocNum { get; set; }
-        public int DeptID { get; set; }
         public DateTime Date { get; set; }
         public object ExternalData { get; set; }
         public ActionStatus Status { get; set; }

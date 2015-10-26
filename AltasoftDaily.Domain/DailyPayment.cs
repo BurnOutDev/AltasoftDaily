@@ -1,7 +1,11 @@
-﻿namespace AltasoftDaily.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AltasoftDaily.Domain.POCO
 {
-    public class DailyModel
+    public class DailyPayment
     {
+        [Key]
+        public int DailyPaymentID { get; set; }
         public int ClientNo { get; set; }
         public int LoanID { get; set; }
         public string ClientName { get; set; }

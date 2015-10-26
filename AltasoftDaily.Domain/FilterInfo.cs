@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace AltasoftDaily.Domain
 {
-    public class Branch
+    public class FilterData
     {
         [Key]
-        public int BranchID { get; set; }
-        public string Name { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        public int FilterInfoID { get; set; }
+        public int ClientID { get; set; }
+        public int DeptID { get; set; }
+        public int OperatorID { get; set; }
     }
 }

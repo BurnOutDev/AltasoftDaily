@@ -1,4 +1,4 @@
-﻿using AltasoftDaily.Domain;
+﻿using AltasoftDaily.Domain.POCO;
 using log4net;
 using System;
 using System.Collections.Generic;

@@ -9,7 +9,6 @@ namespace AltasoftDaily.Domain
 {
     public class TaxOrder
     {
-        [Key]
         public int TaxOrderID { get; set; }
         public int TaxOrderNumber { get; set; }
         public string Date { get; set; }

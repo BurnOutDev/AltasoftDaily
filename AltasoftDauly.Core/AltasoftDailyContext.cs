@@ -1,10 +1,5 @@
-﻿using AltasoftDaily.Domain;
-using System;
-using System.Collections.Generic;
+﻿using AltasoftDaily.Domain.POCO;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AltasoftDaily.Core
 {
@@ -16,8 +11,9 @@ namespace AltasoftDaily.Core
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Branch> Branches { get; set; }
-        public DbSet<Domain.Action> Transaction { get; set; }
+        public DbSet<UserAction> UserActions { get; set; }
+        public DbSet<Filter> Filters { get; set; }
+        public DbSet<DailyPayment> DailyPayments { get; set; }
     }
 
     

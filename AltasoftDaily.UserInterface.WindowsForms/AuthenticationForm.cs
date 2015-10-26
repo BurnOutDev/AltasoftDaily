@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AltasoftDaily.Core;
-using AltasoftDaily.Domain;
+using AltasoftDaily.Domain.POCO;
 using log4net;
 using System.Reflection;
 
