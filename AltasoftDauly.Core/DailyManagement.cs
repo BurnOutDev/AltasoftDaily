@@ -113,32 +113,32 @@ namespace AltasoftDaily.Core
 
         public static List<DailyPayment> GetDailyByUser(int altasoftUserId)
         {
-                #region Initialize Services
-                #region OrdersService
-                AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
-                o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-                #endregion
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
 
-                #region CustomersService
-                AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
-                c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-                #endregion
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
 
-                #region AccountsService
-                AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
-                a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-                #endregion
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
 
-                #region LoansService
-                AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
-                l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-                #endregion
-                #endregion
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
 
-                List<DailyPayment> list = new List<DailyPayment>();
+            List<DailyPayment> list = new List<DailyPayment>();
 
-                var loansIds = (from x in l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } })
-                                select x.Id.Value).ToList().OrderBy(x => x);
+            var loansIds = (from x in l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } })
+                            select x.Id.Value).ToList().OrderBy(x => x);
 
             using (var db = new AltasoftDailyContext())
             {
@@ -214,6 +214,7 @@ namespace AltasoftDaily.Core
             };
 
             result.OperatorID = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).UserId.Value;
+            item.ResponsibleUser = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.PrimaryResponsible).Name;
 
             loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
@@ -335,20 +336,22 @@ namespace AltasoftDaily.Core
 
             return id;
         }
-        public static List<long?> SubmitOrdersFromDatabase()
+        public static List<long?> SubmitOrdersFromDatabase(User user)
         {
-            return null;
-        }
-        public static bool SaveDaily(List<DailyPayment> payments)
-        {
+            List<long?> result = new List<long?>();
+            var calcDate = GetCalculationDate().Date;
+
             using (var db = new AltasoftDailyContext())
             {
-                db.DailyPayments.AddRange(payments);
-                db.SaveChanges();
+                var localPayments = db.DailyPayments.Where(x => DateTime.Parse(x.CalculationDate).Date == calcDate && x.LocalUserID == user.UserID).ToList();
+
+                foreach (var item in localPayments)
+                    result.Add(SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", user.AltasoftUserID, user.DeptID));
             }
-            return true;
+
+            return result;
         }
-        public static bool UpdateDaily(List<DailyPayment> payments)
+        public static bool UpdatePaymentsInDaily(List<DailyPayment> payments)
         {
             using (var db = new AltasoftDailyContext())
             {
@@ -360,32 +363,57 @@ namespace AltasoftDaily.Core
             }
             return true;
         }
-
-        public static List<DailyPayment> GetUpdates()
+        public static int GetUpdatesByAltasoftUserId(int altasoftUserId)
         {
+            var calcDate = GetCalculationDate().Date;
+
             List<DailyPayment> result = new List<DailyPayment>();
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.ToList();
-                var lmsPayments = GetDailyByDeptId(5);
+                var localPayments = db.DailyPayments.Where(x => DateTime.Parse(x.CalculationDate).Date == calcDate && x.LocalUserID == altasoftUserId).ToList();
+                var localPaymentsIds = from x in localPayments
+                                       select x.LoanID;
 
-                for (int i = 0; i < lmsPayments.Count; i++)
-                {
-                    var lms = lmsPayments[0];
-                    var loc = localPayments.FirstOrDefault(x => x.CalculationDate == lms.CalculationDate && x.LoanID == lms.LoanID);
+                var lmsPayments = GetDailyByUser(altasoftUserId);
+                var lmsPaymentsIds = from x in lmsPayments
+                                     select x.LoanID;
 
-                    foreach (var prop in typeof(DailyPayment).GetProperties())
-                    {
-                        if (prop.GetValue(lms) != prop.GetValue(loc))
-                        {
-                            result.Add(lms);
-                            continue;
-                        }
-                    }
-                }
+                var newPaymentsIds = lmsPaymentsIds.Except(localPaymentsIds).ToList();
+                var oldPaymentsIds = localPaymentsIds.Except(lmsPaymentsIds).ToList();
+
+                var newPayments = lmsPayments.Where(x => newPaymentsIds.Contains(x.LoanID));
+                var oldPayments = localPayments.Where(x => oldPaymentsIds.Contains(x.LoanID));
+
+                if (newPaymentsIds.Count > 0)
+                    db.DailyPayments.AddRange(newPayments);
+
+                if (oldPaymentsIds.Count > 0)
+                    db.DailyPayments.RemoveRange(oldPayments);
+
+                db.SaveChanges();
+                return newPaymentsIds.Count;
             }
-            return null;
+        }
+        public static DateTime GetCalculationDate()
+        {
+            #region Initialize Loans Service
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).FirstOrDefault().CalcDate.Value;
         }
     }
 }
+
+
+//public static bool AddDaily(List<DailyPayment> payments)
+//{
+//    using (var db = new AltasoftDailyContext())
+//    {
+//        db.DailyPayments.AddRange(payments);
+//        db.SaveChanges();
+//    }
+//    return true;
+//}

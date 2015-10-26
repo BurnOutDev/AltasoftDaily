@@ -41,5 +41,6 @@ namespace AltasoftDaily.Domain.POCO
         public decimal PrincipalInGel { get; set; }
         public decimal LoanAmountInGel { get; set; }
         public string ResponsibleUser { get; set; }
+        public int LocalUserID { get; set; }
     }
 }
