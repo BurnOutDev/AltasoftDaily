@@ -16,6 +16,16 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class DailyForm : MetroForm
     {
+        private AltasoftDailyContext _db;
+        public AltasoftDailyContext db
+        {
+            get
+            {
+                if (_db == null)
+                    _db = new AltasoftDailyContext();
+                return _db;
+            }
+        }
         public User User { get; set; }
         public int DeptId { get; set; }
         public LoadingForm LoadingForm { get; set; }
@@ -28,24 +38,36 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void DailyForm_Load(object sender, EventArgs e)
         {
+            var calcDate = new DateTime(2015, 9, 27);
+
             button1.Enabled = User.CanSubmit;
-            gridDaily.DataSource = DailyManagement.GetDailyByUser(User.AltasoftUserID);
+
+            DailyManagement.GetUpdatesByAltasoftUserId(User.AltasoftUserID);
+            gridDaily.DataSource = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList();
+
+            foreach (var item in db.DailyPayments)
+            {
+                item.LocalUserID = 1;
+            }
+            db.SaveChanges();
             LoadingForm = new LoadingForm();
             LoadingForm.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var data = ((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0);
+            //var data = ((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0);
 
-            string message = "starting count: " + data.Count() + "\n";
-            message += "ids: ";
-            foreach (var item in data)
-            {
-                message += DailyManagement.SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", User.AltasoftUserID, User.DeptID) + "\n";
-            }
+            //string message = "starting count: " + data.Count() + "\n";
+            //message += "ids: ";
+            //foreach (var item in data)
+            //{
+            //    message += DailyManagement.SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", User.AltasoftUserID, User.DeptID) + "\n";
+            //}
 
-            MessageBox.Show(message);
+            //MessageBox.Show(message);
+
+            DailyManagement.UpdatePaymentsInDaily(((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList());
         }
 
         private void DailyForm_Shown(object sender, EventArgs e)
@@ -63,7 +85,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             {
                 orders.Add(new TaxOrder()
                 {
-                    Date = item.CalculationDate,
+                    Date = item.CalculationDate.ToShortDateString(),
                     TaxOrderNumber = 558,
                     AccountFirstName = item.FirstName,
                     AccountLastName = item.LastName,

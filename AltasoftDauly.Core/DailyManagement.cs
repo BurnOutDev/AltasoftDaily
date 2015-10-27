@@ -63,7 +63,7 @@ namespace AltasoftDaily.Core
 
                     loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
-                    item.CalculationDate = loan.CalcDate.Value.ToShortDateString();
+                    item.CalculationDate = loan.CalcDate.Value.Date;
                     item.LoanAmountInGel = loan.Amount.Amount;
                     item.LoanCCY = loan.Amount.Ccy;
                     item.ClientNo = loan.BorrowerId.Value;
@@ -166,7 +166,6 @@ namespace AltasoftDaily.Core
                         list.Add(loan.DailyPayment);
                     }
                 }
-
             }
             return list.OrderBy(x => x.ClientNo).ToList();
         }
@@ -218,7 +217,7 @@ namespace AltasoftDaily.Core
 
             loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
-            item.CalculationDate = loan.CalcDate.Value.ToShortDateString();
+            item.CalculationDate = loan.CalcDate.Value.Date;
             item.LoanAmountInGel = loan.Amount.Amount;
             item.LoanCCY = loan.Amount.Ccy;
             item.ClientNo = loan.BorrowerId.Value;
@@ -343,10 +342,10 @@ namespace AltasoftDaily.Core
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => DateTime.Parse(x.CalculationDate).Date == calcDate && x.LocalUserID == user.UserID).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate.Date == calcDate && x.LocalUserID == user.UserID).ToList();
 
                 foreach (var item in localPayments)
-                    result.Add(SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", user.AltasoftUserID, user.DeptID));
+                    result.Add(SubmitOrder(0, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", user.AltasoftUserID, user.DeptID));
             }
 
             return result;
@@ -365,13 +364,13 @@ namespace AltasoftDaily.Core
         }
         public static int GetUpdatesByAltasoftUserId(int altasoftUserId)
         {
-            var calcDate = GetCalculationDate().Date;
+            var calcDate = new DateTime(2015, 9, 27);
 
             List<DailyPayment> result = new List<DailyPayment>();
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => DateTime.Parse(x.CalculationDate).Date == calcDate && x.LocalUserID == altasoftUserId).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == 1).ToList();
                 var localPaymentsIds = from x in localPayments
                                        select x.LoanID;
 
@@ -391,6 +390,12 @@ namespace AltasoftDaily.Core
                 if (oldPaymentsIds.Count > 0)
                     db.DailyPayments.RemoveRange(oldPayments);
 
+                //Test
+                foreach (var item in db.DailyPayments)
+                {
+                    item.LocalUserID = 1;
+                }
+
                 db.SaveChanges();
                 return newPaymentsIds.Count;
             }
@@ -402,7 +407,7 @@ namespace AltasoftDaily.Core
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
 
-            return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).FirstOrDefault().CalcDate.Value;
+            return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
         }
     }
 }

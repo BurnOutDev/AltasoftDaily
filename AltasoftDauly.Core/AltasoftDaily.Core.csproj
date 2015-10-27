@@ -100,6 +100,14 @@
     <Compile Include="Migrations\201510261209115_AddedFiltedDataCollection.Designer.cs">
       <DependentUpon>201510261209115_AddedFiltedDataCollection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510261524340_AddedUserIDToDailyPayments.cs" />
+    <Compile Include="Migrations\201510261524340_AddedUserIDToDailyPayments.Designer.cs">
+      <DependentUpon>201510261524340_AddedUserIDToDailyPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.cs" />
+    <Compile Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.Designer.cs">
+      <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -158,6 +166,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510261209115_AddedFiltedDataCollection.resx">
       <DependentUpon>201510261209115_AddedFiltedDataCollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510261524340_AddedUserIDToDailyPayments.resx">
+      <DependentUpon>201510261524340_AddedUserIDToDailyPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.resx">
+      <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

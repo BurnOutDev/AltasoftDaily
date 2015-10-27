@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AltasoftDaily.Domain.POCO
 {
@@ -18,7 +19,7 @@ namespace AltasoftDaily.Domain.POCO
         public decimal CurrentDebtInGel { get; set; }
         public decimal TotalDebtInGel { get; set; }
         public decimal Payment { get; set; }
-        public string CalculationDate { get; set; }
+        public DateTime CalculationDate { get; set; }
         public string AgreementNumber { get; set; }
         public string LoanCCY { get; set; }
         public string StartDate { get; set; }
