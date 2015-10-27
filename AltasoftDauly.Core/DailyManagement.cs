@@ -338,11 +338,11 @@ namespace AltasoftDaily.Core
         public static List<long?> SubmitOrdersFromDatabase(User user)
         {
             List<long?> result = new List<long?>();
-            var calcDate = GetCalculationDate().Date;
+            var calcDate = new DateTime(2015, 9, 27);
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => x.CalculationDate.Date == calcDate && x.LocalUserID == user.UserID).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.Payment > 0).ToList();
 
                 foreach (var item in localPayments)
                     result.Add(SubmitOrder(0, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", user.AltasoftUserID, user.DeptID));
