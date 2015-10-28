@@ -1,6 +1,7 @@
 ﻿using AltasoftDaily.Core;
 using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
+using log4net;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +18,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class DailyForm : MetroForm
     {
+        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private AltasoftDailyContext _db;
         public AltasoftDailyContext db
         {
@@ -38,36 +41,37 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void DailyForm_Load(object sender, EventArgs e)
         {
-            var calcDate = new DateTime(2015, 9, 27);
-
-            button1.Enabled = User.CanSubmit;
-
-            DailyManagement.GetUpdatesByAltasoftUserId(User.AltasoftUserID);
-            gridDaily.DataSource = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList();
-
-            foreach (var item in db.DailyPayments)
+            try
             {
-                item.LocalUserID = 1;
+                var calcDate = new DateTime(2015, 9, 27);
+
+                button1.Enabled = User.CanSubmit;
+
+                DailyManagement.GetUpdatesByAltasoftUser(User);
+                gridDaily.DataSource = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList();
+
+                LoadingForm = new LoadingForm();
+                LoadingForm.Show();
             }
-            db.SaveChanges();
-            LoadingForm = new LoadingForm();
-            LoadingForm.Show();
+            catch (Exception ex)
+            {
+                log.Error("DailyForm Loading Error:", ex);
+                throw;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //var data = ((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0);
-
-            //string message = "starting count: " + data.Count() + "\n";
-            //message += "ids: ";
-            //foreach (var item in data)
-            //{
-            //    message += DailyManagement.SubmitOrder(0, item.LoanCCY, DateTime.Parse(item.CalculationDate), item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", User.AltasoftUserID, User.DeptID) + "\n";
-            //}
-
-            //MessageBox.Show(message);
-
-            DailyManagement.UpdatePaymentsInDaily(((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList());
+            try
+            {
+                DailyManagement.UpdatePaymentsInDaily(((List<DailyPayment>)gridDaily.DataSource).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error Updating Payments In Daily.", ex);
+                throw;
+            }
+            log.Info("Daily Updated Successfuly.");
         }
 
         private void DailyForm_Shown(object sender, EventArgs e)
@@ -86,11 +90,12 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 orders.Add(new TaxOrder()
                 {
                     Date = item.CalculationDate.ToShortDateString(),
-                    TaxOrderNumber = 558,
+                    TaxOrderID = item.TaxOrderNumber,
+                    TaxOrderNumber = item.TaxOrderNumber,
                     AccountFirstName = item.FirstName,
                     AccountLastName = item.LastName,
                     AccountPrivateNumber = item.PersonalID,
-                    Basis = "sesxis dafarva Test",
+                    Basis = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
                     CollectorFirstName = User.Name,
                     CollectorLastName = User.LastName,
                     CollectorPrivateNumber = User.PrivateNumber
@@ -98,14 +103,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 count++;
             }
 
-            TaxOrderGenerator.Generate(@"C:\Users\Irakl\Desktop\TaxOrderTemplate.xlsx", "ს-", orders.ToArray());
+            TaxOrderGenerator.Generate(@"C:\Users\Irakl\Desktop\TaxOrderTemplate.xlsx", orders.ToArray());
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
             var data = (List<DailyPayment>)gridDaily.DataSource;
             var resData = new List<DailyStats>();
-            
+
 
             resData.Add(
                 new DailyStats()
@@ -250,13 +255,39 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 {
                     value += (decimal)item.Value;
                 }
-                catch {
+                catch
+                {
                     lblSum.Text = "";
                     return;
                 }
             }
 
             lblSum.Text = value.ToString();
+        }
+
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            DailyManagement.SubmitOrdersFromDatabase(User);
+        }
+
+        private void gridDaily_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            var count = 0;
+            ((List<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => count++);
+
+            lblCount.Text = count.ToString();
+        }
+
+        private void btnStats_Click_1(object sender, EventArgs e)
+        {
+            TaxOrderGenerator.ExportToExcel(ConvertToExcelPayment((List<DailyPayment>)gridDaily.DataSource));
+        }
+
+        public static List<ExcelPayment> ConvertToExcelPayment(List<DailyPayment> v)
+        {
+            var list = new List<ExcelPayment>();
+            v.ForEach(x => list.Add((ExcelPayment)x));
+            return list;
         }
     }
 }

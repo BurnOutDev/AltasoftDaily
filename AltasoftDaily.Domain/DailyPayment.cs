@@ -1,10 +1,15 @@
-﻿using System;
+﻿using AltasoftDaily.Helpers;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AltasoftDaily.Domain.POCO
 {
     public class DailyPayment
     {
+        public DailyPayment()
+        {
+        }
+
         [Key]
         public int DailyPaymentID { get; set; }
         public int ClientNo { get; set; }
@@ -43,5 +48,6 @@ namespace AltasoftDaily.Domain.POCO
         public decimal LoanAmountInGel { get; set; }
         public string ResponsibleUser { get; set; }
         public int LocalUserID { get; set; }
+        public int TaxOrderNumber { get; set; }
     }
 }

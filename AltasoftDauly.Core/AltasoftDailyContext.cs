@@ -15,6 +15,4 @@ namespace AltasoftDaily.Core
         public DbSet<Filter> Filters { get; set; }
         public DbSet<DailyPayment> DailyPayments { get; set; }
     }
-
-    
 }

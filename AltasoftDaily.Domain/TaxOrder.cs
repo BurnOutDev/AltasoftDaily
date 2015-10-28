@@ -9,8 +9,8 @@ namespace AltasoftDaily.Domain
 {
     public class TaxOrder
     {
-        public int TaxOrderID { get; set; }
-        public int TaxOrderNumber { get; set; }
+        public long TaxOrderID { get; set; }
+        public long TaxOrderNumber { get; set; }
         public string Date { get; set; }
         public int? PaymentAmountLari { get; set; }
         public int? PaymentAmountTetri { get; set; }

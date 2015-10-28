@@ -108,6 +108,10 @@
     <Compile Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.Designer.cs">
       <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510271708164_Something.cs" />
+    <Compile Include="Migrations\201510271708164_Something.Designer.cs">
+      <DependentUpon>201510271708164_Something.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -134,6 +138,10 @@
     <ProjectReference Include="..\AltasoftDaily.Domain\AltasoftDaily.Domain.csproj">
       <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
       <Name>AltasoftDaily.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Helpers\AltasoftDaily.Helpers.csproj">
+      <Project>{0407decb-3a9e-4533-80ca-71f92b9c5605}</Project>
+      <Name>AltasoftDaily.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.resx">
       <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510271708164_Something.resx">
+      <DependentUpon>201510271708164_Something.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

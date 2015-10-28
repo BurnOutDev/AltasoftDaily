@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
 using System.Reflection;
+using AltasoftDaily.Helpers;
 
 namespace AltasoftDaily.Core
 {
@@ -267,7 +268,7 @@ namespace AltasoftDaily.Core
             return result;
         }
 
-        public static long? SubmitOrder(int docNum, string ccy, DateTime date, string accountIBAN, decimal amount, string purpose, string cashDeskSymbol, int userId, int deptId)
+        public static long? SubmitOrder(int docNum, string ccy, DateTime date, string accountIBAN, decimal amount, string agreementNumber, string cashDeskSymbol, int userId, int deptId)
         {
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
@@ -285,7 +286,7 @@ namespace AltasoftDaily.Core
             #endregion
 
             var acc = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { IBAN = accountIBAN }, ccy);
-            var cus = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, acc.CustomerId.Value, true);
+            var cus = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, acc.CustomerId.Value, true);
             var cusEntity = cus.Entity as AltasoftAPI.CustomersAPI.IndividualEntity;
 
 
@@ -303,7 +304,7 @@ namespace AltasoftDaily.Core
                 StatusSpecified = true,
                 TransactionCode = "qwe34242342", //09 
                 OpCode = "120",
-                Purpose = purpose,
+                Purpose = "სესხის დაფარვა სესხის ხელშ. " + agreementNumber + "-ის საფუძველზე",
                 //ExtraAccount = 0,
                 //ExtraAccountSpecified = false,
                 CustomerAccount = new AltasoftAPI.OrdersAPI.InternalAccountIdentification { IBAN = accountIBAN },
@@ -317,9 +318,11 @@ namespace AltasoftDaily.Core
                 DocNumSpecified = docNum == 0 ? false : true
             };
 
-            cusEntity = (c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.IdentityDocuments, true, acc.CustomerId.Value, true).Entity as AltasoftAPI.CustomersAPI.IndividualEntity);
+            cusEntity = (c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.IdentityDocuments | AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, acc.CustomerId.Value, true).Entity as AltasoftAPI.CustomersAPI.IndividualEntity);
 
-            Order.Customer.IdentityDocument = (AltasoftAPI.OrdersAPI.IdentityDocument)cusEntity.IdentityDocuments[0];
+            Order.Customer.IdentityDocument = (AltasoftAPI.OrdersAPI.IdentityDocument)cusEntity.IdentityDocuments.FirstOrDefault();
+            Order.Customer.Address = (AltasoftAPI.OrdersAPI.TextBilingual)cus.AddressActual.Value;
+            Order.Customer.BirthPlaceDateAndCountry = (AltasoftAPI.OrdersAPI.BirthPlaceDateAndCountry)cusEntity.BirthPlaceDateAndCountry;
             #endregion
 
             #region Put Order
@@ -345,7 +348,7 @@ namespace AltasoftDaily.Core
                 var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.Payment > 0).ToList();
 
                 foreach (var item in localPayments)
-                    result.Add(SubmitOrder(0, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, "sesxis dafarva MainForm2", "09", user.AltasoftUserID, user.DeptID));
+                    result.Add(SubmitOrder(item.TaxOrderNumber, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID));
             }
 
             return result;
@@ -362,7 +365,7 @@ namespace AltasoftDaily.Core
             }
             return true;
         }
-        public static int GetUpdatesByAltasoftUserId(int altasoftUserId)
+        public static int GetUpdatesByAltasoftUser(User user)
         {
             var calcDate = new DateTime(2015, 9, 27);
 
@@ -370,11 +373,11 @@ namespace AltasoftDaily.Core
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == 1).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID).ToList();
                 var localPaymentsIds = from x in localPayments
                                        select x.LoanID;
 
-                var lmsPayments = GetDailyByUser(altasoftUserId);
+                var lmsPayments = GetDailyByUser(user.AltasoftUserID).Where(x => x.CalculationDate == calcDate);
                 var lmsPaymentsIds = from x in lmsPayments
                                      select x.LoanID;
 
@@ -384,17 +387,25 @@ namespace AltasoftDaily.Core
                 var newPayments = lmsPayments.Where(x => newPaymentsIds.Contains(x.LoanID));
                 var oldPayments = localPayments.Where(x => oldPaymentsIds.Contains(x.LoanID));
 
+                int count = 0;
+                if (localPayments.Count > 0)
+                    count = localPayments.Max(x => x.TaxOrderNumber);
+
+                foreach (var item in newPayments)
+                {
+                    count++;
+                    item.LocalUserID = user.UserID;
+                    var orderNumber = item.CalculationDate.Year.ToString().Substring(2) + item.CalculationDate.Month.ToString() + item.CalculationDate.Day
+                        + user.AltasoftUserID.ToString();
+                    orderNumber += count.ToString().Replace(orderNumber, "");
+                    item.TaxOrderNumber = int.Parse(orderNumber);
+                }
+
                 if (newPaymentsIds.Count > 0)
                     db.DailyPayments.AddRange(newPayments);
 
                 if (oldPaymentsIds.Count > 0)
                     db.DailyPayments.RemoveRange(oldPayments);
-
-                //Test
-                foreach (var item in db.DailyPayments)
-                {
-                    item.LocalUserID = 1;
-                }
 
                 db.SaveChanges();
                 return newPaymentsIds.Count;

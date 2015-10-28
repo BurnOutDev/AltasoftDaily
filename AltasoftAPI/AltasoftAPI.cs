@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Services;
+using AltasoftAPI.CustomersAPI;
 
 namespace AltasoftAPI.LoansAPI
 {
@@ -31238,6 +31239,13 @@ namespace AltasoftAPI.OrdersAPI
                 this.placeField = value;
             }
         }
+
+        public static explicit operator BirthPlaceDateAndCountry(CustomersAPI.BirthPlaceDateAndCountry v)
+        {
+            if (v == null)
+                return null;
+            return new BirthPlaceDateAndCountry() { Country = v.Country, Date = v.Date, DateSpecified = v.DateSpecified, Place = v.Place };
+        }
     }
 
     /// <remarks/>
@@ -31279,6 +31287,11 @@ namespace AltasoftAPI.OrdersAPI
             {
                 this.valueLatField = value;
             }
+        }
+
+        public static explicit operator TextBilingual(CustomersAPI.TextBilingual v)
+        {
+            return new TextBilingual() { ValueGeo = v.ValueGeo, ValueLat = v.ValueLat };
         }
     }
 

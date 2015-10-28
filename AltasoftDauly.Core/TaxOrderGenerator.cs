@@ -1,20 +1,40 @@
 ﻿using AltasoftDaily.Domain;
+using AltasoftDaily.Domain.POCO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Cache;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AltasoftDaily.Core
 {
     public static class TaxOrderGenerator
     {
-        public static void Generate(string templatePath, string branchInitial, params TaxOrder[] data)
+        public static void ExportToExcel(List<ExcelPayment> data)
+        {
+            var filePath = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString() + ".xlsx");
+            
+            using (ExcelPackage ePack = new ExcelPackage())
+            {
+                ExcelWorksheet ws = ePack.Workbook.Worksheets.Add("Accounts");
+                ws.Cells["A1"].LoadFromDataTable(ToDataTable(data), true);
+                ePack.SaveAs(new FileInfo(filePath));
+
+                Process.Start(filePath);
+            }
+        }
+
+        public static void Generate(string templatePath, params TaxOrder[] data)
         {
             var result = new MemoryStream();
             ExcelPackage ePack = new ExcelPackage();
@@ -53,7 +73,7 @@ namespace AltasoftDaily.Core
                     if (array.Count > 0)
                     {
                         //OrderNumber
-                        worksheet.Cells["B5"].Value = branchInitial + array.ElementAt(0).TaxOrderNumber;
+                        worksheet.Cells["B5"].Value = array.ElementAt(0).TaxOrderNumber;
                         //Date
                         worksheet.Cells["B6"].Value = array.ElementAt(0).Date;
                         //PaymentAmountLari
@@ -81,7 +101,7 @@ namespace AltasoftDaily.Core
                     if (array.Count > 1)
                     {
                         //OrderNumber
-                        worksheet.Cells["H5"].Value = branchInitial + array.ElementAt(1).TaxOrderNumber;
+                        worksheet.Cells["H5"].Value = array.ElementAt(1).TaxOrderNumber;
                         //Date                                        
                         worksheet.Cells["H6"].Value = array.ElementAt(1).Date;
                         //PaymentAmountLari                           
@@ -109,7 +129,7 @@ namespace AltasoftDaily.Core
                     if (array.Count > 2)
                     {
                         //OrderNumber
-                        worksheet.Cells["B28"].Value = branchInitial + array.ElementAt(2).TaxOrderNumber;
+                        worksheet.Cells["B28"].Value = array.ElementAt(2).TaxOrderNumber;
                         //Date                                        
                         worksheet.Cells["B29"].Value = array.ElementAt(2).Date;
                         //PaymentAmountLari                           
@@ -137,7 +157,7 @@ namespace AltasoftDaily.Core
                     if (array.Count > 3)
                     {
                         //OrderNumber
-                        worksheet.Cells["H28"].Value = branchInitial + array.ElementAt(3).TaxOrderNumber;
+                        worksheet.Cells["H28"].Value = array.ElementAt(3).TaxOrderNumber;
                         //Date                                         
                         worksheet.Cells["H29"].Value = array.ElementAt(3).Date;
                         //PaymentAmountLari                            
@@ -171,7 +191,54 @@ namespace AltasoftDaily.Core
             ePack.SaveAs(new FileInfo(filePath));
 
             Process.Start(filePath);
+        }
 
+        public static long GetTimestamp()
+        {
+            DateTime dateTime = DateTime.MinValue;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://nist.time.gov/actualtime.cgi?lzbc=siqm9b");
+            request.Method = "GET";
+            request.Accept = "text/html, application/xhtml+xml, */*";
+            request.UserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore); //No caching
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                StreamReader stream = new StreamReader(response.GetResponseStream());
+                string html = stream.ReadToEnd();//<timestamp time=\"1395772696469995\" delay=\"1395772696469995\"/>
+                string time = Regex.Match(html, @"(?<=\btime="")[^""]*").Value;
+                long milliseconds = Convert.ToInt64(time);
+                return milliseconds;
+            }
+            else
+                return 0;
+        }
+
+        public static DataTable ToDataTable<T>(List<T> items)
+        {
+            DataTable dataTable = new DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
+            {
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name);
+            }
+            foreach (T item in items)
+            {
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
+            }
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
     }
 }

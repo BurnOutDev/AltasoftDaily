@@ -69,7 +69,7 @@
             this.btnEnter.Location = new System.Drawing.Point(23, 200);
             this.btnEnter.Name = "btnEnter";
             this.btnEnter.Size = new System.Drawing.Size(215, 29);
-            this.btnEnter.TabIndex = 2;
+            this.btnEnter.TabIndex = 3;
             this.btnEnter.Text = "შესვლა";
             this.btnEnter.UseSelectable = true;
             this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
@@ -79,7 +79,7 @@
             this.btnExit.Location = new System.Drawing.Point(23, 235);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(215, 29);
-            this.btnExit.TabIndex = 3;
+            this.btnExit.TabIndex = 4;
             this.btnExit.Text = "გაუქმება";
             this.btnExit.UseSelectable = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -100,7 +100,7 @@
             this.cbxDept.Location = new System.Drawing.Point(23, 165);
             this.cbxDept.Name = "cbxDept";
             this.cbxDept.Size = new System.Drawing.Size(215, 29);
-            this.cbxDept.TabIndex = 4;
+            this.cbxDept.TabIndex = 2;
             this.cbxDept.UseSelectable = true;
             this.cbxDept.SelectedIndexChanged += new System.EventHandler(this.cbxDept_SelectedIndexChanged);
             // 

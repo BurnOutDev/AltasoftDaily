@@ -60,6 +60,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             catch (Exception ex)
             {
                 log.Error("Authentication Error: ", ex);
+                throw;
             }
         }
 
