@@ -289,7 +289,6 @@ namespace AltasoftDaily.Core
             var cus = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, acc.CustomerId.Value, true);
             var cusEntity = cus.Entity as AltasoftAPI.CustomersAPI.IndividualEntity;
 
-
             #region Variables
             long id;
             bool specified;
@@ -395,10 +394,7 @@ namespace AltasoftDaily.Core
                 {
                     count++;
                     item.LocalUserID = user.UserID;
-                    var orderNumber = item.CalculationDate.Year.ToString().Substring(2) + item.CalculationDate.Month.ToString() + item.CalculationDate.Day
-                        + user.AltasoftUserID.ToString();
-                    orderNumber += count.ToString().Replace(orderNumber, "");
-                    item.TaxOrderNumber = int.Parse(orderNumber);
+                    item.TaxOrderNumber = int.Parse(user.DeptID + user.AltasoftUserID.ToString() + count);
                 }
 
                 if (newPaymentsIds.Count > 0)
@@ -419,6 +415,18 @@ namespace AltasoftDaily.Core
             #endregion
 
             return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
+        }
+
+        public static string GetAccountIbanByDept(int deptId)
+        {
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            
+            var acc = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic | AltasoftAPI.AccountsAPI.AccountControlFlags.Classifiers, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { AccountNumber = ulong.Parse(1001000.ToString() + deptId.ToString()), AccountNumberSpecified = true, Ccy = "GET", BranchId = deptId, BranchIdSpecified = true }, "GEL");
+            
+            return acc.IBAN;
         }
     }
 }

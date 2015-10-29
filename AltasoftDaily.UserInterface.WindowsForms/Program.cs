@@ -17,8 +17,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
-            //using (var db = new AltasoftDailyContext())
-            //{
+            using (var db = new AltasoftDailyContext())
+            {
                 //var artura = db.Users.FirstOrDefault(x => x.Username == "atumaniani");
                 //var filter = new Filter();
                 //filter.Enabled = true;
@@ -33,12 +33,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 //artura.Filter.FilterData.Add(new Domain.FilterData() { DeptID = 3 });
 
                 //db.SaveChanges();
-            //}
+                //}
 
-            XmlConfigurator.Configure();
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+                XmlConfigurator.Configure();
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new MainForm());
+            }
         }
     }
 }

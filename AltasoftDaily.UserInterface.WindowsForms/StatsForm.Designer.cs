@@ -42,16 +42,16 @@
             this.gridStats.Location = new System.Drawing.Point(0, 0);
             this.gridStats.Name = "gridStats";
             this.gridStats.ReadOnly = true;
-            this.gridStats.Size = new System.Drawing.Size(460, 198);
+            this.gridStats.Size = new System.Drawing.Size(581, 198);
             this.gridStats.TabIndex = 0;
             // 
             // StatsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(460, 198);
+            this.ClientSize = new System.Drawing.Size(581, 198);
             this.Controls.Add(this.gridStats);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "StatsForm";
             this.Text = "StatsForm";
             this.Load += new System.EventHandler(this.StatsForm_Load);

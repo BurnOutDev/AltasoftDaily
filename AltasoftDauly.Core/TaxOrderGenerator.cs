@@ -1,5 +1,6 @@
 ﻿using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
+using AltasoftDaily.Helpers;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using OfficeOpenXml;
@@ -20,14 +21,14 @@ namespace AltasoftDaily.Core
 {
     public static class TaxOrderGenerator
     {
-        public static void ExportToExcel(List<ExcelPayment> data)
+        public static void ExportToExcel(SortableBindingList<ExcelPayment> data)
         {
             var filePath = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString() + ".xlsx");
             
             using (ExcelPackage ePack = new ExcelPackage())
             {
                 ExcelWorksheet ws = ePack.Workbook.Worksheets.Add("Accounts");
-                ws.Cells["A1"].LoadFromDataTable(ToDataTable(data), true);
+                ws.Cells["A1"].LoadFromDataTable(ToDataTable(data.ToList()), true);
                 ePack.SaveAs(new FileInfo(filePath));
 
                 Process.Start(filePath);

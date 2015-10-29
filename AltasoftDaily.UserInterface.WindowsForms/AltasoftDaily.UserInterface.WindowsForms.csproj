@@ -84,6 +84,12 @@
     <Compile Include="DailyForm.Designer.cs">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SingleOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SingleOrderForm.Designer.cs">
+      <DependentUpon>SingleOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
     <EmbeddedResource Include="DailyForm.resx">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SingleOrderForm.resx">
+      <DependentUpon>SingleOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,6 +133,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="StatsForm.resx">
       <DependentUpon>StatsForm.cs</DependentUpon>
@@ -148,10 +158,29 @@
       <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
       <Name>AltasoftDaily.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Helpers\AltasoftDaily.Helpers.csproj">
+      <Project>{0407decb-3a9e-4533-80ca-71f92b9c5605}</Project>
+      <Name>AltasoftDaily.Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AltasoftDauly.Core\AltasoftDaily.Core.csproj">
       <Project>{a4500228-a134-4a6b-abc7-0c4f77608638}</Project>
       <Name>AltasoftDaily.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GenerateOrders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExportXLS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SubmitOrders.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Statistics.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
