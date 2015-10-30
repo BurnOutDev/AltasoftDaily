@@ -31,13 +31,19 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ინკასატორიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.დეილიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.takoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.კომენტარებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.რეპორტებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.პრობლემურისესხებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ინკასატორიToolStripMenuItem});
+            this.ინკასატორიToolStripMenuItem,
+            this.takoToolStripMenuItem,
+            this.რეპორტებიToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(512, 24);
@@ -55,9 +61,38 @@
             // დეილიToolStripMenuItem
             // 
             this.დეილიToolStripMenuItem.Name = "დეილიToolStripMenuItem";
-            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.დეილიToolStripMenuItem.Text = "დეილი";
             this.დეილიToolStripMenuItem.Click += new System.EventHandler(this.TmiDaily_Click);
+            // 
+            // takoToolStripMenuItem
+            // 
+            this.takoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.კომენტარებიToolStripMenuItem});
+            this.takoToolStripMenuItem.Name = "takoToolStripMenuItem";
+            this.takoToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+            this.takoToolStripMenuItem.Text = "მონიტორინგი";
+            this.takoToolStripMenuItem.Click += new System.EventHandler(this.takoToolStripMenuItem_Click);
+            // 
+            // კომენტარებიToolStripMenuItem
+            // 
+            this.კომენტარებიToolStripMenuItem.Name = "კომენტარებიToolStripMenuItem";
+            this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.კომენტარებიToolStripMenuItem.Text = "კომენტარები";
+            // 
+            // რეპორტებიToolStripMenuItem
+            // 
+            this.რეპორტებიToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.პრობლემურისესხებიToolStripMenuItem});
+            this.რეპორტებიToolStripMenuItem.Name = "რეპორტებიToolStripMenuItem";
+            this.რეპორტებიToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.რეპორტებიToolStripMenuItem.Text = "რეპორტები";
+            // 
+            // პრობლემურისესხებიToolStripMenuItem
+            // 
+            this.პრობლემურისესხებიToolStripMenuItem.Name = "პრობლემურისესხებიToolStripMenuItem";
+            this.პრობლემურისესხებიToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.პრობლემურისესხებიToolStripMenuItem.Text = "პრობლემური სესხები";
             // 
             // MainForm
             // 
@@ -83,5 +118,9 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem ინკასატორიToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem დეილიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem takoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem კომენტარებიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem რეპორტებიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem პრობლემურისესხებიToolStripMenuItem;
     }
 }

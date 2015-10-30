@@ -144,7 +144,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.73434F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.26566F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.tableLayoutPanel4.Controls.Add(this.cbxCashDeskSymbol, 3, 0);
             this.tableLayoutPanel4.Controls.Add(this.lblAmount, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.tbxAmount, 1, 0);
@@ -163,11 +163,12 @@
             // cbxCashDeskSymbol
             // 
             this.cbxCashDeskSymbol.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxCashDeskSymbol.Enabled = false;
             this.cbxCashDeskSymbol.FormattingEnabled = true;
             this.cbxCashDeskSymbol.ItemHeight = 23;
             this.cbxCashDeskSymbol.Items.AddRange(new object[] {
             "120"});
-            this.cbxCashDeskSymbol.Location = new System.Drawing.Point(649, 3);
+            this.cbxCashDeskSymbol.Location = new System.Drawing.Point(648, 3);
             this.cbxCashDeskSymbol.Name = "cbxCashDeskSymbol";
             this.cbxCashDeskSymbol.Size = new System.Drawing.Size(88, 29);
             this.cbxCashDeskSymbol.TabIndex = 3;
@@ -186,6 +187,7 @@
             // tbxAmount
             // 
             this.tbxAmount.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tbxAmount.BackColor = System.Drawing.Color.White;
             this.tbxAmount.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxAmount.Lines = new string[0];
             this.tbxAmount.Location = new System.Drawing.Point(104, 3);
@@ -202,7 +204,7 @@
             // 
             this.lblCashDeskSymbol.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblCashDeskSymbol.AutoSize = true;
-            this.lblCashDeskSymbol.Location = new System.Drawing.Point(518, 8);
+            this.lblCashDeskSymbol.Location = new System.Drawing.Point(516, 8);
             this.lblCashDeskSymbol.Name = "lblCashDeskSymbol";
             this.lblCashDeskSymbol.Size = new System.Drawing.Size(113, 19);
             this.lblCashDeskSymbol.TabIndex = 2;
@@ -221,6 +223,7 @@
             // tbxPurpose
             // 
             this.tbxPurpose.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.tbxPurpose.Enabled = false;
             this.tbxPurpose.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxPurpose.Lines = new string[0];
             this.tbxPurpose.Location = new System.Drawing.Point(104, 39);
@@ -229,7 +232,7 @@
             this.tbxPurpose.PasswordChar = '\0';
             this.tbxPurpose.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxPurpose.SelectedText = "";
-            this.tbxPurpose.Size = new System.Drawing.Size(408, 29);
+            this.tbxPurpose.Size = new System.Drawing.Size(406, 29);
             this.tbxPurpose.TabIndex = 1;
             this.tbxPurpose.UseSelectable = true;
             // 
@@ -254,7 +257,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 149F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 151F));
             this.tableLayoutPanel1.Controls.Add(this.tbxDocNum, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblDocNum, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dtpDate, 7, 0);
@@ -271,9 +274,10 @@
             // tbxDocNum
             // 
             this.tbxDocNum.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxDocNum.Enabled = false;
             this.tbxDocNum.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxDocNum.Lines = new string[0];
-            this.tbxDocNum.Location = new System.Drawing.Point(97, 3);
+            this.tbxDocNum.Location = new System.Drawing.Point(96, 3);
             this.tbxDocNum.MaxLength = 32767;
             this.tbxDocNum.Name = "tbxDocNum";
             this.tbxDocNum.PasswordChar = '\0';
@@ -297,9 +301,10 @@
             // 
             this.dtpDate.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.dtpDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpDate.Enabled = false;
             this.dtpDate.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDate.Location = new System.Drawing.Point(629, 3);
+            this.dtpDate.Location = new System.Drawing.Point(628, 3);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(119, 29);
             this.dtpDate.TabIndex = 4;
@@ -309,7 +314,7 @@
             // 
             this.lblDate.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(542, 8);
+            this.lblDate.Location = new System.Drawing.Point(540, 8);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(63, 19);
             this.lblDate.TabIndex = 2;
@@ -318,11 +323,13 @@
             // cbxCcy
             // 
             this.cbxCcy.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.cbxCcy.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.cbxCcy.Enabled = false;
             this.cbxCcy.FormattingEnabled = true;
             this.cbxCcy.ItemHeight = 23;
             this.cbxCcy.Items.AddRange(new object[] {
             "GEL"});
-            this.cbxCcy.Location = new System.Drawing.Point(418, 3);
+            this.cbxCcy.Location = new System.Drawing.Point(416, 3);
             this.cbxCcy.Name = "cbxCcy";
             this.cbxCcy.Size = new System.Drawing.Size(69, 29);
             this.cbxCcy.TabIndex = 3;
@@ -332,7 +339,7 @@
             // 
             this.lblCcy.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblCcy.AutoSize = true;
-            this.lblCcy.Location = new System.Drawing.Point(345, 8);
+            this.lblCcy.Location = new System.Drawing.Point(343, 8);
             this.lblCcy.Name = "lblCcy";
             this.lblCcy.Size = new System.Drawing.Size(64, 19);
             this.lblCcy.TabIndex = 2;
@@ -378,6 +385,7 @@
             // 
             // cbxCashDesk
             // 
+            this.cbxCashDesk.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cbxCashDesk.Enabled = false;
             this.cbxCashDesk.FormattingEnabled = true;
             this.cbxCashDesk.ItemHeight = 23;
@@ -437,7 +445,8 @@
             this.tbxCashDeskName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tbxCashDeskName.Enabled = false;
             this.tbxCashDeskName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.tbxCashDeskName.Lines = new string[0];
+            this.tbxCashDeskName.Lines = new string[] {
+        "სალარო"};
             this.tbxCashDeskName.Location = new System.Drawing.Point(336, 3);
             this.tbxCashDeskName.MaxLength = 32767;
             this.tbxCashDeskName.Name = "tbxCashDeskName";
@@ -446,6 +455,7 @@
             this.tbxCashDeskName.SelectedText = "";
             this.tbxCashDeskName.Size = new System.Drawing.Size(407, 29);
             this.tbxCashDeskName.TabIndex = 1;
+            this.tbxCashDeskName.Text = "სალარო";
             this.tbxCashDeskName.UseSelectable = true;
             // 
             // groupBox1
@@ -474,6 +484,8 @@
             // 
             // cbxBranch
             // 
+            this.cbxBranch.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.cbxBranch.Enabled = false;
             this.cbxBranch.FormattingEnabled = true;
             this.cbxBranch.ItemHeight = 23;
             this.cbxBranch.Items.AddRange(new object[] {
@@ -494,6 +506,7 @@
             // tbxAccountNumber
             // 
             this.tbxAccountNumber.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxAccountNumber.Enabled = false;
             this.tbxAccountNumber.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxAccountNumber.Lines = new string[0];
             this.tbxAccountNumber.Location = new System.Drawing.Point(116, 3);
@@ -508,6 +521,7 @@
             // 
             // btnAccountBrowse
             // 
+            this.btnAccountBrowse.Enabled = false;
             this.btnAccountBrowse.Location = new System.Drawing.Point(266, 3);
             this.btnAccountBrowse.Name = "btnAccountBrowse";
             this.btnAccountBrowse.Size = new System.Drawing.Size(29, 29);
@@ -517,6 +531,7 @@
             // 
             // button6
             // 
+            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(301, 3);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(29, 29);
@@ -527,6 +542,7 @@
             // tbxAccountName
             // 
             this.tbxAccountName.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbxAccountName.Enabled = false;
             this.tbxAccountName.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxAccountName.Lines = new string[0];
             this.tbxAccountName.Location = new System.Drawing.Point(336, 3);
@@ -546,7 +562,7 @@
             this.ClientSize = new System.Drawing.Size(831, 395);
             this.Controls.Add(this.panel1);
             this.Name = "SingleOrderForm";
-            this.Text = "საშემოსავლო ორდერის დამატება";
+            this.Text = "სალაროს შემოსავლის ორდერის დამატება";
             this.Load += new System.EventHandler(this.Home_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);

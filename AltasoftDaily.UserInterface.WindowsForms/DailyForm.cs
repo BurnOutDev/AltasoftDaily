@@ -80,6 +80,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 throw;
             }
             log.Info("Daily Updated Successfuly.");
+            MessageBox.Show("წარმატებით შეინახა.");
         }
 
         private void DailyForm_Shown(object sender, EventArgs e)
@@ -296,7 +297,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void metroButton2_Click(object sender, EventArgs e)
         {
-            DailyManagement.SubmitOrdersFromDatabase(User);
+            try
+            {
+                if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    DailyManagement.SubmitOrdersFromDatabase(User);
+            }
+            catch (Exception ex)
+            {
+                log.Error("ალტასოფტში ატვირთვა: ", ex);
+                throw;
+            }
+            MessageBox.Show("წარმატებით აიტვირთა.");
         }
 
         private void gridDaily_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -306,7 +317,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             decimal sum = 0;
 
-            ((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => sum+=x.Payment);
+            ((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => sum += x.Payment);
 
             lblPmtSum.Text = sum.ToString();
             lblPmtCount.Text = count.ToString();
@@ -326,7 +337,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridDaily_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-           
+
         }
 
         #region Painting
@@ -382,6 +393,12 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             var form = new SingleOrderForm(((SortableBindingList<DailyPayment>)gridDaily.DataSource)[e.ColumnIndex], User);
             form.Show();
+        }
+
+        private void DailyForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("ნამდვილად გსურთ დახურვა?", "დახურვა", MessageBoxButtons.YesNo) == DialogResult.No)
+                e.Cancel = true;
         }
     }
 }

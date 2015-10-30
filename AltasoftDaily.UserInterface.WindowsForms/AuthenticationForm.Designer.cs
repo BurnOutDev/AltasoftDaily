@@ -109,12 +109,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(261, 287);
+            this.ControlBox = false;
             this.Controls.Add(this.cbxDept);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.tbxPassword);
             this.Controls.Add(this.tbxUsername);
             this.Name = "AuthenticationForm";
+            this.Resizable = false;
             this.Text = "ავტენტიფიკაცია";
             this.Load += new System.EventHandler(this.AuthenticationForm_Load);
             this.ResumeLayout(false);

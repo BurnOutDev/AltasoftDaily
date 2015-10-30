@@ -34,6 +34,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             tbxCashDesk.Text = DailyManagement.GetAccountIbanByDept(User.DeptID);
             cbxCashDesk.SelectedIndex = User.DeptID;
             cbxBranch.SelectedIndex = User.DeptID;
+            tbxAmount.Text = Payment.Payment.ToString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

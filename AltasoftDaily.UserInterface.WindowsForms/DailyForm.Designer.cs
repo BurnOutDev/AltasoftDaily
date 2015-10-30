@@ -263,6 +263,7 @@
             this.Controls.Add(this.lblPmtSumName);
             this.Name = "DailyForm";
             this.Text = "AltasoftDaily";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DailyForm_FormClosing);
             this.Load += new System.EventHandler(this.DailyForm_Load);
             this.Shown += new System.EventHandler(this.DailyForm_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);

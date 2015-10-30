@@ -47,5 +47,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 DeptId = form.GetDeptId();
             }
         }
+
+        private void takoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

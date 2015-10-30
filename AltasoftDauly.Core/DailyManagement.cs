@@ -137,6 +137,7 @@ namespace AltasoftDaily.Core
             #endregion
 
             List<DailyPayment> list = new List<DailyPayment>();
+            List<DailyPaymentAndLoan> data = new List<DailyPaymentAndLoan>();
 
             var loansIds = (from x in l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } })
                             select x.Id.Value).ToList().OrderBy(x => x);
@@ -145,30 +146,29 @@ namespace AltasoftDaily.Core
             {
                 var user = db.Users.FirstOrDefault(x => x.AltasoftUserID == altasoftUserId);
 
-                foreach (var loanId in loansIds)
+
+                loansIds.ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
+
+                try
                 {
-                    var loan = GetLoanAndDailyModel(loanId);
+                    if (user.Filter.IsDeptFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.DeptID == x.DeptID)).ToList();
 
-                    if (loan == null)
-                    {
-                        continue;
-                    }
+                    if (user.Filter.IsCustomerFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.ClientID == x.ClientID)).ToList();
 
-                    if (user.Filter.IsCustomerFilterEnabled && user.Filter.FilterData.FirstOrDefault(x => x.ClientID == loan.ClientID) != null)
-                    {
-                        list.Add(loan.DailyPayment);
-                    }
-                    else if (user.Filter.IsDeptFilterEnabled && user.Filter.FilterData.FirstOrDefault(x => x.DeptID == loan.DeptID) != null)
-                    {
-                        list.Add(loan.DailyPayment);
-                    }
-                    else if (user.Filter.IsOperatorFilterEnabled && user.Filter.FilterData.FirstOrDefault(x => x.OperatorID != loan.OperatorID) != null)
-                    {
-                        list.Add(loan.DailyPayment);
-                    }
+                    if (user.Filter.IsOperatorFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.OperatorID == x.OperatorID)).ToList();
                 }
+                catch (NullReferenceException)
+                {
+                    return new List<DailyPayment>();
+                }
+
+                if (data != null)
+                    data.ForEach(x => list.Add(x.DailyPayment));
             }
-            return list.OrderBy(x => x.ClientNo).ToList();
+            return list.OrderBy(x => x.LoanID).ToList();
         }
 
         private static DailyPaymentAndLoan GetLoanAndDailyModel(int loanId)
@@ -423,9 +423,9 @@ namespace AltasoftDaily.Core
             AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
             a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
-            
+
             var acc = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic | AltasoftAPI.AccountsAPI.AccountControlFlags.Classifiers, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { AccountNumber = ulong.Parse(1001000.ToString() + deptId.ToString()), AccountNumberSpecified = true, Ccy = "GET", BranchId = deptId, BranchIdSpecified = true }, "GEL");
-            
+
             return acc.IBAN;
         }
     }
