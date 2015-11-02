@@ -354,7 +354,7 @@ namespace AltasoftDaily.Core
         public static List<long?> SubmitOrdersFromDatabase(User user)
         {
             List<long?> result = new List<long?>();
-            var calcDate = new DateTime(2015, 9, 27);
+            var calcDate = GetCalculationDate();
 
             using (var db = new AltasoftDailyContext())
             {
@@ -380,7 +380,7 @@ namespace AltasoftDaily.Core
         }
         public static int GetUpdatesByAltasoftUser(User user)
         {
-            var calcDate = new DateTime(2015, 9, 27);
+            var calcDate = GetCalculationDate();
 
             List<DailyPayment> result = new List<DailyPayment>();
 

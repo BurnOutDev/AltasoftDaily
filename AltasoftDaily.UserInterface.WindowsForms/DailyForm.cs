@@ -45,7 +45,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-                var calcDate = new DateTime(2015, 9, 27);
+                var calcDate = DailyManagement.GetCalculationDate();
 
                 DailyManagement.GetUpdatesByAltasoftUser(User);
                 gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList());
