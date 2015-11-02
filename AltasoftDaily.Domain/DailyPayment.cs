@@ -49,5 +49,7 @@ namespace AltasoftDaily.Domain.POCO
         public string ResponsibleUser { get; set; }
         public int LocalUserID { get; set; }
         public int TaxOrderNumber { get; set; }
+        public string Comment { get; set; }
+        public int DeptID { get; set; }
     }
 }

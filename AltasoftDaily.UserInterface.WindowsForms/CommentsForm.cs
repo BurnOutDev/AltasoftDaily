@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
-    public partial class DailyForm : MetroForm
+    public partial class CommentsForm : MetroForm
     {
         private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private AltasoftDailyContext _db;
@@ -35,7 +35,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         public int DeptId { get; set; }
         public LoadingForm LoadingForm { get; set; }
 
-        public DailyForm(User user)
+        public CommentsForm(User user)
         {
             User = user;
             InitializeComponent();
@@ -45,25 +45,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-                var calcDate = new DateTime(2015, 9, 27);
-
-                DailyManagement.GetUpdatesByAltasoftUser(User);
-                gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList());
-
                 foreach (DataGridViewTextBoxColumn col in gridDaily.Columns)
                 {
-                    if (col.Name == "Payment")
+                    if (col.Name == "Comment")
                         continue;
 
                     col.ReadOnly = true;
                 }
-
-                LoadingForm = new LoadingForm();
-                LoadingForm.Show();
             }
             catch (Exception ex)
             {
-                log.Error("(User: " + User.Username + ") DailyForm Loading Error:", ex);
+                log.Error("DailyForm Loading Error:", ex);
                 throw;
             }
         }
@@ -72,11 +64,11 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-                DailyManagement.UpdatePaymentsInDaily(((SortableBindingList<DailyPayment>)gridDaily.DataSource).ToList());
+                DailyManagement.UpdateCommentsInDaily(((SortableBindingList<DailyPayment>)gridDaily.DataSource).ToList());
             }
             catch (Exception ex)
             {
-                log.Error("Error Updating Payments In Daily.", ex);
+                log.Error("Error Updating Comments In Daily.", ex);
                 throw;
             }
             log.Info("Daily Updated Successfuly. User: " + User.Username);
@@ -89,55 +81,18 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 LoadingForm.Close();
 
             int count = 0;
-            ((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => count++);
-            lblPmtCount.Text = count.ToString();
+            //((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => count++);
+            //lblPmtCount.Text = count.ToString();
 
-            decimal sum = 0;
-            ((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => sum += x.Payment);
-            lblPmtSum.Text = Math.Round(sum, 2).ToString();
-
-            gridDaily.Columns["Payment"].DefaultCellStyle.BackColor = Color.Yellow;
-
-            #region Hide Columns
-            gridDaily.Columns[0].Visible = false;
-            gridDaily.Columns[gridDaily.Columns.Count - 1].Visible = false;
-            gridDaily.Columns["FirstName"].Visible = false;
-            gridDaily.Columns["LastName"].Visible = false;
-            gridDaily.Columns["LocalUserID"].Visible = false;
-            #endregion
-        }
-
-        private void metroButton1_Click(object sender, EventArgs e)
-        {
-            var list = ((SortableBindingList<DailyPayment>)gridDaily.DataSource).ToList();
-            List<TaxOrder> orders = new List<TaxOrder>();
-            int count = 1;
-            foreach (var item in list)
-            {
-                orders.Add(new TaxOrder()
-                {
-                    Date = item.CalculationDate.ToShortDateString(),
-                    TaxOrderID = item.TaxOrderNumber,
-                    TaxOrderNumber = item.TaxOrderNumber,
-                    AccountFirstName = item.FirstName,
-                    AccountLastName = item.LastName,
-                    AccountPrivateNumber = item.PersonalID,
-                    Basis = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
-                    CollectorFirstName = User.Name,
-                    CollectorLastName = User.LastName,
-                    CollectorPrivateNumber = User.PrivateNumber
-                });
-                count++;
-            }
-
-            TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), orders.ToArray());
+            //decimal sum = 0;
+            //((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => sum += x.Payment);
+            //lblPmtSum.Text = Math.Round(sum, 2).ToString();
         }
 
         private void btnStats_Click(object sender, EventArgs e)
         {
             var data = (SortableBindingList<DailyPayment>)gridDaily.DataSource;
             var resData = new List<DailyStats>();
-
 
             resData.Add(
                 new DailyStats()
@@ -295,21 +250,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             lblSum.Text = value.ToString();
         }
 
-        private void metroButton2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    DailyManagement.SubmitOrdersFromDatabase(User);
-            }
-            catch (Exception ex)
-            {
-                log.Error("ალტასოფტში ატვირთვა: ", ex);
-                throw;
-            }
-            MessageBox.Show("წარმატებით აიტვირთა.");
-        }
-
         private void gridDaily_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var count = 0;
@@ -391,12 +331,48 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridDaily_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            var form = new SingleOrderForm(((SortableBindingList<DailyPayment>)gridDaily.DataSource)[e.ColumnIndex], User);
+            form.Show();
         }
 
         private void DailyForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (MessageBox.Show("ნამდვილად გსურთ დახურვა?", "დახურვა", MessageBoxButtons.YesNo) == DialogResult.No)
                 e.Cancel = true;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var calcDate = dateTimePicker1.Value.Date;
+
+                var users = db.Users.Where(x => x.DeptID == comboBox1.SelectedIndex).ToList();
+
+                var t = db.DailyPayments.Where(x => users.Any(y => y.UserID == x.LocalUserID));
+
+                if (cbxOnlyZeroPayment.Checked)
+                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex && x.Payment <= 0).ToList());
+                else
+                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+            }
+        }
+
+        private void gridDaily_DataSourceChanged(object sender, EventArgs e)
+        {
+            gridDaily.Columns["Payment"].DefaultCellStyle.BackColor = Color.Yellow;
+
+            #region Hide Columns
+            gridDaily.Columns[0].Visible = false;
+            gridDaily.Columns[gridDaily.Columns.Count - 1].Visible = false;
+            gridDaily.Columns["FirstName"].Visible = false;
+            gridDaily.Columns["LastName"].Visible = false;
+            gridDaily.Columns["LocalUserID"].Visible = false;
+            #endregion
         }
     }
 }

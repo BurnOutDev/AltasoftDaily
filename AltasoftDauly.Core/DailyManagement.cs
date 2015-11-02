@@ -112,6 +112,19 @@ namespace AltasoftDaily.Core
             return list.OrderBy(x => x.ClientNo).ToList();
         }
 
+        public static bool UpdateCommentsInDaily(List<DailyPayment> list)
+        {
+            using (var db = new AltasoftDailyContext())
+            {
+                foreach (var comment in list)
+                {
+                    db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == comment.DailyPaymentID).Comment = comment.Comment;
+                }
+                db.SaveChanges();
+            }
+            return true;
+        }
+
         public static List<DailyPayment> GetDailyByUser(int altasoftUserId)
         {
             #region Initialize Services
@@ -218,6 +231,7 @@ namespace AltasoftDaily.Core
 
             loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
+            item.DeptID = loan.BranchId.Value;
             item.CalculationDate = loan.CalcDate.Value.Date;
             item.LoanAmountInGel = loan.Amount.Amount;
             item.LoanCCY = loan.Amount.Ccy;

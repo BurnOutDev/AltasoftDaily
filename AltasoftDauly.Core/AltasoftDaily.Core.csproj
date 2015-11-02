@@ -112,6 +112,14 @@
     <Compile Include="Migrations\201510271708164_Something.Designer.cs">
       <DependentUpon>201510271708164_Something.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.cs" />
+    <Compile Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.Designer.cs">
+      <DependentUpon>201510311459522_AddedCommentProperty_DailyPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510311541546_AddedDeptID_DailyPayment.cs" />
+    <Compile Include="Migrations\201510311541546_AddedDeptID_DailyPayment.Designer.cs">
+      <DependentUpon>201510311541546_AddedDeptID_DailyPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -183,6 +191,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510271708164_Something.resx">
       <DependentUpon>201510271708164_Something.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.resx">
+      <DependentUpon>201510311459522_AddedCommentProperty_DailyPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510311541546_AddedDeptID_DailyPayment.resx">
+      <DependentUpon>201510311541546_AddedDeptID_DailyPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

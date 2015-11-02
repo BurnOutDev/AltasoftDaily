@@ -61,7 +61,7 @@
             // დეილიToolStripMenuItem
             // 
             this.დეილიToolStripMenuItem.Name = "დეილიToolStripMenuItem";
-            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.დეილიToolStripMenuItem.Text = "დეილი";
             this.დეილიToolStripMenuItem.Click += new System.EventHandler(this.TmiDaily_Click);
             // 
@@ -69,6 +69,7 @@
             // 
             this.takoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.კომენტარებიToolStripMenuItem});
+            this.takoToolStripMenuItem.Enabled = false;
             this.takoToolStripMenuItem.Name = "takoToolStripMenuItem";
             this.takoToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.takoToolStripMenuItem.Text = "მონიტორინგი";
@@ -79,11 +80,13 @@
             this.კომენტარებიToolStripMenuItem.Name = "კომენტარებიToolStripMenuItem";
             this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.კომენტარებიToolStripMenuItem.Text = "კომენტარები";
+            this.კომენტარებიToolStripMenuItem.Click += new System.EventHandler(this.კომენტარებიToolStripMenuItem_Click);
             // 
             // რეპორტებიToolStripMenuItem
             // 
             this.რეპორტებიToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.პრობლემურისესხებიToolStripMenuItem});
+            this.რეპორტებიToolStripMenuItem.Enabled = false;
             this.რეპორტებიToolStripMenuItem.Name = "რეპორტებიToolStripMenuItem";
             this.რეპორტებიToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.რეპორტებიToolStripMenuItem.Text = "რეპორტები";

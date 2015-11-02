@@ -46,11 +46,25 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 User = form.GetUser();
                 DeptId = form.GetDeptId();
             }
+
+            if (User.Username == "tkobalia")
+            {
+                takoToolStripMenuItem.Enabled = true;
+                ინკასატორიToolStripMenuItem.Enabled = false;
+            }
+
+            log.Info("User logged in: " + User.Username);
         }
 
         private void takoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void კომენტარებიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commentsForm = new CommentsForm(User);
+            commentsForm.Show();
         }
     }
 }
