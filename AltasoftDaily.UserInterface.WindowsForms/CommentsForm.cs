@@ -331,8 +331,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridDaily_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var form = new SingleOrderForm(((SortableBindingList<DailyPayment>)gridDaily.DataSource)[e.ColumnIndex], User);
-            form.Show();
+            var loanId = ((SortableBindingList<DailyPayment>)gridDaily.DataSource)[e.ColumnIndex].LoanID;
+
+            var paymentsForm = new PaymentsForm(loanId);
+            paymentsForm.Show();
         }
 
         private void DailyForm_FormClosing(object sender, FormClosingEventArgs e)

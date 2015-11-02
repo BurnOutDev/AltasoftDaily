@@ -90,6 +90,12 @@
     <Compile Include="DailyForm.Designer.cs">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PaymentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PaymentsForm.Designer.cs">
+      <DependentUpon>PaymentsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SingleOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DailyForm.resx">
       <DependentUpon>DailyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PaymentsForm.resx">
+      <DependentUpon>PaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SingleOrderForm.resx">
       <DependentUpon>SingleOrderForm.cs</DependentUpon>
