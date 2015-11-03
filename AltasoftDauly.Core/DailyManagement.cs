@@ -179,7 +179,7 @@ namespace AltasoftDaily.Core
                 }
 
                 if (data != null)
-                    data.ForEach(x => list.Add(x.DailyPayment));
+                    data.ForEach(x => { if (x != null) list.Add(x.DailyPayment); });
             }
             return list.OrderBy(x => x.LoanID).ToList();
         }
@@ -423,12 +423,14 @@ namespace AltasoftDaily.Core
         }
         public static DateTime GetCalculationDate()
         {
-            //#region Initialize Loans Service
-            //AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
-            //l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            //#endregion
-            return new DateTime(2015, 9, 27);
-            //return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
+            #region Initialize Loans Service
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+
+            return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
+            //return new DateTime(2015, 9, 27);
         }
 
         public static string GetAccountIbanByDept(int deptId)
