@@ -41,12 +41,12 @@
             this.tsBtnStats = new System.Windows.Forms.ToolStripButton();
             this.lblPmtCount = new System.Windows.Forms.Label();
             this.lblSum = new System.Windows.Forms.Label();
-            this.lblCountName = new System.Windows.Forms.Label();
             this.lblSumName = new System.Windows.Forms.Label();
-            this.lblPmtSumName = new System.Windows.Forms.Label();
             this.lblPmtSum = new System.Windows.Forms.Label();
             this.lblCount = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblCountName = new System.Windows.Forms.Label();
+            this.lblPmtSumName = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridDaily)).BeginInit();
             this.panel1.SuspendLayout();
@@ -215,6 +215,7 @@
             this.lblPmtCount.Name = "lblPmtCount";
             this.lblPmtCount.Size = new System.Drawing.Size(0, 21);
             this.lblPmtCount.TabIndex = 2;
+            this.lblPmtCount.Visible = false;
             // 
             // lblSum
             // 
@@ -224,16 +225,7 @@
             this.lblSum.Name = "lblSum";
             this.lblSum.Size = new System.Drawing.Size(0, 21);
             this.lblSum.TabIndex = 2;
-            // 
-            // lblCountName
-            // 
-            this.lblCountName.AutoSize = true;
-            this.lblCountName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblCountName.Location = new System.Drawing.Point(356, 36);
-            this.lblCountName.Name = "lblCountName";
-            this.lblCountName.Size = new System.Drawing.Size(116, 21);
-            this.lblCountName.TabIndex = 2;
-            this.lblCountName.Text = "Payment count:";
+            this.lblSum.Visible = false;
             // 
             // lblSumName
             // 
@@ -244,16 +236,7 @@
             this.lblSumName.Size = new System.Drawing.Size(45, 21);
             this.lblSumName.TabIndex = 2;
             this.lblSumName.Text = "Sum:";
-            // 
-            // lblPmtSumName
-            // 
-            this.lblPmtSumName.AutoSize = true;
-            this.lblPmtSumName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblPmtSumName.Location = new System.Drawing.Point(155, 36);
-            this.lblPmtSumName.Name = "lblPmtSumName";
-            this.lblPmtSumName.Size = new System.Drawing.Size(107, 21);
-            this.lblPmtSumName.TabIndex = 2;
-            this.lblPmtSumName.Text = "Payment sum:";
+            this.lblSumName.Visible = false;
             // 
             // lblPmtSum
             // 
@@ -263,6 +246,7 @@
             this.lblPmtSum.Name = "lblPmtSum";
             this.lblPmtSum.Size = new System.Drawing.Size(0, 21);
             this.lblPmtSum.TabIndex = 2;
+            this.lblPmtSum.Visible = false;
             // 
             // lblCount
             // 
@@ -272,6 +256,7 @@
             this.lblCount.Name = "lblCount";
             this.lblCount.Size = new System.Drawing.Size(0, 21);
             this.lblCount.TabIndex = 2;
+            this.lblCount.Visible = false;
             // 
             // label2
             // 
@@ -282,6 +267,29 @@
             this.label2.Size = new System.Drawing.Size(55, 21);
             this.label2.TabIndex = 2;
             this.label2.Text = "Count:";
+            this.label2.Visible = false;
+            // 
+            // lblCountName
+            // 
+            this.lblCountName.AutoSize = true;
+            this.lblCountName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblCountName.Location = new System.Drawing.Point(356, 36);
+            this.lblCountName.Name = "lblCountName";
+            this.lblCountName.Size = new System.Drawing.Size(117, 21);
+            this.lblCountName.TabIndex = 2;
+            this.lblCountName.Text = "Payment count:";
+            this.lblCountName.Visible = false;
+            // 
+            // lblPmtSumName
+            // 
+            this.lblPmtSumName.AutoSize = true;
+            this.lblPmtSumName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblPmtSumName.Location = new System.Drawing.Point(155, 36);
+            this.lblPmtSumName.Name = "lblPmtSumName";
+            this.lblPmtSumName.Size = new System.Drawing.Size(108, 21);
+            this.lblPmtSumName.TabIndex = 2;
+            this.lblPmtSumName.Text = "Payment sum:";
+            this.lblPmtSumName.Visible = false;
             // 
             // CommentsForm
             // 
@@ -298,7 +306,7 @@
             this.Controls.Add(this.lblSum);
             this.Controls.Add(this.lblPmtSumName);
             this.Name = "CommentsForm";
-            this.Text = "AltasoftDaily";
+            this.Text = "Altasoft Payments";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DailyForm_FormClosing);
             this.Load += new System.EventHandler(this.DailyForm_Load);
             this.Shown += new System.EventHandler(this.DailyForm_Shown);
@@ -325,8 +333,6 @@
         private System.Windows.Forms.ToolStripButton tsBtnExport;
         private System.Windows.Forms.ToolStripButton tsBtnStats;
         private System.Windows.Forms.Label lblSumName;
-        private System.Windows.Forms.Label lblCountName;
-        private System.Windows.Forms.Label lblPmtSumName;
         private System.Windows.Forms.Label lblPmtSum;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.Label label2;
@@ -334,5 +340,7 @@
         private MetroFramework.Controls.MetroComboBox comboBox1;
         private MetroFramework.Controls.MetroButton button1;
         private MetroFramework.Controls.MetroCheckBox cbxOnlyZeroPayment;
+        private System.Windows.Forms.Label lblCountName;
+        private System.Windows.Forms.Label lblPmtSumName;
     }
 }

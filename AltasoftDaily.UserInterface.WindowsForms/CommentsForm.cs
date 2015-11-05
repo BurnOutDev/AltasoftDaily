@@ -45,13 +45,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-                foreach (DataGridViewTextBoxColumn col in gridDaily.Columns)
-                {
-                    if (col.Name == "Comment")
-                        continue;
-
-                    col.ReadOnly = true;
-                }
+             
             }
             catch (Exception ex)
             {
@@ -375,6 +369,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             gridDaily.Columns["LastName"].Visible = false;
             gridDaily.Columns["LocalUserID"].Visible = false;
             #endregion
+
+            foreach (DataGridViewTextBoxColumn col in gridDaily.Columns)
+            {
+                if (col.Name == "Comment")
+                    continue;
+
+                col.ReadOnly = true;
+            }
         }
     }
 }

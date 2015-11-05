@@ -69,7 +69,6 @@
             // 
             this.takoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.კომენტარებიToolStripMenuItem});
-            this.takoToolStripMenuItem.Enabled = false;
             this.takoToolStripMenuItem.Name = "takoToolStripMenuItem";
             this.takoToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
             this.takoToolStripMenuItem.Text = "მონიტორინგი";
@@ -90,6 +89,7 @@
             this.რეპორტებიToolStripMenuItem.Name = "რეპორტებიToolStripMenuItem";
             this.რეპორტებიToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.რეპორტებიToolStripMenuItem.Text = "რეპორტები";
+            this.რეპორტებიToolStripMenuItem.Click += new System.EventHandler(this.რეპორტებიToolStripMenuItem_Click);
             // 
             // პრობლემურისესხებიToolStripMenuItem
             // 

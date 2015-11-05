@@ -195,7 +195,7 @@
             this.lblCountName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblCountName.Location = new System.Drawing.Point(356, 36);
             this.lblCountName.Name = "lblCountName";
-            this.lblCountName.Size = new System.Drawing.Size(116, 21);
+            this.lblCountName.Size = new System.Drawing.Size(117, 21);
             this.lblCountName.TabIndex = 2;
             this.lblCountName.Text = "Payment count:";
             // 
@@ -215,7 +215,7 @@
             this.lblPmtSumName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblPmtSumName.Location = new System.Drawing.Point(155, 36);
             this.lblPmtSumName.Name = "lblPmtSumName";
-            this.lblPmtSumName.Size = new System.Drawing.Size(107, 21);
+            this.lblPmtSumName.Size = new System.Drawing.Size(108, 21);
             this.lblPmtSumName.TabIndex = 2;
             this.lblPmtSumName.Text = "Payment sum:";
             // 

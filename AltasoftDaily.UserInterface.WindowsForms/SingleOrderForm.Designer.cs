@@ -106,6 +106,7 @@
             // 
             // btnAdd
             // 
+            this.btnAdd.Enabled = false;
             this.btnAdd.Location = new System.Drawing.Point(601, 283);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(88, 23);
@@ -144,7 +145,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.73434F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80.26566F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel4.Controls.Add(this.cbxCashDeskSymbol, 3, 0);
             this.tableLayoutPanel4.Controls.Add(this.lblAmount, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.tbxAmount, 1, 0);
@@ -168,7 +169,7 @@
             this.cbxCashDeskSymbol.ItemHeight = 23;
             this.cbxCashDeskSymbol.Items.AddRange(new object[] {
             "120"});
-            this.cbxCashDeskSymbol.Location = new System.Drawing.Point(648, 3);
+            this.cbxCashDeskSymbol.Location = new System.Drawing.Point(647, 3);
             this.cbxCashDeskSymbol.Name = "cbxCashDeskSymbol";
             this.cbxCashDeskSymbol.Size = new System.Drawing.Size(88, 29);
             this.cbxCashDeskSymbol.TabIndex = 3;
@@ -204,7 +205,7 @@
             // 
             this.lblCashDeskSymbol.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblCashDeskSymbol.AutoSize = true;
-            this.lblCashDeskSymbol.Location = new System.Drawing.Point(516, 8);
+            this.lblCashDeskSymbol.Location = new System.Drawing.Point(515, 8);
             this.lblCashDeskSymbol.Name = "lblCashDeskSymbol";
             this.lblCashDeskSymbol.Size = new System.Drawing.Size(113, 19);
             this.lblCashDeskSymbol.TabIndex = 2;
@@ -232,7 +233,7 @@
             this.tbxPurpose.PasswordChar = '\0';
             this.tbxPurpose.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxPurpose.SelectedText = "";
-            this.tbxPurpose.Size = new System.Drawing.Size(406, 29);
+            this.tbxPurpose.Size = new System.Drawing.Size(405, 29);
             this.tbxPurpose.TabIndex = 1;
             this.tbxPurpose.UseSelectable = true;
             // 
@@ -257,7 +258,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 75F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 81F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 151F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 152F));
             this.tableLayoutPanel1.Controls.Add(this.tbxDocNum, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblDocNum, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.dtpDate, 7, 0);
@@ -277,7 +278,7 @@
             this.tbxDocNum.Enabled = false;
             this.tbxDocNum.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.tbxDocNum.Lines = new string[0];
-            this.tbxDocNum.Location = new System.Drawing.Point(96, 3);
+            this.tbxDocNum.Location = new System.Drawing.Point(95, 3);
             this.tbxDocNum.MaxLength = 32767;
             this.tbxDocNum.Name = "tbxDocNum";
             this.tbxDocNum.PasswordChar = '\0';
@@ -291,7 +292,7 @@
             // 
             this.lblDocNum.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDocNum.AutoSize = true;
-            this.lblDocNum.Location = new System.Drawing.Point(6, 8);
+            this.lblDocNum.Location = new System.Drawing.Point(5, 8);
             this.lblDocNum.Name = "lblDocNum";
             this.lblDocNum.Size = new System.Drawing.Size(81, 19);
             this.lblDocNum.TabIndex = 2;
@@ -314,7 +315,7 @@
             // 
             this.lblDate.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDate.AutoSize = true;
-            this.lblDate.Location = new System.Drawing.Point(540, 8);
+            this.lblDate.Location = new System.Drawing.Point(539, 8);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(63, 19);
             this.lblDate.TabIndex = 2;
@@ -329,7 +330,7 @@
             this.cbxCcy.ItemHeight = 23;
             this.cbxCcy.Items.AddRange(new object[] {
             "GEL"});
-            this.cbxCcy.Location = new System.Drawing.Point(416, 3);
+            this.cbxCcy.Location = new System.Drawing.Point(415, 3);
             this.cbxCcy.Name = "cbxCcy";
             this.cbxCcy.Size = new System.Drawing.Size(69, 29);
             this.cbxCcy.TabIndex = 3;
@@ -339,7 +340,7 @@
             // 
             this.lblCcy.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblCcy.AutoSize = true;
-            this.lblCcy.Location = new System.Drawing.Point(343, 8);
+            this.lblCcy.Location = new System.Drawing.Point(342, 8);
             this.lblCcy.Name = "lblCcy";
             this.lblCcy.Size = new System.Drawing.Size(64, 19);
             this.lblCcy.TabIndex = 2;

@@ -62,6 +62,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -173,6 +174,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
+      <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
+      <Name>AltasoftAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AltasoftDaily.Domain\AltasoftDaily.Domain.csproj">
       <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
       <Name>AltasoftDaily.Domain</Name>

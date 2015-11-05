@@ -54,6 +54,32 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
 
             log.Info("User logged in: " + User.Username);
+
+
+            //////////////////////////////////////////////////////////////////////
+            //#region Initialize Services
+            //#region OrdersService
+            //AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            //o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //#endregion
+
+            //#region CustomersService
+            //AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            //c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //#endregion
+
+            //#region AccountsService
+            //AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            //a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //#endregion
+
+            //#region LoansService
+            //AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            //l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //#endregion
+            //#endregion
+
+            //var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, 1795, true);
         }
 
         private void takoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +91,33 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             var commentsForm = new CommentsForm(User);
             commentsForm.Show();
+        }
+
+        private void რეპორტებიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+        //    #region Initialize Services
+        //    #region OrdersService
+        //    AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+        //    o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+        //    #endregion
+
+        //    #region CustomersService
+        //    AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+        //    c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+        //    #endregion
+
+        //    #region AccountsService
+        //    AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+        //    a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+        //    #endregion
+
+        //    #region LoansService
+        //    AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+        //    l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+        //    #endregion
+        //    #endregion
+
+        //    var t = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, 1795, true);
         }
     }
 }

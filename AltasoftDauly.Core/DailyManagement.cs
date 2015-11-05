@@ -316,7 +316,7 @@ namespace AltasoftDaily.Core
                 Status = AltasoftAPI.OrdersAPI.TransactionStatus.Green,
                 StatusSpecified = true,
                 TransactionCode = "qwe34242342", //09 
-                OpCode = "120",
+                OpCode = "09",
                 Purpose = "სესხის დაფარვა სესხის ხელშ. " + agreementNumber + "-ის საფუძველზე",
                 //ExtraAccount = 0,
                 //ExtraAccountSpecified = false,
@@ -427,7 +427,6 @@ namespace AltasoftDaily.Core
             AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
-
 
             return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
             //return new DateTime(2015, 9, 27);
