@@ -55,6 +55,7 @@
     <Compile Include="DailyStats.cs" />
     <Compile Include="ExcelPayment.cs" />
     <Compile Include="FilterInfo.cs" />
+    <Compile Include="DailyPaymentIDOrderID.cs" />
     <Compile Include="UserAction.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

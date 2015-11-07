@@ -33,7 +33,7 @@ namespace AltasoftDaily.Core
             #region LoansService
             AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion 
+            #endregion
             #endregion
 
             List<DailyPayment> list = new List<DailyPayment>();
@@ -351,9 +351,9 @@ namespace AltasoftDaily.Core
 
             return id;
         }
-        public static List<long?> SubmitOrdersFromDatabase(User user)
+        public static List<DailyPaymentIDOrderID> SubmitOrdersFromDatabase(User user)
         {
-            List<long?> result = new List<long?>();
+            List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
             var calcDate = GetCalculationDate();
 
             using (var db = new AltasoftDailyContext())
@@ -361,11 +361,36 @@ namespace AltasoftDaily.Core
                 var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.Payment > 0).ToList();
 
                 foreach (var item in localPayments)
-                    result.Add(SubmitOrder(item.TaxOrderNumber, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID));
+                {
+                    DeleteOrder(item);
+                    result.Add(new DailyPaymentIDOrderID() { OrderID = SubmitOrder(item.TaxOrderNumber, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID), PaymentID = item.DailyPaymentID });
+                }
             }
 
             return result;
         }
+
+        public static bool DeleteOrder(DailyPayment payment)
+        {
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            if (!payment.OrderID.HasValue)
+                return false;
+
+            using (var db = new AltasoftDailyContext())
+            {
+                var user = db.Users.FirstOrDefault(x => x.UserID == payment.LocalUserID);
+                o.DeleteOrder(new AltasoftAPI.OrdersAPI.UserAndDeptId() { DeptId = user.DeptID, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = user.AltasoftUserID, IdSpecified = true, Name = user.Name + " " + user.LastName } }, payment.OrderID, payment.OrderID.HasValue, "asdasd", true, true);
+                db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == payment.DailyPaymentID).OrderID = null;
+                db.SaveChanges();
+            }
+
+            return true;
+        }
+
         public static bool UpdatePaymentsInDaily(List<DailyPayment> payments)
         {
             using (var db = new AltasoftDailyContext())

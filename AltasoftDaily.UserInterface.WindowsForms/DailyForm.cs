@@ -299,8 +299,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
+                List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
+
                 if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    DailyManagement.SubmitOrdersFromDatabase(User);
+                    result = DailyManagement.SubmitOrdersFromDatabase(User);
+
+                foreach (var item in result)
+                {
+                    db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID).OrderID = item.OrderID;
+                }
+
+                db.SaveChanges();
             }
             catch (Exception ex)
             {

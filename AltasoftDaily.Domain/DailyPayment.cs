@@ -51,5 +51,6 @@ namespace AltasoftDaily.Domain.POCO
         public int TaxOrderNumber { get; set; }
         public string Comment { get; set; }
         public int DeptID { get; set; }
+        public long? OrderID { get; set; }
     }
 }
