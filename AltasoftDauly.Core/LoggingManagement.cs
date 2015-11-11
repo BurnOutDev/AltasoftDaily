@@ -23,19 +23,21 @@ namespace AltasoftDaily.Core
             return true;
         }
 
-        private static ExceptionLog CreateExceptionLog(Exception ex, User user)
+        private static ExceptionLog CreateExceptionLog(Exception ex, User user, bool isInner = false)
         {
             var exLog = new ExceptionLog();
 
             exLog.Date = DateTime.Now;
             exLog.User = user;
 
+            exLog.IsInner = isInner;
+
             exLog.Message = ex.Message;
             exLog.Source = ex.Source;
             exLog.StackTrace = ex.StackTrace;
 
             if (ex.InnerException != null)
-                exLog.InnerException = CreateExceptionLog(ex.InnerException, user);
+                exLog.InnerException = CreateExceptionLog(ex.InnerException, user, true);
 
             return exLog;
         }

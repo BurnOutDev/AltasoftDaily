@@ -129,6 +129,10 @@
     <Compile Include="Migrations\201511111327169_AddedLogging.Designer.cs">
       <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.cs" />
+    <Compile Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.Designer.cs">
+      <DependentUpon>201511111439396_AddedIsInnerPropertyToExceptionLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -212,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511111327169_AddedLogging.resx">
       <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.resx">
+      <DependentUpon>201511111439396_AddedIsInnerPropertyToExceptionLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
