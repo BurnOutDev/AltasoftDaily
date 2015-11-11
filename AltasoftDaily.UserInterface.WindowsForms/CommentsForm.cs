@@ -2,7 +2,6 @@
 using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
 using AltasoftDaily.Helpers;
-using log4net;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class CommentsForm : MetroForm
     {
-        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private AltasoftDailyContext _db;
         public AltasoftDailyContext db
         {
@@ -49,7 +47,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
             catch (Exception ex)
             {
-                log.Error("DailyForm Loading Error:", ex);
+                LoggingManagement.LogException(ex, User);
                 throw;
             }
         }
@@ -58,14 +56,15 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-                DailyManagement.UpdateCommentsInDaily(((SortableBindingList<DailyPayment>)gridDaily.DataSource).ToList());
+                var updated = DailyManagement.UpdateCommentsInDaily(((SortableBindingList<DailyPayment>)gridDaily.DataSource).ToList());
+                updated.ToList().ForEach(x => LoggingManagement.LogComment(x, User));
             }
             catch (Exception ex)
             {
-                log.Error("Error Updating Comments In Daily.", ex);
+                LoggingManagement.LogException(ex, User);
                 throw;
             }
-            log.Info("Daily Updated Successfuly. User: " + User.Username);
+            
             MessageBox.Show("წარმატებით შეინახა.");
         }
 
@@ -354,7 +353,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
             catch (Exception ex)
             {
-                log.Error("Error", ex);
+                LoggingManagement.LogException(ex, User);
             }
         }
 

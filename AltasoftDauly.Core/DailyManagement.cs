@@ -112,17 +112,26 @@ namespace AltasoftDaily.Core
             return list.OrderBy(x => x.ClientNo).ToList();
         }
 
-        public static bool UpdateCommentsInDaily(List<DailyPayment> list)
+        public static List<DailyPayment> UpdateCommentsInDaily(List<DailyPayment> list)
         {
+            var result = new List<DailyPayment>();
             using (var db = new AltasoftDailyContext())
             {
+                //Collection was modified; enumeration operation may not execute.
                 foreach (var comment in list)
                 {
-                    db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == comment.DailyPaymentID).Comment = comment.Comment;
+                    var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == comment.DailyPaymentID);
+
+                    if (payment.Comment != comment.Comment)
+                    {
+                        payment.Comment = comment.Comment;
+                        result.Add(comment);
+                    }
+
                 }
                 db.SaveChanges();
             }
-            return true;
+            return result;
         }
 
         public static List<DailyPayment> GetDailyByUser(int altasoftUserId)

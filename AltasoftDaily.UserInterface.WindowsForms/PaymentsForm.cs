@@ -1,6 +1,5 @@
 ﻿using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +15,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class PaymentsForm : Form
     {
-        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private AltasoftDailyContext _db;
         public AltasoftDailyContext db
         {

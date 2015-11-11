@@ -2,7 +2,6 @@
 using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
 using AltasoftDaily.Helpers;
-using log4net;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class DailyForm : MetroForm
     {
-        private readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private AltasoftDailyContext _db;
         public AltasoftDailyContext db
         {
@@ -63,7 +61,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
             catch (Exception ex)
             {
-                log.Error("(User: " + User.Username + ") DailyForm Loading Error:", ex);
+                LoggingManagement.LogException(ex, User);
                 throw;
             }
         }
@@ -76,10 +74,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
             catch (Exception ex)
             {
-                log.Error("Error Updating Payments In Daily.", ex);
+                LoggingManagement.LogException(ex, User);
                 throw;
             }
-            log.Info("Daily Updated Successfuly. User: " + User.Username);
             MessageBox.Show("წარმატებით შეინახა.");
         }
 
@@ -297,6 +294,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void metroButton2_Click(object sender, EventArgs e)
         {
+            tsBtnSave.PerformClick();
+
             try
             {
                 List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
@@ -306,17 +305,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
                 foreach (var item in result)
                 {
-                    db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID).OrderID = item.OrderID;
+                    var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID);
+                    payment.OrderID = item.OrderID;
+                    LoggingManagement.LogOrder(payment, User);
                 }
 
                 db.SaveChanges();
+
+                MessageBox.Show(string.Format("წარმატებით აიტვირთა {0} გადახდა.", result.Count));
             }
             catch (Exception ex)
             {
-                log.Error("ალტასოფტში ატვირთვა: ", ex);
+                LoggingManagement.LogException(ex, User);
                 throw;
             }
-            MessageBox.Show("წარმატებით აიტვირთა.");
         }
 
         private void gridDaily_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -346,7 +348,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridDaily_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
+            
         }
 
         #region Painting

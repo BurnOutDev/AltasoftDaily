@@ -12,9 +12,12 @@ namespace AltasoftDaily.Core
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<UserAction> UserActions { get; set; }
         public DbSet<Filter> Filters { get; set; }
         public DbSet<DailyPayment> DailyPayments { get; set; }
+        public DbSet<ExceptionLog> ExceptionLogs { get; set; }
+        public DbSet<CommentLog> CommentLogs { get; set; }
+        public DbSet<OrderLog> OrderLogs { get; set; }
+        public DbSet<SignLog> SignLogs { get; set; }
     }
 
     public class CustomDatabaseInitializer : CreateDatabaseIfNotExists<AltasoftDailyContext>

@@ -125,6 +125,10 @@
     <Compile Include="Migrations\201511061306197_AddedOrderIDProperty.Designer.cs">
       <DependentUpon>201511061306197_AddedOrderIDProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511111327169_AddedLogging.cs" />
+    <Compile Include="Migrations\201511111327169_AddedLogging.Designer.cs">
+      <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
+    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
@@ -205,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511061306197_AddedOrderIDProperty.resx">
       <DependentUpon>201511061306197_AddedOrderIDProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511111327169_AddedLogging.resx">
+      <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

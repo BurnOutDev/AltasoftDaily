@@ -1,6 +1,5 @@
 ﻿using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
-using log4net.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +34,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 //db.SaveChanges();
                 //}
 
-                XmlConfigurator.Configure();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm());

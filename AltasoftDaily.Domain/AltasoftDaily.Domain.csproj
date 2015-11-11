@@ -50,13 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentLog.cs" />
     <Compile Include="DailyPayment.cs" />
     <Compile Include="DailyPaymentAndLoan.cs" />
     <Compile Include="DailyStats.cs" />
     <Compile Include="ExcelPayment.cs" />
     <Compile Include="FilterInfo.cs" />
     <Compile Include="DailyPaymentIDOrderID.cs" />
-    <Compile Include="UserAction.cs" />
+    <Compile Include="ExceptionLog.cs" />
+    <Compile Include="OrderLog.cs" />
+    <Compile Include="SignLog.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaxOrder.cs" />
