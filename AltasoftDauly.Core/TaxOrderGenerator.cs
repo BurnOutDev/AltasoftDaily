@@ -35,6 +35,20 @@ namespace AltasoftDaily.Core
             }
         }
 
+        public static void ExportToExcel(SortableBindingList<object> data, Type dataType)
+        {
+            var filePath = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString() + ".xlsx");
+
+            using (ExcelPackage ePack = new ExcelPackage())
+            {
+                ExcelWorksheet ws = ePack.Workbook.Worksheets.Add("_");
+                ws.Cells["A1"].LoadFromDataTable(ToDataTable(data.ToList(), dataType.GetProperties(BindingFlags.Public | BindingFlags.Instance)), true);
+                ePack.SaveAs(new FileInfo(filePath));
+
+                Process.Start(filePath);
+            }
+        }
+
         public static void Generate(string templatePath, params TaxOrder[] data)
         {
             var result = new MemoryStream();
@@ -217,12 +231,15 @@ namespace AltasoftDaily.Core
                 return 0;
         }
 
-        public static DataTable ToDataTable<T>(List<T> items)
+        public static DataTable ToDataTable<T>(List<T> items, PropertyInfo[] props = null)
         {
             DataTable dataTable = new DataTable(typeof(T).Name);
 
             //Get all the properties
             PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            if (props != null)
+                Props = props; 
+
             foreach (PropertyInfo prop in Props)
             {
                 //Setting column names as Property names

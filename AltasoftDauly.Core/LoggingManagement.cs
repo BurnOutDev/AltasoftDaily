@@ -1,4 +1,5 @@
 ﻿using AltasoftDaily.Domain.POCO;
+using AltasoftDaily.Domain.POCO.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

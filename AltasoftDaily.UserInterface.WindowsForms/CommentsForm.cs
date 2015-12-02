@@ -43,7 +43,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             try
             {
-             
+
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 LoggingManagement.LogException(ex, User);
                 throw;
             }
-            
+
             MessageBox.Show("წარმატებით შეინახა.");
         }
 
@@ -258,7 +258,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void btnStats_Click_1(object sender, EventArgs e)
         {
-            TaxOrderGenerator.ExportToExcel(ConvertToExcelPayment((SortableBindingList<DailyPayment>)gridDaily.DataSource));
+            var data = (SortableBindingList<DailyPayment>)gridDaily.DataSource;
+
+            var comments = ConvertToCommentsPaymentModel(data);
+
+            var converted = new SortableBindingList<object>(ConvertToCommentsPaymentModel(data).Cast<object>().ToList());
+
+            TaxOrderGenerator.ExportToExcel(converted, typeof(CommentsPaymentModel));
+        }
+
+        public static SortableBindingList<CommentsPaymentModel> ConvertToCommentsPaymentModel(SortableBindingList<DailyPayment> v)
+        {
+            var list = new List<CommentsPaymentModel>();
+            v.ToList().ForEach(x => list.Add((CommentsPaymentModel)x));
+            return new SortableBindingList<CommentsPaymentModel>(list);
         }
 
         public static SortableBindingList<ExcelPayment> ConvertToExcelPayment(SortableBindingList<DailyPayment> v)

@@ -92,9 +92,6 @@ namespace AltasoftDaily.Test
                 item.StartDate = loan.Term.Start.ToShortDateString();
                 item.EndDate = loan.Term.End.ToShortDateString();
 
-                if (item.ClientNo == 661)
-                    continue;
-
                 var customer = CustomersService.GetCustomer(CustomerControlFlags.Basic | CustomerControlFlags.Extensions | CustomerControlFlags.Addresses, true, loan.BorrowerId.Value, true);
  
                 var account = AccountsService.GetAccount(AccountControlFlags.Basic, true, new AccountsAPI.InternalAccountIdentification() { Id = loan.AccountIdentifier, IdSpecified = true }, item.LoanCCY);
@@ -164,9 +161,6 @@ namespace AltasoftDaily.Test
                 item.AgreementNumber = loan.AgreementNo;
                 item.StartDate = loan.Term.Start.ToShortDateString();
                 item.EndDate = loan.Term.End.ToShortDateString();
-
-                if (item.ClientNo == 661)
-                    continue;
 
                 var customer = CustomersService.GetCustomer(CustomerControlFlags.Basic, true, loan.BorrowerId.Value, true);
                 Customer customer2;

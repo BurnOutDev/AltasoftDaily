@@ -25,10 +25,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 return _db;
             }
         }
+
+        private int loanID;
         public User User { get; set; }
 
         public PaymentsForm(int loanId)
         {
+            loanID = loanId;
             InitializeComponent();
             dataGridView1.DataSource = db.DailyPayments.Where(x => x.LoanID == loanId).OrderBy(x => x.CalculationDate).ToList();
         }
@@ -52,6 +55,12 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void PaymentsForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var form = new ViewCollateralsForm(loanID);
+            form.Show();
         }
     }
 }

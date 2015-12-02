@@ -1,5 +1,6 @@
 ﻿using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
+using AltasoftDaily.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void TmiDaily_Click(object sender, EventArgs e)
         {
-            DailyForm frmDaily = new DailyForm(User);
+            DailyPaymentsForm frmDaily = new DailyPaymentsForm(User);
             frmDaily.MdiParent = this;
             frmDaily.Show();
         }
@@ -49,33 +50,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     ინკასატორიToolStripMenuItem.Enabled = false;
                 }
             }
-
-
-
-            //////////////////////////////////////////////////////////////////////
-            //#region Initialize Services
-            //#region OrdersService
-            //AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
-            //o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            //#endregion
-
-            //#region CustomersService
-            //AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
-            //c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            //#endregion
-
-            //#region AccountsService
-            //AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
-            //a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            //#endregion
-
-            //#region LoansService
-            //AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
-            //l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            //#endregion
-            //#endregion
-
-            //var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, 1795, true);
         }
 
         private void takoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,6 +93,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             LoggingManagement.LogSign(SignType.SignOut, User);
+        }
+
+        public void ReloadData(GridBaseForm target)
+        {
+
+        }
+
+        private void კლიენტებიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new OldPaymentsForm(User);
+            form.Show();
         }
     }
 }

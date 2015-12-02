@@ -116,7 +116,6 @@
             this.Controls.Add(this.tbxPassword);
             this.Controls.Add(this.tbxUsername);
             this.Name = "AuthenticationForm";
-            this.Resizable = false;
             this.Text = "ავტენტიფიკაცია";
             this.Load += new System.EventHandler(this.AuthenticationForm_Load);
             this.ResumeLayout(false);

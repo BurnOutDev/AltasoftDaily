@@ -72,9 +72,6 @@ namespace AltasoftDaily.Core
                     item.StartDate = loan.Term.Start.ToShortDateString();
                     item.EndDate = loan.Term.End.ToShortDateString();
 
-                    if (item.ClientNo == 661)
-                        continue;
-
                     var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, loan.BorrowerId.Value, true);
                     AltasoftAPI.CustomersAPI.Customer customer2;
                     var account = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { Id = loan.AccountIdentifier, IdSpecified = true }, item.LoanCCY);
@@ -252,9 +249,6 @@ namespace AltasoftDaily.Core
             result.ClientID = loan.BorrowerId.Value;
             result.DeptID = loan.BranchId.Value;
 
-            if (item.ClientNo == 661)
-                return null;
-
             var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, loan.BorrowerId.Value, true);
             AltasoftAPI.CustomersAPI.Customer customer2;
             var account = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { Id = loan.AccountIdentifier, IdSpecified = true }, item.LoanCCY);
@@ -272,8 +266,10 @@ namespace AltasoftDaily.Core
             AltasoftAPI.CustomersAPI.Customer customer3;
 
             customer3 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, loan.BorrowerId.Value, true);
-            item.ClientAddressFact = customer3.AddressActual.Value.ValueGeo;
-
+            if (customer3.AddressActual != null)
+            {
+                item.ClientAddressFact = customer3.AddressActual.Value.ValueGeo;
+            }
 
             item.NextScheduledPaymentInGel = l.GetLoanSchedule(AltasoftAPI.LoansAPI.DebtComponentDetalization.Detailed, true, AltasoftAPI.LoansAPI.GetLoanScheduleControlFlags.Full, true, item.LoanID, true).FirstOrDefault(x => x.Date == DateTime.Today) != null ?
                 l.GetLoanSchedule(AltasoftAPI.LoansAPI.DebtComponentDetalization.Detailed, true, AltasoftAPI.LoansAPI.GetLoanScheduleControlFlags.Full, true, item.LoanID, true).FirstOrDefault(x => x.Date == DateTime.Today).Elements.Where(x => x.Name != "balance").Sum(x => x.Amount) : 0;
@@ -457,13 +453,14 @@ namespace AltasoftDaily.Core
         }
         public static DateTime GetCalculationDate()
         {
-            #region Initialize Loans Service
-            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
-            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion
+            //#region Initialize Loans Service
+            //AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            //l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //#endregion
 
-            return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
-            //return new DateTime(2015, 9, 27);
+            //return l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Current } }).LastOrDefault().CalcDate.Value;
+            ////return new DateTime(2015, 9, 27);
+            return DateTime.Today;
         }
 
         public static string GetAccountIbanByDept(int deptId)
@@ -476,6 +473,55 @@ namespace AltasoftDaily.Core
             var acc = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic | AltasoftAPI.AccountsAPI.AccountControlFlags.Classifiers, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { AccountNumber = ulong.Parse(1001000.ToString() + deptId.ToString()), AccountNumberSpecified = true, Ccy = "GET", BranchId = deptId, BranchIdSpecified = true }, "GEL");
 
             return acc.IBAN;
+        }
+
+        public static int GetCollateralIdByLoanId(int loanId)
+        {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+
+            AltasoftAPI.LoansAPI.Application app;
+            bool? n;
+            bool n2;
+
+            l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.Basic | AltasoftAPI.LoansAPI.ApplicationControlFlags.Extensions, true, loanId, true, out n, out n2, out app);
+
+            var collaterals = l.ListLinkedCollaterals(new AltasoftAPI.LoansAPI.ListLinkedCollateralsQuery()
+                {
+                    ControlFlags = AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Basic | AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Attributes,
+                    ApplicationId = app.Id.Value,
+                    ApplicationIdSpecified = app.IdSpecified
+                });
+
+            //var collateral = l.ListCollaterals(new AltasoftAPI.LoansAPI.ListCollateralsQuery()
+            //    {
+            //        ControlFlags = AltasoftAPI.LoansAPI.CollateralControlFlags.Basic | AltasoftAPI.LoansAPI.CollateralControlFlags.Attributes,
+            //        AccountId = loan.AccountIdentifier,
+            //        AccountIdSpecified = loan.AccountIdentifierSpecified,
+            //        CollateralType = "03"
+            //    });
+
+            return collaterals.FirstOrDefault().CollateralId.Value;
         }
     }
 }

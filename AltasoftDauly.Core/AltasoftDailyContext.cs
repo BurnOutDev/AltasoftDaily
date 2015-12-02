@@ -1,4 +1,5 @@
 ﻿using AltasoftDaily.Domain.POCO;
+using AltasoftDaily.Domain.POCO.Logging;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 

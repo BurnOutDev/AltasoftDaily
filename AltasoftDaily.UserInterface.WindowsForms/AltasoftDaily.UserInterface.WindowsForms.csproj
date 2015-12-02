@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedDataGridView">
+      <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
+    </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
@@ -76,11 +79,23 @@
     <Compile Include="AuthenticationForm.Designer.cs">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CollateralForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CollateralForm.Designer.cs">
+      <DependentUpon>CollateralForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CommentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CommentsForm.Designer.cs">
       <DependentUpon>CommentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerForm.Designer.cs">
+      <DependentUpon>CustomerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DailyForm.cs">
       <SubType>Form</SubType>
@@ -88,11 +103,46 @@
     <Compile Include="DailyForm.Designer.cs">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DailyPaymentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DailyPaymentsForm.Designer.cs">
+      <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilterForm.Designer.cs">
+      <DependentUpon>FilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GridBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GridBaseForm.Designer.cs">
+      <DependentUpon>GridBaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IdentityDocumentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IdentityDocumentForm.Designer.cs">
+      <DependentUpon>IdentityDocumentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OldPaymentsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldPaymentsForm.Designer.cs">
+      <DependentUpon>OldPaymentsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PaymentsForm.Designer.cs">
       <DependentUpon>PaymentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SingleOrderForm.cs">
       <SubType>Form</SubType>
@@ -120,14 +170,41 @@
     <Compile Include="StatsForm.Designer.cs">
       <DependentUpon>StatsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewCollateralsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewCollateralsForm.Designer.cs">
+      <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CollateralForm.resx">
+      <DependentUpon>CollateralForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CommentsForm.resx">
       <DependentUpon>CommentsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomerForm.resx">
+      <DependentUpon>CustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DailyForm.resx">
       <DependentUpon>DailyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DailyPaymentsForm.resx">
+      <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterForm.resx">
+      <DependentUpon>FilterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridBaseForm.resx">
+      <DependentUpon>GridBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdentityDocumentForm.resx">
+      <DependentUpon>IdentityDocumentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldPaymentsForm.resx">
+      <DependentUpon>OldPaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PaymentsForm.resx">
       <DependentUpon>PaymentsForm.cs</DependentUpon>
@@ -143,16 +220,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="StatsForm.resx">
       <DependentUpon>StatsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewCollateralsForm.resx">
+      <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="log4net.config" />
     <None Include="packages.config" />
@@ -167,7 +242,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
@@ -201,6 +278,39 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Statistics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh-100.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Order-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Order-481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Upload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stats-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Guarantor-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

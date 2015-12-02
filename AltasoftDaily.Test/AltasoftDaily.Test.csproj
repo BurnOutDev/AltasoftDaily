@@ -103,6 +103,24 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
+      <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
+      <Name>AltasoftAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Domain\AltasoftDaily.Domain.csproj">
+      <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
+      <Name>AltasoftDaily.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Helpers\AltasoftDaily.Helpers.csproj">
+      <Project>{0407decb-3a9e-4533-80ca-71f92b9c5605}</Project>
+      <Name>AltasoftDaily.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDauly.Core\AltasoftDaily.Core.csproj">
+      <Project>{a4500228-a134-4a6b-abc7-0c4f77608638}</Project>
+      <Name>AltasoftDaily.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

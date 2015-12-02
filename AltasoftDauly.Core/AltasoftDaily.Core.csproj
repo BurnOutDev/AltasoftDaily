@@ -69,81 +69,8 @@
     <Compile Include="AltasoftDailyContext.cs" />
     <Compile Include="DailyManagement.cs" />
     <Compile Include="LoggingManagement.cs" />
-    <Compile Include="Migrations\201510210929155_AddedDepartmentId.cs" />
-    <Compile Include="Migrations\201510210929155_AddedDepartmentId.Designer.cs">
-      <DependentUpon>201510210929155_AddedDepartmentId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510211440130_AddedAltasoftUserId.cs" />
-    <Compile Include="Migrations\201510211440130_AddedAltasoftUserId.Designer.cs">
-      <DependentUpon>201510211440130_AddedAltasoftUserId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510221226012_AddedVisibleDepts.cs" />
-    <Compile Include="Migrations\201510221226012_AddedVisibleDepts.Designer.cs">
-      <DependentUpon>201510221226012_AddedVisibleDepts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510221305010_AddedVisibleDepts1.cs" />
-    <Compile Include="Migrations\201510221305010_AddedVisibleDepts1.Designer.cs">
-      <DependentUpon>201510221305010_AddedVisibleDepts1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510241338264_RenamedTransactionToActionAndEdited.cs" />
-    <Compile Include="Migrations\201510241338264_RenamedTransactionToActionAndEdited.Designer.cs">
-      <DependentUpon>201510241338264_RenamedTransactionToActionAndEdited.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs" />
-    <Compile Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.Designer.cs">
-      <DependentUpon>201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs" />
-    <Compile Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.Designer.cs">
-      <DependentUpon>201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510261209115_AddedFiltedDataCollection.cs" />
-    <Compile Include="Migrations\201510261209115_AddedFiltedDataCollection.Designer.cs">
-      <DependentUpon>201510261209115_AddedFiltedDataCollection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510261524340_AddedUserIDToDailyPayments.cs" />
-    <Compile Include="Migrations\201510261524340_AddedUserIDToDailyPayments.Designer.cs">
-      <DependentUpon>201510261524340_AddedUserIDToDailyPayments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.cs" />
-    <Compile Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.Designer.cs">
-      <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510271708164_Something.cs" />
-    <Compile Include="Migrations\201510271708164_Something.Designer.cs">
-      <DependentUpon>201510271708164_Something.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.cs" />
-    <Compile Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.Designer.cs">
-      <DependentUpon>201510311459522_AddedCommentProperty_DailyPayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510311541546_AddedDeptID_DailyPayment.cs" />
-    <Compile Include="Migrations\201510311541546_AddedDeptID_DailyPayment.Designer.cs">
-      <DependentUpon>201510311541546_AddedDeptID_DailyPayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511061306197_AddedOrderIDProperty.cs" />
-    <Compile Include="Migrations\201511061306197_AddedOrderIDProperty.Designer.cs">
-      <DependentUpon>201511061306197_AddedOrderIDProperty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511111327169_AddedLogging.cs" />
-    <Compile Include="Migrations\201511111327169_AddedLogging.Designer.cs">
-      <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.cs" />
-    <Compile Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.Designer.cs">
-      <DependentUpon>201511111439396_AddedIsInnerPropertyToExceptionLog.cs</DependentUpon>
-    </Compile>
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
-    <Compile Include="Migrations\201510091108140_FirstMigration.cs" />
-    <Compile Include="Migrations\201510091108140_FirstMigration.Designer.cs">
-      <DependentUpon>201510091108140_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510101437567_AddedUsernameAndPasswordToUser.cs" />
-    <Compile Include="Migrations\201510101437567_AddedUsernameAndPasswordToUser.Designer.cs">
-      <DependentUpon>201510101437567_AddedUsernameAndPasswordToUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -166,62 +93,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201510091108140_FirstMigration.resx">
-      <DependentUpon>201510091108140_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510101437567_AddedUsernameAndPasswordToUser.resx">
-      <DependentUpon>201510101437567_AddedUsernameAndPasswordToUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510210929155_AddedDepartmentId.resx">
-      <DependentUpon>201510210929155_AddedDepartmentId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510211440130_AddedAltasoftUserId.resx">
-      <DependentUpon>201510211440130_AddedAltasoftUserId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510221226012_AddedVisibleDepts.resx">
-      <DependentUpon>201510221226012_AddedVisibleDepts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510221305010_AddedVisibleDepts1.resx">
-      <DependentUpon>201510221305010_AddedVisibleDepts1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510241338264_RenamedTransactionToActionAndEdited.resx">
-      <DependentUpon>201510241338264_RenamedTransactionToActionAndEdited.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.resx">
-      <DependentUpon>201510241514288_AddedFiltersAndRemovedBranchesAndEditedPOCOClasses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.resx">
-      <DependentUpon>201510241529477_RenamedDailyModelToDailyPaymentAddedToDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510261209115_AddedFiltedDataCollection.resx">
-      <DependentUpon>201510261209115_AddedFiltedDataCollection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510261524340_AddedUserIDToDailyPayments.resx">
-      <DependentUpon>201510261524340_AddedUserIDToDailyPayments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510261600146_ChangedCalculationDateFromStringToDate.resx">
-      <DependentUpon>201510261600146_ChangedCalculationDateFromStringToDate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510271708164_Something.resx">
-      <DependentUpon>201510271708164_Something.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510311459522_AddedCommentProperty_DailyPayment.resx">
-      <DependentUpon>201510311459522_AddedCommentProperty_DailyPayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510311541546_AddedDeptID_DailyPayment.resx">
-      <DependentUpon>201510311541546_AddedDeptID_DailyPayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511061306197_AddedOrderIDProperty.resx">
-      <DependentUpon>201511061306197_AddedOrderIDProperty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511111327169_AddedLogging.resx">
-      <DependentUpon>201511111327169_AddedLogging.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511111439396_AddedIsInnerPropertyToExceptionLog.resx">
-      <DependentUpon>201511111439396_AddedIsInnerPropertyToExceptionLog.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Libraries\EPPlus.dll" />
     <Content Include="Libraries\ExcelPackage.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

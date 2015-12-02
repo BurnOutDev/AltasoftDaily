@@ -50,20 +50,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommentLog.cs" />
-    <Compile Include="DailyPayment.cs" />
+    <Compile Include="CollateralModel.cs" />
+    <Compile Include="CommentsPaymentModel.cs" />
+    <Compile Include="POCO\FormWindow.cs" />
+    <Compile Include="POCO\Logging\CommentLog.cs" />
+    <Compile Include="POCO\DailyPayment.cs" />
     <Compile Include="DailyPaymentAndLoan.cs" />
     <Compile Include="DailyStats.cs" />
     <Compile Include="ExcelPayment.cs" />
-    <Compile Include="FilterInfo.cs" />
+    <Compile Include="POCO\FilterData.cs" />
     <Compile Include="DailyPaymentIDOrderID.cs" />
-    <Compile Include="ExceptionLog.cs" />
-    <Compile Include="OrderLog.cs" />
-    <Compile Include="SignLog.cs" />
-    <Compile Include="Filter.cs" />
+    <Compile Include="POCO\Logging\ExceptionLog.cs" />
+    <Compile Include="POCO\Logging\OrderLog.cs" />
+    <Compile Include="POCO\Logging\SignLog.cs" />
+    <Compile Include="POCO\Filter.cs" />
+    <Compile Include="POCO\Role.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationModel.cs" />
     <Compile Include="TaxOrder.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="POCO\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
