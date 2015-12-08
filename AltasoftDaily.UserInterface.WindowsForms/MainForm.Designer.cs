@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ინკასატორიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.დეილიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,14 +64,14 @@
             // დეილიToolStripMenuItem
             // 
             this.დეილიToolStripMenuItem.Name = "დეილიToolStripMenuItem";
-            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.დეილიToolStripMenuItem.Text = "დეილი";
             this.დეილიToolStripMenuItem.Click += new System.EventHandler(this.TmiDaily_Click);
             // 
             // კლიენტებიToolStripMenuItem
             // 
             this.კლიენტებიToolStripMenuItem.Name = "კლიენტებიToolStripMenuItem";
-            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.კლიენტებიToolStripMenuItem.Text = "გადახდები";
             this.კლიენტებიToolStripMenuItem.Click += new System.EventHandler(this.კლიენტებიToolStripMenuItem_Click);
             // 
@@ -113,6 +114,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 389);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";

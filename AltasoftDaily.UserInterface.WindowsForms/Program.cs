@@ -16,28 +16,30 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
-            using (var db = new AltasoftDailyContext())
-            {
-                //var artura = db.Users.FirstOrDefault(x => x.Username == "atumaniani");
-                //var filter = new Filter();
-                //filter.Enabled = true;
-                //filter.IsDeptFilterEnabled = true;
-                //var deptIds = new List<int>();
-                //deptIds.Add(2);
-                //filter.DeptIDs = deptIds;
-                //artura.Filter = filter;
+            #region Old Comments
+            //using (var db = new AltasoftDailyContext())
+            //{
+            //var artura = db.Users.FirstOrDefault(x => x.Username == "atumaniani");
+            //var filter = new Filter();
+            //filter.Enabled = true;
+            //filter.IsDeptFilterEnabled = true;
+            //var deptIds = new List<int>();
+            //deptIds.Add(2);
+            //filter.DeptIDs = deptIds;
+            //artura.Filter = filter;
 
-                //artura.Filter.DeptIDs = new List<int>();
-                //artura.Filter.FilterData = new List<Domain.FilterData>();
-                //artura.Filter.FilterData.Add(new Domain.FilterData() { DeptID = 3 });
+            //artura.Filter.DeptIDs = new List<int>();
+            //artura.Filter.FilterData = new List<Domain.FilterData>();
+            //artura.Filter.FilterData.Add(new Domain.FilterData() { DeptID = 3 });
 
-                //db.SaveChanges();
-                //}
+            //db.SaveChanges();
+            //} 
+            //}
+            #endregion
 
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AltasoftDaily.Core
                     message = "მომხმარებლის სახელი არასწორია!";
                     return null;
                 }
-                else if (userByName.Password != password)
+                else if (!EncryptionManagement.Validate(userByName.Password, password, userByName.Salt))
                 {
                     authenticated = false;
                     message = "მომხმარებლის პაროლი არასწორია!";

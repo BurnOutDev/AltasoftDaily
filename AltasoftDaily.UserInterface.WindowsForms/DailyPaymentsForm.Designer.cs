@@ -33,7 +33,7 @@
             this.pbxOrders = new System.Windows.Forms.PictureBox();
             this.pbxStats = new System.Windows.Forms.PictureBox();
             this.pbxUpload = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbxGuarantors = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -48,7 +48,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxOrders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxStats)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxUpload)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxGuarantors)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -56,7 +56,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.pbxGuarantors);
             this.splitContainer1.Panel1.Controls.Add(this.pbxUpload);
             this.splitContainer1.Panel1.Controls.Add(this.pbxStats);
             this.splitContainer1.Panel1.Controls.Add(this.pbxOrders);
@@ -68,14 +68,16 @@
             // 
             // pbxRefresh
             // 
-            this.pbxRefresh.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Refresh;
+            this.pbxRefresh.Image = ((System.Drawing.Image)(resources.GetObject("pbxRefresh.Image")));
             // 
             // pbxFilter
             // 
+            this.pbxFilter.Image = ((System.Drawing.Image)(resources.GetObject("pbxFilter.Image")));
             this.pbxFilter.Click += new System.EventHandler(this.pbxFilter_Click);
             // 
             // pbxExport
             // 
+            this.pbxExport.Image = ((System.Drawing.Image)(resources.GetObject("pbxExport.Image")));
             this.pbxExport.Click += new System.EventHandler(this.pbxExport_Click);
             // 
             // pbxSave
@@ -86,6 +88,7 @@
             this.pbxSave.Size = new System.Drawing.Size(48, 48);
             this.pbxSave.TabIndex = 1;
             this.pbxSave.TabStop = false;
+            this.pbxSave.Tag = "შენახვა";
             this.pbxSave.Click += new System.EventHandler(this.pbxSave_Click);
             // 
             // pbxOrders
@@ -96,37 +99,42 @@
             this.pbxOrders.Size = new System.Drawing.Size(48, 48);
             this.pbxOrders.TabIndex = 2;
             this.pbxOrders.TabStop = false;
+            this.pbxOrders.Tag = "საშემოსავლო";
             this.pbxOrders.Click += new System.EventHandler(this.pbxOrders_Click);
             // 
             // pbxStats
             // 
-            this.pbxStats.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Stats_48;
+            this.pbxStats.Image = ((System.Drawing.Image)(resources.GetObject("pbxStats.Image")));
             this.pbxStats.Location = new System.Drawing.Point(273, 3);
             this.pbxStats.Name = "pbxStats";
             this.pbxStats.Size = new System.Drawing.Size(48, 48);
             this.pbxStats.TabIndex = 3;
             this.pbxStats.TabStop = false;
+            this.pbxStats.Tag = "სტატისტიკა";
             this.pbxStats.Click += new System.EventHandler(this.pbxStats_Click);
             // 
             // pbxUpload
             // 
-            this.pbxUpload.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Upload;
+            this.pbxUpload.Image = ((System.Drawing.Image)(resources.GetObject("pbxUpload.Image")));
             this.pbxUpload.Location = new System.Drawing.Point(327, 3);
             this.pbxUpload.Name = "pbxUpload";
             this.pbxUpload.Size = new System.Drawing.Size(48, 48);
             this.pbxUpload.TabIndex = 4;
             this.pbxUpload.TabStop = false;
+            this.pbxUpload.Tag = "ატვირთვა";
             this.pbxUpload.Click += new System.EventHandler(this.pbxUpload_Click);
             // 
-            // pictureBox1
+            // pbxGuarantors
             // 
-            this.pictureBox1.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Guarantor_48;
-            this.pictureBox1.Location = new System.Drawing.Point(382, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pbxGuarantors.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxGuarantors;
+            this.pbxGuarantors.InitialImage = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxGuarantors;
+            this.pbxGuarantors.Location = new System.Drawing.Point(382, 3);
+            this.pbxGuarantors.Name = "pbxGuarantors";
+            this.pbxGuarantors.Size = new System.Drawing.Size(48, 48);
+            this.pbxGuarantors.TabIndex = 5;
+            this.pbxGuarantors.TabStop = false;
+            this.pbxGuarantors.Tag = "თავდებები";
+            this.pbxGuarantors.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // DailyPaymentsForm
             // 
@@ -155,7 +163,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxOrders)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxStats)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxUpload)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxGuarantors)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -166,7 +174,7 @@
         private System.Windows.Forms.PictureBox pbxOrders;
         private System.Windows.Forms.PictureBox pbxStats;
         private System.Windows.Forms.PictureBox pbxUpload;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbxGuarantors;
 
     }
 }

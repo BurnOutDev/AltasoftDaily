@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="AltasoftDailyContext.cs" />
     <Compile Include="DailyManagement.cs" />
+    <Compile Include="EncryptionManagement.cs" />
     <Compile Include="LoggingManagement.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />

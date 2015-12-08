@@ -31,6 +31,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
         }
         public Type DataType { get; set; }
+        public bool MultipleRowsSelected { get; set; }
 
         public GridBaseForm()
         {
@@ -45,7 +46,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             Data = data;
         }
 
-        private void gridData_SelectionChanged(object sender, EventArgs e)
+        public virtual void gridData_SelectionChanged(object sender, EventArgs e)
         {
             var value = 0M;
             var count = gridData.SelectedCells.Count;
@@ -65,6 +66,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             }
 
             lblSum.Text = value.ToString();
+
+            if (gridData.SelectedCells.Count > 0)
+            {
+                DataGridViewCell[] cells = new DataGridViewCell[gridData.SelectedCells.Count];
+                gridData.SelectedCells.CopyTo(cells, 0);
+
+                MultipleRowsSelected = cells.ToList().Select(x => x.RowIndex).Distinct().Count() > 1;
+            }
         }
 
         private void gridData_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -99,6 +108,39 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         }
 
         public virtual void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pbx_MouseHover(object sender, EventArgs e)
+        {
+            var tooltip = new ToolTip();
+            tooltip.SetToolTip(sender as Control, (sender as PictureBox).Tag.ToString());
+        }
+
+        private void GridBaseForm_Shown(object sender, EventArgs e)
+        {
+            foreach (var item in splitContainer1.Panel1.Controls)
+            {
+                if (item.GetType() == typeof(PictureBox))
+                {
+                    var pbx = item as PictureBox;
+                    pbx.MouseHover += pbx_MouseHover;
+                    pbx.EnabledChanged += pbx_EnabledChanged;
+                }
+            }
+        }
+
+        void pbx_EnabledChanged(object sender, EventArgs e)
+        {
+            var pbx = sender as PictureBox;
+            if (!pbx.Enabled)
+                pbx.Image = Properties.Resources.ResourceManager.GetObject(pbx.Name + "Disabled") as Image;
+            else
+                pbx.Image = Properties.Resources.ResourceManager.GetObject(pbx.Name) as Image;
+        }
+
+        private void GridBaseForm_Load(object sender, EventArgs e)
         {
 
         }

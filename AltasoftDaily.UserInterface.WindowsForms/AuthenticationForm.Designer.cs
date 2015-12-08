@@ -28,27 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbxUsername = new MetroFramework.Controls.MetroTextBox();
             this.tbxPassword = new MetroFramework.Controls.MetroTextBox();
             this.btnEnter = new MetroFramework.Controls.MetroButton();
             this.btnExit = new MetroFramework.Controls.MetroButton();
             this.cbxDept = new MetroFramework.Controls.MetroComboBox();
+            this.tbxUsername = new MetroFramework.Controls.MetroTextBox();
             this.SuspendLayout();
-            // 
-            // tbxUsername
-            // 
-            this.tbxUsername.FontSize = MetroFramework.MetroTextBoxSize.Tall;
-            this.tbxUsername.FontWeight = MetroFramework.MetroTextBoxWeight.Light;
-            this.tbxUsername.Lines = new string[0];
-            this.tbxUsername.Location = new System.Drawing.Point(23, 95);
-            this.tbxUsername.MaxLength = 32767;
-            this.tbxUsername.Name = "tbxUsername";
-            this.tbxUsername.PasswordChar = '\0';
-            this.tbxUsername.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.tbxUsername.SelectedText = "";
-            this.tbxUsername.Size = new System.Drawing.Size(215, 29);
-            this.tbxUsername.TabIndex = 0;
-            this.tbxUsername.UseSelectable = true;
             // 
             // tbxPassword
             // 
@@ -104,6 +89,21 @@
             this.cbxDept.UseSelectable = true;
             this.cbxDept.SelectedIndexChanged += new System.EventHandler(this.cbxDept_SelectedIndexChanged);
             // 
+            // tbxUsername
+            // 
+            this.tbxUsername.FontSize = MetroFramework.MetroTextBoxSize.Tall;
+            this.tbxUsername.FontWeight = MetroFramework.MetroTextBoxWeight.Light;
+            this.tbxUsername.Lines = new string[0];
+            this.tbxUsername.Location = new System.Drawing.Point(23, 95);
+            this.tbxUsername.MaxLength = 32767;
+            this.tbxUsername.Name = "tbxUsername";
+            this.tbxUsername.PasswordChar = '\0';
+            this.tbxUsername.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.tbxUsername.SelectedText = "";
+            this.tbxUsername.Size = new System.Drawing.Size(215, 29);
+            this.tbxUsername.TabIndex = 0;
+            this.tbxUsername.UseSelectable = true;
+            // 
             // AuthenticationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -116,7 +116,8 @@
             this.Controls.Add(this.tbxPassword);
             this.Controls.Add(this.tbxUsername);
             this.Name = "AuthenticationForm";
-            this.Text = "ავტენტიფიკაცია";
+            this.Text = "შესვლა";
+            this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Load += new System.EventHandler(this.AuthenticationForm_Load);
             this.ResumeLayout(false);
 

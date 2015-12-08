@@ -302,13 +302,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         public override void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //var form = new SingleOrderForm(((SortableBindingList<DailyPayment>)gridData.DataSource)[e.ColumnIndex], User);
+            //var form = new ViewCollateralsForm(int.Parse(gridData.Rows[e.RowIndex].Cells["LoanID"].Value.ToString()));
             //form.Show();
-
-
-            var form = new ViewCollateralsForm(int.Parse(gridData.Rows[e.RowIndex].Cells["LoanID"].Value.ToString()));
-
-            form.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -321,12 +316,22 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
+            new ViewCollateralsForm(int.Parse(gridData.Rows[gridData.SelectedCells[0].RowIndex].Cells["LoanID"].Value.ToString())).Show();
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        public override void gridData_SelectionChanged(object sender, EventArgs e)
+        {
+            base.gridData_SelectionChanged(sender, e);
+
+            if (MultipleRowsSelected)
+                pbxGuarantors.Enabled = false;
+            else
+                pbxGuarantors.Enabled = true;
         }
     }
 }

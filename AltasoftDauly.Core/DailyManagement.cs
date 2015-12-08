@@ -363,7 +363,7 @@ namespace AltasoftDaily.Core
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.Payment > 0).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.Payment > 0 && x.OrderID == null).ToList();
 
                 foreach (var item in localPayments)
                 {
@@ -388,7 +388,7 @@ namespace AltasoftDaily.Core
             using (var db = new AltasoftDailyContext())
             {
                 var user = db.Users.FirstOrDefault(x => x.UserID == payment.LocalUserID);
-                o.DeleteOrder(new AltasoftAPI.OrdersAPI.UserAndDeptId() { DeptId = user.DeptID, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = user.AltasoftUserID, IdSpecified = true, Name = user.Name + " " + user.LastName } }, payment.OrderID, payment.OrderID.HasValue, "asdasd", true, true);
+                o.DeleteOrder(new AltasoftAPI.OrdersAPI.UserAndDeptId() { DeptId = user.DeptID, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = user.AltasoftUserID, IdSpecified = true } }, payment.OrderID, payment.OrderID.HasValue, Guid.NewGuid().ToString(), true, true);
                 db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == payment.DailyPaymentID).OrderID = null;
                 db.SaveChanges();
             }

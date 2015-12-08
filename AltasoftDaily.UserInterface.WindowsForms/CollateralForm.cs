@@ -63,13 +63,15 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             tbxType.Text = collateral[0].CollateralType;
 
-            var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, collateral[0].OwnerId.Value, true);
+            var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses | AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, collateral[0].OwnerId.Value, true);
 
             tbxOwner.Text = collateral[0].OwnerId.Value.ToString() + " | " + customer.Name.ValueGeo;
             tbxIdNumber.Text = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
             tbxBranch.Text = customer.BranchId.Value.ToString();
             tbxAgreement.Text = collateral[0].AgreementNo;
             tbxAddressLegal.Text = customer.AddressLegal.Value.ValueGeo;
+            tbxMobile.Text = customer.ContactInfo.MobilePhone;
+            tbxPhone.Text = customer.ContactInfo.Phone;
 
             var relations = new List<RelationModel>();
 

@@ -129,33 +129,37 @@
             // 
             // pbxRefresh
             // 
-            this.pbxRefresh.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Refresh;
+            this.pbxRefresh.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxRefresh;
             this.pbxRefresh.Location = new System.Drawing.Point(3, 3);
             this.pbxRefresh.Name = "pbxRefresh";
             this.pbxRefresh.Size = new System.Drawing.Size(48, 48);
             this.pbxRefresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbxRefresh.TabIndex = 0;
             this.pbxRefresh.TabStop = false;
+            this.pbxRefresh.Tag = "განახლება";
+            this.pbxRefresh.MouseHover += new System.EventHandler(this.pbx_MouseHover);
             // 
             // pbxFilter
             // 
-            this.pbxFilter.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Filter;
+            this.pbxFilter.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxFilter;
             this.pbxFilter.Location = new System.Drawing.Point(57, 3);
             this.pbxFilter.Name = "pbxFilter";
             this.pbxFilter.Size = new System.Drawing.Size(48, 48);
             this.pbxFilter.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbxFilter.TabIndex = 0;
             this.pbxFilter.TabStop = false;
+            this.pbxFilter.Tag = "გაფილტრვა";
             // 
             // pbxExport
             // 
-            this.pbxExport.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Export;
+            this.pbxExport.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxExport;
             this.pbxExport.Location = new System.Drawing.Point(111, 3);
             this.pbxExport.Name = "pbxExport";
             this.pbxExport.Size = new System.Drawing.Size(48, 48);
             this.pbxExport.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbxExport.TabIndex = 0;
             this.pbxExport.TabStop = false;
+            this.pbxExport.Tag = "ექსპორტი";
             // 
             // splitContainer2
             // 
@@ -186,6 +190,8 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "GridBaseForm";
             this.Text = "GridBaseForm";
+            this.Load += new System.EventHandler(this.GridBaseForm_Load);
+            this.Shown += new System.EventHandler(this.GridBaseForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.gridData)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

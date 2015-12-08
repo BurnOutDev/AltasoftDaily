@@ -22,6 +22,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         public AuthenticationForm()
         {
             InitializeComponent();
+
+            tbxUsername.Text = Properties.Settings.Default.Username;
+            cbxDept.SelectedIndex = Properties.Settings.Default.SelectedBranch;
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -44,6 +47,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     return;
                 }
                 LoggingManagement.LogSign(SignType.SignIn, _user);
+
+                Properties.Settings.Default.Username = tbxUsername.Text;
+                Properties.Settings.Default.SelectedBranch = cbxDept.SelectedIndex;
+                Properties.Settings.Default.Save();
 
                 Close();
             }

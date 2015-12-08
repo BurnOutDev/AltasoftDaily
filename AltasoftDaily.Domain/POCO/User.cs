@@ -15,6 +15,7 @@ namespace AltasoftDaily.Domain.POCO
         public int AltasoftUserID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Salt { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string PrivateNumber { get; set; }

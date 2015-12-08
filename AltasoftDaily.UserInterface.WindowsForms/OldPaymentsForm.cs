@@ -49,5 +49,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             var payments = db.DailyPayments.Where(x => x.LocalUserID == User.UserID && x.CalculationDate == Date).ToList();
             gridData.DataSource = payments;
         }
+
+        public override void gridData_SelectionChanged(object sender, EventArgs e)
+        {
+            base.gridData_SelectionChanged(sender, e);
+        }
     }
 }

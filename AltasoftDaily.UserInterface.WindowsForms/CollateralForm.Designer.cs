@@ -44,6 +44,10 @@
             this.lblAddressLegal = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.gridRelations = new System.Windows.Forms.DataGridView();
+            this.lblPhone = new System.Windows.Forms.Label();
+            this.tbxPhone = new System.Windows.Forms.TextBox();
+            this.lblMobile = new System.Windows.Forms.Label();
+            this.tbxMobile = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -135,8 +139,12 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.tbxMobile);
+            this.tabPage1.Controls.Add(this.tbxPhone);
             this.tabPage1.Controls.Add(this.tbxIdNumber);
             this.tabPage1.Controls.Add(this.tbxAddressLegal);
+            this.tabPage1.Controls.Add(this.lblMobile);
+            this.tabPage1.Controls.Add(this.lblPhone);
             this.tabPage1.Controls.Add(this.lblIdNumber);
             this.tabPage1.Controls.Add(this.lblAddressLegal);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -203,6 +211,42 @@
             this.gridRelations.Size = new System.Drawing.Size(517, 286);
             this.gridRelations.TabIndex = 0;
             // 
+            // lblPhone
+            // 
+            this.lblPhone.AutoSize = true;
+            this.lblPhone.Font = new System.Drawing.Font("Sylfaen", 8.25F);
+            this.lblPhone.Location = new System.Drawing.Point(9, 65);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(80, 14);
+            this.lblPhone.TabIndex = 18;
+            this.lblPhone.Text = "ტელ. ნომერი";
+            // 
+            // tbxPhone
+            // 
+            this.tbxPhone.Font = new System.Drawing.Font("Sylfaen", 8.25F);
+            this.tbxPhone.Location = new System.Drawing.Point(150, 62);
+            this.tbxPhone.Name = "tbxPhone";
+            this.tbxPhone.Size = new System.Drawing.Size(236, 22);
+            this.tbxPhone.TabIndex = 19;
+            // 
+            // lblMobile
+            // 
+            this.lblMobile.AutoSize = true;
+            this.lblMobile.Font = new System.Drawing.Font("Sylfaen", 8.25F);
+            this.lblMobile.Location = new System.Drawing.Point(9, 93);
+            this.lblMobile.Name = "lblMobile";
+            this.lblMobile.Size = new System.Drawing.Size(76, 14);
+            this.lblMobile.TabIndex = 18;
+            this.lblMobile.Text = "მობ. ნომერი";
+            // 
+            // tbxMobile
+            // 
+            this.tbxMobile.Font = new System.Drawing.Font("Sylfaen", 8.25F);
+            this.tbxMobile.Location = new System.Drawing.Point(150, 90);
+            this.tbxMobile.Name = "tbxMobile";
+            this.tbxMobile.Size = new System.Drawing.Size(236, 22);
+            this.tbxMobile.TabIndex = 19;
+            // 
             // CollateralForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -248,5 +292,9 @@
         private System.Windows.Forms.Label lblIdNumber;
         private System.Windows.Forms.Label lblAddressLegal;
         private System.Windows.Forms.DataGridView gridRelations;
+        private System.Windows.Forms.TextBox tbxMobile;
+        private System.Windows.Forms.TextBox tbxPhone;
+        private System.Windows.Forms.Label lblMobile;
+        private System.Windows.Forms.Label lblPhone;
     }
 }
