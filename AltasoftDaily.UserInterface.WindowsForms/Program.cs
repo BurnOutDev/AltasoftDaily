@@ -2,20 +2,54 @@
 using AltasoftDaily.Domain.POCO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+            //var accs = from x in a.ListAccounts(new AltasoftAPI.AccountsAPI.ListAccountsQuery()
+            //   {
+            //       ControlFlags = AltasoftAPI.AccountsAPI.AccountControlFlags.Basic
+            //   }).ToList()
+            //           select new { AccountNumber = x.IBAN, Name = x.Name.ValueGeo };
+
+            //using (var txtWriter = File.CreateText("exported.txt"))
+            //{
+            //    var serializer = JsonSerializer.Create();
+            //    serializer.Serialize(txtWriter, accs.Where(x => x.Name.Contains("დაფარვის")));
+            //}
+
             #region Old Comments
             //using (var db = new AltasoftDailyContext())
             //{

@@ -23,6 +23,8 @@ namespace AltasoftDaily.Domain.POCO
         public bool IsLockedOut { get; set; }
         public bool CanSubmit { get; set; }
         public bool CanViewDaily { get; set; }
+        public DateTime LastPasswordChange { get; set; }
+        public bool ForceUserToChangePassword { get; set; }
 
         public int DeptID { get; set; }
 

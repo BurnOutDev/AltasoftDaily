@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AltasoftDaily.UserInterface.WindowsForms</RootNamespace>
     <AssemblyName>AltasoftDaily.UserInterface.WindowsForms</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -56,13 +56,17 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MetroFramework">
-      <HintPath>D:\GitHub\DLLs\Controls\MetroFramework.dll</HintPath>
+      <HintPath>..\..\..\..\AltasoftDaily - Copy\MetroFramework.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Design">
-      <HintPath>D:\GitHub\DLLs\Controls\MetroFramework.Design.dll</HintPath>
+      <HintPath>..\..\..\..\AltasoftDaily - Copy\MetroFramework.Design.dll</HintPath>
     </Reference>
     <Reference Include="MetroFramework.Fonts">
-      <HintPath>D:\GitHub\DLLs\Controls\MetroFramework.Fonts.dll</HintPath>
+      <HintPath>..\..\..\..\AltasoftDaily - Copy\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -79,76 +83,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthenticationForm.cs">
+    <Compile Include="Forms\AuthenticationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AuthenticationForm.Designer.cs">
+    <Compile Include="Forms\AuthenticationForm.Designer.cs">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CollateralForm.cs">
+    <Compile Include="Controls\ChangePassword.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ChangePassword.Designer.cs">
+      <DependentUpon>ChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CollateralForm.Designer.cs">
+    <Compile Include="Forms\ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CollateralForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CollateralForm.Designer.cs">
       <DependentUpon>CollateralForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CommentsForm.cs">
+    <Compile Include="Forms\CommentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CommentsForm.Designer.cs">
+    <Compile Include="Forms\CommentsForm.Designer.cs">
       <DependentUpon>CommentsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomerForm.cs">
+    <Compile Include="Forms\CustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomerForm.Designer.cs">
+    <Compile Include="Forms\CustomerForm.Designer.cs">
       <DependentUpon>CustomerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DailyForm.cs">
+    <Compile Include="Forms\DailyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DailyForm.Designer.cs">
+    <Compile Include="Forms\DailyForm.Designer.cs">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DailyPaymentsForm.cs">
+    <Compile Include="Forms\DailyPaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DailyPaymentsForm.Designer.cs">
+    <Compile Include="Forms\DailyPaymentsForm.Designer.cs">
       <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EntityBaseForm.cs">
+    <Compile Include="Forms\EntityBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EntityBaseForm.Designer.cs">
+    <Compile Include="Forms\EntityBaseForm.Designer.cs">
       <DependentUpon>EntityBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilterForm.cs">
+    <Compile Include="Forms\FilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FilterForm.Designer.cs">
+    <Compile Include="Forms\FilterForm.Designer.cs">
       <DependentUpon>FilterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridBaseForm.cs">
+    <Compile Include="Forms\GridBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GridBaseForm.Designer.cs">
+    <Compile Include="Forms\GridBaseForm.Designer.cs">
       <DependentUpon>GridBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IdentityDocumentForm.cs">
+    <Compile Include="Forms\IdentityDocumentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IdentityDocumentForm.Designer.cs">
+    <Compile Include="Forms\IdentityDocumentForm.Designer.cs">
       <DependentUpon>IdentityDocumentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="OldPaymentsForm.cs">
+    <Compile Include="Forms\OldPaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OldPaymentsForm.Designer.cs">
+    <Compile Include="Forms\OldPaymentsForm.Designer.cs">
       <DependentUpon>OldPaymentsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PaymentsForm.cs">
+    <Compile Include="Forms\PaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PaymentsForm.Designer.cs">
+    <Compile Include="Forms\PaymentsForm.Designer.cs">
       <DependentUpon>PaymentsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -156,81 +172,87 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SingleOrderForm.cs">
+    <Compile Include="Forms\SingleOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SingleOrderForm.Designer.cs">
+    <Compile Include="Forms\SingleOrderForm.Designer.cs">
       <DependentUpon>SingleOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoadingForm.cs">
+    <Compile Include="Forms\LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoadingForm.Designer.cs">
+    <Compile Include="Forms\LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StatsForm.cs">
+    <Compile Include="Forms\StatsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StatsForm.Designer.cs">
+    <Compile Include="Forms\StatsForm.Designer.cs">
       <DependentUpon>StatsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewCollateralsForm.cs">
+    <Compile Include="Forms\ViewCollateralsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ViewCollateralsForm.Designer.cs">
+    <Compile Include="Forms\ViewCollateralsForm.Designer.cs">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AuthenticationForm.resx">
+    <EmbeddedResource Include="Forms\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CollateralForm.resx">
+    <EmbeddedResource Include="Controls\ChangePassword.resx">
+      <DependentUpon>ChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CollateralForm.resx">
       <DependentUpon>CollateralForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CommentsForm.resx">
+    <EmbeddedResource Include="Forms\CommentsForm.resx">
       <DependentUpon>CommentsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomerForm.resx">
+    <EmbeddedResource Include="Forms\CustomerForm.resx">
       <DependentUpon>CustomerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DailyForm.resx">
+    <EmbeddedResource Include="Forms\DailyForm.resx">
       <DependentUpon>DailyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DailyPaymentsForm.resx">
+    <EmbeddedResource Include="Forms\DailyPaymentsForm.resx">
       <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EntityBaseForm.resx">
+    <EmbeddedResource Include="Forms\EntityBaseForm.resx">
       <DependentUpon>EntityBaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FilterForm.resx">
+    <EmbeddedResource Include="Forms\FilterForm.resx">
       <DependentUpon>FilterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GridBaseForm.resx">
+    <EmbeddedResource Include="Forms\GridBaseForm.resx">
       <DependentUpon>GridBaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IdentityDocumentForm.resx">
+    <EmbeddedResource Include="Forms\IdentityDocumentForm.resx">
       <DependentUpon>IdentityDocumentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="OldPaymentsForm.resx">
+    <EmbeddedResource Include="Forms\OldPaymentsForm.resx">
       <DependentUpon>OldPaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaymentsForm.resx">
+    <EmbeddedResource Include="Forms\PaymentsForm.resx">
       <DependentUpon>PaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SingleOrderForm.resx">
+    <EmbeddedResource Include="Forms\SingleOrderForm.resx">
       <DependentUpon>SingleOrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadingForm.resx">
+    <EmbeddedResource Include="Forms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -238,10 +260,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="StatsForm.resx">
+    <EmbeddedResource Include="Forms\StatsForm.resx">
       <DependentUpon>StatsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ViewCollateralsForm.resx">
+    <EmbeddedResource Include="Forms\ViewCollateralsForm.resx">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="log4net.config" />
@@ -364,6 +386,7 @@
     <Content Include="BC.ico" />
     <None Include="Resources\pbxEditOrder.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

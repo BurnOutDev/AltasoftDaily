@@ -70,6 +70,19 @@
     <Compile Include="DailyManagement.cs" />
     <Compile Include="EncryptionManagement.cs" />
     <Compile Include="LoggingManagement.cs" />
+    <Compile Include="Migrations\201511191610385_InitialCreate.cs" />
+    <Compile Include="Migrations\201511191610385_InitialCreate.Designer.cs">
+      <DependentUpon>201511191610385_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512080952337_AddedPasswordEncryption.cs" />
+    <Compile Include="Migrations\201512080952337_AddedPasswordEncryption.Designer.cs">
+      <DependentUpon>201512080952337_AddedPasswordEncryption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512090632513_AddedPasswordFields.cs" />
+    <Compile Include="Migrations\201512090632513_AddedPasswordFields.Designer.cs">
+      <DependentUpon>201512090632513_AddedPasswordFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +93,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinessCredit.Core\BusinessCredit.Core.csproj">
+      <Project>{10e1b965-9262-4ce5-b727-8c0f5e4d4ac4}</Project>
+      <Name>BusinessCredit.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinssCredit.Domain\BusinssCredit.Domain.csproj">
+      <Project>{63460d01-2be9-45ba-906e-088645bad220}</Project>
+      <Name>BusinssCredit.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
       <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
       <Name>AltasoftAPI</Name>
@@ -96,6 +117,17 @@
   <ItemGroup>
     <Content Include="Libraries\EPPlus.dll" />
     <Content Include="Libraries\ExcelPackage.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201511191610385_InitialCreate.resx">
+      <DependentUpon>201511191610385_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512080952337_AddedPasswordEncryption.resx">
+      <DependentUpon>201512080952337_AddedPasswordEncryption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512090632513_AddedPasswordFields.resx">
+      <DependentUpon>201512090632513_AddedPasswordFields.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

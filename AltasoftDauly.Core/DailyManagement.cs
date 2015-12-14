@@ -7,6 +7,9 @@ using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
 using System.Reflection;
 using AltasoftDaily.Helpers;
+using System.Net;
+using BusinessCredit.Core;
+using BusinessCredit.Domain;
 
 namespace AltasoftDaily.Core
 {
@@ -106,7 +109,52 @@ namespace AltasoftDaily.Core
                 }
             }
 
+            list.AddRange(GetDailyByDeptId() as IEnumerable<DailyPayment>);
+
             return list.OrderBy(x => x.ClientNo).ToList();
+        }
+
+        public static List<DailyPayment> GetDailyByDeptId()
+        {
+            using (var db = new BusinessCreditContext("Isani_BusinessCreditDbConnectionString"))
+            {
+                var result = (from x in db.Payments.ToList()
+                              where x.PaymentDate == DateTime.Today
+                              select new DailyPayment()
+                              {
+                                  ClientName = x.Loan.Account.Name + " " + x.Loan.Account.LastName,
+                                  FirstName = x.Loan.Account.Name,
+                                  LastName = x.Loan.Account.LastName,
+                                  ClientNo = x.Loan.Account.AccountID,
+                                  StartDate = x.Loan.LoanStartDate.ToShortDateString(),
+                                  EndDate = x.Loan.LoanEndDate.ToShortDateString(),
+                                  Phone = x.Loan.Account.NumberMobile,
+                                  AccruedInterestInGel = decimal.Parse(x.PayableInterest.Value.ToString()),
+                                  AgreementNumber = x.Loan.Agreement,
+                                  BusinessAddress = x.Loan.Account.BusinessPhysicalAddress,
+                                  CalculationDate = x.PaymentDate,
+                                  TotalDebtInGel = decimal.Parse(x.WholeDebt.Value.ToString()),
+                                  ResponsibleUser = x.Loan.CreditExpert.Name + " " + x.Loan.CreditExpert.LastName,
+                                  ProblemManager = x.Loan.ProblemManager,
+                                  ProblemManageDate = x.Loan.ProblemManagerDate.HasValue ? x.Loan.ProblemManagerDate.Value.ToShortDateString() : null,
+                                  CurrentDebtInGel = decimal.Parse(x.CurrentDebt.Value.ToString()),
+                                  Payment = decimal.Parse(x.CurrentPayment.ToString()),
+                                  ClientAddressFact = x.Loan.Account.PhysicalAddress,
+                                  OverduePrincipalInGel = decimal.Parse(x.CurrentOverduePrincipal.Value.ToString()),
+                                  CourtAndEnforcementFee = decimal.Parse(x.EnforcementAndCourtFee.ToString()),
+                                  DateOfEnforcement = x.Loan.DateOfEnforcement.HasValue ? x.Loan.DateOfEnforcement.Value.ToShortDateString() : null,
+                                  DateOfTheNotificationLetter = x.Loan.LoanNotificationLetter.HasValue ? x.Loan.LoanNotificationLetter.Value.ToString() : null,
+                                  PrincipalInGel = decimal.Parse(x.PayablePrincipal.ToString()),
+                                  OverdueInterestInGel = decimal.Parse(x.AccruingOverdueInterest.ToString()),
+                                  LoanAmountInGel = decimal.Parse(x.Loan.LoanAmount.ToString()),
+                                  LoanID = x.Loan.LoanID,
+                                  PersonalID = x.Loan.Account.PrivateNumber,
+                                  CurrentPrincipalInGel = decimal.Parse((x.LoanBalance == x.AccruingOverduePrincipal ? 0 : (x.LoanBalance - x.AccruingOverduePrincipal > x.PayablePrincipal ? x.PayablePrincipal : x.LoanBalance - x.AccruingOverduePrincipal)).Value.ToString()),
+                                  PrincipalPenaltyInGel = decimal.Parse(x.AccruingPenalty.Value.ToString())
+                              }).ToList();
+
+                return result;
+            }
         }
 
         public static List<DailyPayment> UpdateCommentsInDaily(List<DailyPayment> list)
