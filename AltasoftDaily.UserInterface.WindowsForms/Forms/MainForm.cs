@@ -131,6 +131,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void კომენტარებიToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var commentsForm = new CommentsForm(User);
+            commentsForm.MdiParent = this;
             commentsForm.Show();
         }
 
@@ -174,6 +175,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void კლიენტებიToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new OldPaymentsForm(User);
+            form.MdiParent = this;
             form.Show();
         }
     }

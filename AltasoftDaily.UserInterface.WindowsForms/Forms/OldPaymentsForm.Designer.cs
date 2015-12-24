@@ -50,6 +50,10 @@
             // 
             this.pbxFilter.Click += new System.EventHandler(this.pbxFilter_Click);
             // 
+            // pbxExport
+            // 
+            this.pbxExport.Click += new System.EventHandler(this.pbxExport_Click);
+            // 
             // OldPaymentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

@@ -41,6 +41,7 @@
             this.tbxNewPassword.MaxLength = 32767;
             this.tbxNewPassword.Name = "tbxNewPassword";
             this.tbxNewPassword.PasswordChar = '●';
+            this.tbxNewPassword.PromptText = "ახალი პაროლი";
             this.tbxNewPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxNewPassword.SelectedText = "";
             this.tbxNewPassword.Size = new System.Drawing.Size(215, 29);
@@ -56,6 +57,7 @@
             this.tbxOldPassword.MaxLength = 32767;
             this.tbxOldPassword.Name = "tbxOldPassword";
             this.tbxOldPassword.PasswordChar = '\0';
+            this.tbxOldPassword.PromptText = "ძველი პაროლი";
             this.tbxOldPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxOldPassword.SelectedText = "";
             this.tbxOldPassword.Size = new System.Drawing.Size(215, 29);
@@ -70,6 +72,7 @@
             this.tbxNewPasswordRe.MaxLength = 32767;
             this.tbxNewPasswordRe.Name = "tbxNewPasswordRe";
             this.tbxNewPasswordRe.PasswordChar = '●';
+            this.tbxNewPasswordRe.PromptText = "გაიმეორეთ";
             this.tbxNewPasswordRe.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxNewPasswordRe.SelectedText = "";
             this.tbxNewPasswordRe.Size = new System.Drawing.Size(215, 29);

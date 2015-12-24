@@ -57,21 +57,22 @@
             this.ინკასატორიToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.დეილიToolStripMenuItem,
             this.კლიენტებიToolStripMenuItem});
+            this.ინკასატორიToolStripMenuItem.Font = new System.Drawing.Font("Sylfaen", 9F);
             this.ინკასატორიToolStripMenuItem.Name = "ინკასატორიToolStripMenuItem";
-            this.ინკასატორიToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.ინკასატორიToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.ინკასატორიToolStripMenuItem.Text = "ინკასატორი";
             // 
             // დეილიToolStripMenuItem
             // 
             this.დეილიToolStripMenuItem.Name = "დეილიToolStripMenuItem";
-            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.დეილიToolStripMenuItem.Text = "დეილი";
             this.დეილიToolStripMenuItem.Click += new System.EventHandler(this.TmiDaily_Click);
             // 
             // კლიენტებიToolStripMenuItem
             // 
             this.კლიენტებიToolStripMenuItem.Name = "კლიენტებიToolStripMenuItem";
-            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.კლიენტებიToolStripMenuItem.Text = "გადახდები";
             this.კლიენტებიToolStripMenuItem.Click += new System.EventHandler(this.კლიენტებიToolStripMenuItem_Click);
             // 
@@ -80,15 +81,16 @@
             this.takoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.კომენტარებიToolStripMenuItem});
             this.takoToolStripMenuItem.Enabled = false;
+            this.takoToolStripMenuItem.Font = new System.Drawing.Font("Sylfaen", 9F);
             this.takoToolStripMenuItem.Name = "takoToolStripMenuItem";
-            this.takoToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+            this.takoToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
             this.takoToolStripMenuItem.Text = "მონიტორინგი";
             this.takoToolStripMenuItem.Click += new System.EventHandler(this.takoToolStripMenuItem_Click);
             // 
             // კომენტარებიToolStripMenuItem
             // 
             this.კომენტარებიToolStripMenuItem.Name = "კომენტარებიToolStripMenuItem";
-            this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.კომენტარებიToolStripMenuItem.Text = "კომენტარები";
             this.კომენტარებიToolStripMenuItem.Click += new System.EventHandler(this.კომენტარებიToolStripMenuItem_Click);
             // 
@@ -97,6 +99,7 @@
             this.რეპორტებიToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.პრობლემურისესხებიToolStripMenuItem});
             this.რეპორტებიToolStripMenuItem.Enabled = false;
+            this.რეპორტებიToolStripMenuItem.Font = new System.Drawing.Font("Sylfaen", 9F);
             this.რეპორტებიToolStripMenuItem.Name = "რეპორტებიToolStripMenuItem";
             this.რეპორტებიToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
             this.რეპორტებიToolStripMenuItem.Text = "რეპორტები";
@@ -105,7 +108,7 @@
             // პრობლემურისესხებიToolStripMenuItem
             // 
             this.პრობლემურისესხებიToolStripMenuItem.Name = "პრობლემურისესხებიToolStripMenuItem";
-            this.პრობლემურისესხებიToolStripMenuItem.Size = new System.Drawing.Size(207, 22);
+            this.პრობლემურისესხებიToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.პრობლემურისესხებიToolStripMenuItem.Text = "პრობლემური სესხები";
             // 
             // MainForm
@@ -118,7 +121,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
-            this.Text = "AltasoftDaily";
+            this.Text = "BC";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);

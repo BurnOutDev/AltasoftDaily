@@ -284,6 +284,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinessCredit.Core\BusinessCredit.Core.csproj">
+      <Project>{10e1b965-9262-4ce5-b727-8c0f5e4d4ac4}</Project>
+      <Name>BusinessCredit.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinssCredit.Domain\BusinssCredit.Domain.csproj">
+      <Project>{63460d01-2be9-45ba-906e-088645bad220}</Project>
+      <Name>BusinssCredit.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
       <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
       <Name>AltasoftAPI</Name>

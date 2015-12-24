@@ -52,5 +52,6 @@ namespace AltasoftDaily.Domain.POCO
         public string Comment { get; set; }
         public int DeptID { get; set; }
         public long? OrderID { get; set; }
+        public bool IsOld { get; set; }
     }
 }

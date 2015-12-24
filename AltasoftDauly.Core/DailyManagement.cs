@@ -10,11 +10,169 @@ using AltasoftDaily.Helpers;
 using System.Net;
 using BusinessCredit.Core;
 using BusinessCredit.Domain;
+using System.Configuration;
 
 namespace AltasoftDaily.Core
 {
     public class DailyManagement
     {
+        #region Databases
+        private BusinessCreditContext _centralDb;
+
+        public BusinessCreditContext CentralDb
+        {
+            get
+            {
+                if (_centralDb == null)
+                    _centralDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Head_BusinessCreditDbConnectionString"].ConnectionString);
+                return _centralDb;
+            }
+        }
+
+        private BusinessCreditContext _isaniDb;
+
+        public BusinessCreditContext IsaniDb
+        {
+            get
+            {
+                if (_isaniDb == null)
+                    _isaniDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Isani_BusinessCreditDbConnectionString"].ConnectionString);
+                return _isaniDb;
+            }
+        }
+
+        private BusinessCreditContext _okribaDb;
+
+        public BusinessCreditContext OkribaDb
+        {
+            get
+            {
+                if (_okribaDb == null)
+                    _okribaDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Okriba_BusinessCreditDbConnectionString"].ConnectionString);
+                return _okribaDb;
+            }
+        }
+
+        private BusinessCreditContext _liloDb;
+
+        public BusinessCreditContext LiloDb
+        {
+            get
+            {
+                if (_liloDb == null)
+                    _liloDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Lilo_BusinessCreditDbConnectionString"].ConnectionString);
+                return _liloDb;
+            }
+        }
+
+        private BusinessCreditContext _eliavaDb;
+
+        public BusinessCreditContext EliavaDb
+        {
+            get
+            {
+                if (_eliavaDb == null)
+                    _eliavaDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Eliava_BusinessCreditDbConnectionString"].ConnectionString);
+                return _eliavaDb;
+            }
+        }
+
+        private BusinessCreditContext _vagzaliDb;
+
+        public BusinessCreditContext VagzaliDb
+        {
+            get
+            {
+                if (_vagzaliDb == null)
+                    _vagzaliDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Vagzali_BusinessCreditDbConnectionString"].ConnectionString);
+                return _vagzaliDb;
+            }
+        }
+
+        private BusinessCreditContext _gugaDb;
+
+        public BusinessCreditContext GugaDb
+        {
+            get
+            {
+                if (_gugaDb == null)
+                    _gugaDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Central_Guga_BusinessCreditDbConnectionString"].ConnectionString);
+                return _gugaDb;
+            }
+        }
+
+        private BusinessCreditContext _sandroDb;
+
+        public BusinessCreditContext SandroDb
+        {
+            get
+            {
+                if (_sandroDb == null)
+                    _sandroDb = new BusinessCreditContext(ConfigurationManager.ConnectionStrings["Sandro_Head_BusinessCreditDbConnectionString"].ConnectionString);
+                return _sandroDb;
+            }
+        }
+
+        public ICollection<BusinessCreditContext> Databases
+        {
+            get
+            {
+                return new List<BusinessCreditContext>() { CentralDb, IsaniDb, OkribaDb, LiloDb, EliavaDb, VagzaliDb, GugaDb, SandroDb };
+            }
+        }
+
+        #endregion
+
+        public static int InsertPaymentsInBusinessCreditDb(User user)
+        {
+            using (var db = new BusinessCreditContext(user.ConnectionString))
+            {
+                using (var localdb = new AltasoftDailyContext())
+                {
+                    var data = localdb.DailyPayments.Where(x => x.CalculationDate == DateTime.Today && x.IsOld);
+                    foreach (var pmt in data)
+                    {
+                        if (!pmt.IsOld)
+                            continue;
+
+                        Payment payment = null;
+                        try
+                        {
+                            payment = db.Payments.FirstOrDefault(p => p.PaymentDate == pmt.CalculationDate && p.Loan.LoanID == pmt.LoanID);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                        var loanId = payment.Loan.LoanID;
+
+                        db.Payments.Remove(payment);
+                        db.SaveChanges();
+
+                        var paymentNew = db.Payments.Create();
+                        paymentNew.Loan = db.Loans.FirstOrDefault(loan => loan.LoanID == loanId);
+                        paymentNew.CurrentPayment = double.Parse(pmt.Payment.ToString());
+                        paymentNew.PaymentDate = pmt.CalculationDate;
+                        paymentNew.TaxOrderID = pmt.TaxOrderNumber.ToString();
+                        paymentNew.CreditExpert = db.CreditExperts.FirstOrDefault();
+                        paymentNew.CashCollectionAgent = db.CashCollectionAgents.FirstOrDefault();
+
+                        db.Payments.Add(paymentNew);
+                        db.SaveChanges();
+
+                        if (paymentNew.WholeDebt.Value <= 0)
+                        {
+                            paymentNew.Loan.LoanStatus = LoanStatus.Closed;
+                            db.SaveChanges();
+                        }
+                    }
+                    db.SaveChanges();
+                }
+            }
+
+            return 1;
+        }
+
         public static List<DailyPayment> GetDailyByDeptId(int deptId)
         {
             #region Initialize Services
@@ -109,14 +267,21 @@ namespace AltasoftDaily.Core
                 }
             }
 
-            list.AddRange(GetDailyByDeptId() as IEnumerable<DailyPayment>);
+            //list.AddRange(GetDailyByDeptId() as IEnumerable<DailyPayment>);
 
             return list.OrderBy(x => x.ClientNo).ToList();
         }
 
-        public static List<DailyPayment> GetDailyByDeptId()
+        public static List<DailyPayment> GetDailyByBusinesscreditUser(User user)
         {
-            using (var db = new BusinessCreditContext("Isani_BusinessCreditDbConnectionString"))
+            var altasoftdailydb = new AltasoftDailyContext();
+
+            if (string.IsNullOrWhiteSpace(user.ConnectionString))
+            {
+                return new List<DailyPayment>();
+            }
+
+            using (var db = new BusinessCreditContext(user.ConnectionString))
             {
                 var result = (from x in db.Payments.ToList()
                               where x.PaymentDate == DateTime.Today
@@ -150,8 +315,14 @@ namespace AltasoftDaily.Core
                                   LoanID = x.Loan.LoanID,
                                   PersonalID = x.Loan.Account.PrivateNumber,
                                   CurrentPrincipalInGel = decimal.Parse((x.LoanBalance == x.AccruingOverduePrincipal ? 0 : (x.LoanBalance - x.AccruingOverduePrincipal > x.PayablePrincipal ? x.PayablePrincipal : x.LoanBalance - x.AccruingOverduePrincipal)).Value.ToString()),
-                                  PrincipalPenaltyInGel = decimal.Parse(x.AccruingPenalty.Value.ToString())
+                                  PrincipalPenaltyInGel = decimal.Parse(x.AccruingPenalty.Value.ToString()),
+                                  IsOld = true
                               }).ToList();
+
+                foreach (var item in result)
+                {
+                    item.ClientAccountIban = altasoftdailydb.AccountNumbers.FirstOrDefault(x => x.LoanID == item.LoanID).AccountNumber;
+                }
 
                 return result;
             }
@@ -387,19 +558,26 @@ namespace AltasoftDaily.Core
             cusEntity = (c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.IdentityDocuments | AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, acc.CustomerId.Value, true).Entity as AltasoftAPI.CustomersAPI.IndividualEntity);
 
             Order.Customer.IdentityDocument = (AltasoftAPI.OrdersAPI.IdentityDocument)cusEntity.IdentityDocuments.FirstOrDefault();
-            Order.Customer.Address = (AltasoftAPI.OrdersAPI.TextBilingual)cus.AddressActual.Value;
-            Order.Customer.BirthPlaceDateAndCountry = (AltasoftAPI.OrdersAPI.BirthPlaceDateAndCountry)cusEntity.BirthPlaceDateAndCountry;
+            try
+            {
+                Order.Customer.Address = (AltasoftAPI.OrdersAPI.TextBilingual)cus.AddressActual.Value;
+                Order.Customer.BirthPlaceDateAndCountry = (AltasoftAPI.OrdersAPI.BirthPlaceDateAndCountry)cusEntity.BirthPlaceDateAndCountry;
+
+            }
+            catch
+            {
+            }
             #endregion
 
             #region Put Order
             o.PutOrder(new AltasoftAPI.OrdersAPI.UserAndDeptId()
-            {
-                DeptId = deptId,
-                DeptIdSpecified = true,
-                UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = userId, IdSpecified = true }
-            }, 0, false,
-                   new Guid().ToString(),
-                   true, true, false, true, Order, out id, out specified);
+                        {
+                            DeptId = deptId,
+                            DeptIdSpecified = true,
+                            UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = userId, IdSpecified = true }
+                        }, 0, false,
+                               new Guid().ToString(),
+                               true, true, false, true, Order, out id, out specified);
             #endregion
 
             return id;
@@ -416,7 +594,7 @@ namespace AltasoftDaily.Core
                 foreach (var item in localPayments)
                 {
                     DeleteOrder(item);
-                    result.Add(new DailyPaymentIDOrderID() { OrderID = SubmitOrder(item.TaxOrderNumber, item.LoanCCY, item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID), PaymentID = item.DailyPaymentID });
+                    result.Add(new DailyPaymentIDOrderID() { OrderID = SubmitOrder(item.TaxOrderNumber, "GEL", item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID), PaymentID = item.DailyPaymentID });
                 }
             }
 
@@ -464,7 +642,7 @@ namespace AltasoftDaily.Core
 
             using (var db = new AltasoftDailyContext())
             {
-                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID).ToList();
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && !x.IsOld).ToList();
                 var localPaymentsIds = from x in localPayments
                                        select x.LoanID;
 
@@ -499,6 +677,51 @@ namespace AltasoftDaily.Core
                 return newPaymentsIds.Count;
             }
         }
+
+        public static int GetUpdatesByBusinesscreditUser(User user)
+        {
+            var calcDate = GetCalculationDate();
+
+            List<DailyPayment> result = new List<DailyPayment>();
+
+            using (var db = new AltasoftDailyContext())
+            {
+                var localPayments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == user.UserID && x.IsOld).ToList();
+                var localPaymentsIds = from x in localPayments
+                                       select x.LoanID;
+
+                var bcPayments = GetDailyByBusinesscreditUser(user);
+                var bcPaymentsIds = from x in bcPayments
+                                    select x.LoanID;
+
+                var newPaymentsIds = bcPaymentsIds.Except(localPaymentsIds).ToList();
+                var oldPaymentsIds = localPaymentsIds.Except(bcPaymentsIds).ToList();
+
+                var newPayments = bcPayments.Where(x => newPaymentsIds.Contains(x.LoanID));
+                var oldPayments = localPayments.Where(x => oldPaymentsIds.Contains(x.LoanID));
+
+                int count = 0;
+                if (localPayments.Count > 0)
+                    count = localPayments.Max(x => x.TaxOrderNumber);
+
+                foreach (var item in newPayments)
+                {
+                    count++;
+                    item.LocalUserID = user.UserID;
+                    item.TaxOrderNumber = int.Parse(user.DeptID + user.AltasoftUserID.ToString() + count);
+                }
+
+                if (newPaymentsIds.Count > 0)
+                    db.DailyPayments.AddRange(newPayments);
+
+                if (oldPaymentsIds.Count > 0)
+                    db.DailyPayments.RemoveRange(oldPayments);
+
+                db.SaveChanges();
+                return newPaymentsIds.Count;
+            }
+        }
+
         public static DateTime GetCalculationDate()
         {
             //#region Initialize Loans Service

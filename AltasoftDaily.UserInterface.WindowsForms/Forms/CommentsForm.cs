@@ -357,12 +357,28 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
                 var users = db.Users.Where(x => x.DeptID == comboBox1.SelectedIndex).ToList();
 
-                var t = db.DailyPayments.Where(x => users.Any(y => y.UserID == x.LocalUserID));
+                var t = db.DailyPayments.Where(x => users.Any(y => y.UserID == x.LocalUserID) && x.CalculationDate == calcDate);
 
                 if (cbxOnlyZeroPayment.Checked)
-                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex && x.Payment <= 0).ToList());
+                //gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex && x.Payment <= 0).ToList());
+                {
+                    var lst = new List<DailyPayment>();
+                    foreach (var user in users)
+                    {
+                        lst.AddRange(db.DailyPayments.Where(x => user.UserID == x.LocalUserID && x.CalculationDate == calcDate && x.Payment > 0 && x.IsOld).ToList());
+                    }
+                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(lst);
+                }
                 else
-                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex).ToList());
+                //gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.DeptID == comboBox1.SelectedIndex).ToList());
+                {
+                    var lst = new List<DailyPayment>();
+                    foreach (var user in users)
+                    {
+                        lst.AddRange(db.DailyPayments.Where(x => user.UserID == x.LocalUserID && x.CalculationDate == calcDate).ToList());
+                    }
+                    gridDaily.DataSource = new SortableBindingList<DailyPayment>(lst);
+                }
             }
             catch (Exception ex)
             {
@@ -376,13 +392,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             #region Hide Columns
             gridDaily.Columns[0].Visible = false;
-            gridDaily.Columns[gridDaily.Columns.Count - 1].Visible = false;
+            gridDaily.Columns[gridDaily.Columns.Count - 2].Visible = false;
             gridDaily.Columns["FirstName"].Visible = false;
             gridDaily.Columns["LastName"].Visible = false;
             gridDaily.Columns["LocalUserID"].Visible = false;
             #endregion
 
-            foreach (DataGridViewTextBoxColumn col in gridDaily.Columns)
+            foreach (DataGridViewColumn col in gridDaily.Columns)
             {
                 if (col.Name == "Comment")
                     continue;

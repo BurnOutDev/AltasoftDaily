@@ -43,6 +43,7 @@
             this.tbxPassword.MaxLength = 32767;
             this.tbxPassword.Name = "tbxPassword";
             this.tbxPassword.PasswordChar = '●';
+            this.tbxPassword.PromptText = "პაროლი";
             this.tbxPassword.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxPassword.SelectedText = "";
             this.tbxPassword.Size = new System.Drawing.Size(215, 29);
@@ -98,6 +99,7 @@
             this.tbxUsername.MaxLength = 32767;
             this.tbxUsername.Name = "tbxUsername";
             this.tbxUsername.PasswordChar = '\0';
+            this.tbxUsername.PromptText = "სახელი";
             this.tbxUsername.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.tbxUsername.SelectedText = "";
             this.tbxUsername.Size = new System.Drawing.Size(215, 29);

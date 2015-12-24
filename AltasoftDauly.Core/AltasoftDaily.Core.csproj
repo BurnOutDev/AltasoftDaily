@@ -55,6 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
@@ -81,6 +82,18 @@
     <Compile Include="Migrations\201512090632513_AddedPasswordFields.cs" />
     <Compile Include="Migrations\201512090632513_AddedPasswordFields.Designer.cs">
       <DependentUpon>201512090632513_AddedPasswordFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512142137426_AddedLoanAccountNumberTable.cs" />
+    <Compile Include="Migrations\201512142137426_AddedLoanAccountNumberTable.Designer.cs">
+      <DependentUpon>201512142137426_AddedLoanAccountNumberTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512150705290_AddedConnectionStringPropertyToUser.cs" />
+    <Compile Include="Migrations\201512150705290_AddedConnectionStringPropertyToUser.Designer.cs">
+      <DependentUpon>201512150705290_AddedConnectionStringPropertyToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512151131366_AddedIsOldPropertyToDailyPayments.cs" />
+    <Compile Include="Migrations\201512151131366_AddedIsOldPropertyToDailyPayments.Designer.cs">
+      <DependentUpon>201512151131366_AddedIsOldPropertyToDailyPayments.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
@@ -127,6 +140,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512090632513_AddedPasswordFields.resx">
       <DependentUpon>201512090632513_AddedPasswordFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512142137426_AddedLoanAccountNumberTable.resx">
+      <DependentUpon>201512142137426_AddedLoanAccountNumberTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512150705290_AddedConnectionStringPropertyToUser.resx">
+      <DependentUpon>201512150705290_AddedConnectionStringPropertyToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512151131366_AddedIsOldPropertyToDailyPayments.resx">
+      <DependentUpon>201512151131366_AddedIsOldPropertyToDailyPayments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

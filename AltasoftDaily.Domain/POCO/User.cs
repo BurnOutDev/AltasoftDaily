@@ -25,6 +25,7 @@ namespace AltasoftDaily.Domain.POCO
         public bool CanViewDaily { get; set; }
         public DateTime LastPasswordChange { get; set; }
         public bool ForceUserToChangePassword { get; set; }
+        public string ConnectionString { get; set; }
 
         public int DeptID { get; set; }
 

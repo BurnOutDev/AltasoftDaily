@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
+using AltasoftDaily.Helpers;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -53,6 +54,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         public override void gridData_SelectionChanged(object sender, EventArgs e)
         {
             base.gridData_SelectionChanged(sender, e);
+        }
+
+        private void pbxExport_Click(object sender, EventArgs e)
+        {
+            var obectList = gridData.DataSource as List<DailyPayment>;
+            var lst = new SortableBindingList<object>(obectList.Cast<object>().ToList());
+
+            TaxOrderGenerator.ExportToExcel(lst, typeof(DailyPayment));
         }
     }
 }
