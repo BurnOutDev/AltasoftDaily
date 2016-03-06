@@ -95,7 +95,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             var id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["CollateralID"].Value);
 
-            var form = new CollateralForm(DailyManagement.GetCollateralIdByLoanId(loanId));
+            var form = new CollateralForm(id);
 
             form.Show();
         }

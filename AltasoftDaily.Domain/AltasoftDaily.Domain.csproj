@@ -50,8 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Article.cs" />
+    <Compile Include="BalanceReportModel.cs" />
     <Compile Include="CollateralModel.cs" />
     <Compile Include="CommentsPaymentModel.cs" />
+    <Compile Include="POCO\EnforcementLoans.cs" />
     <Compile Include="POCO\FormWindow.cs" />
     <Compile Include="POCO\LoanAccountNumber.cs" />
     <Compile Include="POCO\Logging\CommentLog.cs" />

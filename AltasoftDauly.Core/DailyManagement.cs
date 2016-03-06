@@ -11,6 +11,7 @@ using System.Net;
 using BusinessCredit.Core;
 using BusinessCredit.Domain;
 using System.Configuration;
+using AltasoftAPI.AccountsAPI;
 
 namespace AltasoftDaily.Core
 {
@@ -270,6 +271,8 @@ namespace AltasoftDaily.Core
             //list.AddRange(GetDailyByDeptId() as IEnumerable<DailyPayment>);
 
             return list.OrderBy(x => x.ClientNo).ToList();
+
+
         }
 
         public static List<DailyPayment> GetDailyByBusinesscreditUser(User user)
@@ -385,7 +388,7 @@ namespace AltasoftDaily.Core
                 var user = db.Users.FirstOrDefault(x => x.AltasoftUserID == altasoftUserId);
 
 
-                loansIds.ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
+                loansIds.Where(x => x != 2331).ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
 
                 try
                 {
@@ -409,7 +412,7 @@ namespace AltasoftDaily.Core
             return list.OrderBy(x => x.LoanID).ToList();
         }
 
-        private static DailyPaymentAndLoan GetLoanAndDailyModel(int loanId)
+        public static DailyPaymentAndLoan GetLoanAndDailyModel(int loanId)
         {
             #region Initialize Services
             #region OrdersService
@@ -646,7 +649,7 @@ namespace AltasoftDaily.Core
                 var localPaymentsIds = from x in localPayments
                                        select x.LoanID;
 
-                var lmsPayments = GetDailyByUser(user.AltasoftUserID).Where(x => x.CalculationDate == calcDate);
+                var lmsPayments = GetDailyByUser(user.AltasoftUserID).Where(x => x.CalculationDate == calcDate && x.LoanID != 2331);
                 var lmsPaymentsIds = from x in lmsPayments
                                      select x.LoanID;
 
@@ -793,6 +796,807 @@ namespace AltasoftDaily.Core
             //    });
 
             return collaterals.FirstOrDefault().CollateralId.Value;
+        }
+
+        public static SortableBindingList<BalanceReportModel> GetAccounts(DateTime startDate, DateTime endDate, decimal? balCode, int? deptId)
+        {
+            var dates = new List<DateTime>();
+
+            for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                dates.Add(startDate);
+
+            var list = new List<BalanceReportModel>();
+
+            AltasoftAPI.AccountsAPI.Account[] result = null;
+
+            foreach (var date in dates)
+            {
+                #region AccountsService
+                AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+                a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+                #endregion
+
+                var lll = new List<AccountStatement>();
+
+                result = a.ListAccounts(new ListAccountsQuery()
+                {
+                    ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
+                    BalAcc = balCode,
+                    BalAccSpecified = balCode.HasValue,
+                    DeptId = deptId,
+                    DeptIdSpecified = deptId.HasValue
+                });
+
+                foreach (var item in result)
+                {
+                    AccountStatement bal;
+
+                    if (item.Ccy == "GEL")
+                        bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = date, End = date }, false, false, TransactionStatus.Green, true, 0, false);
+                    else
+                        bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = date, End = date }, true, true, TransactionStatus.Green, true, 0, false);
+                    lll.Add(bal);
+                }
+
+                foreach (var item in lll)
+                {
+                    list.Add(new BalanceReportModel()
+                        {
+                            Date = date,
+                            Balance = item.EndingBalanceEqu.HasValue ? item.EndingBalanceEqu.Value : item.EndingBalance,
+                            CreditAmount = item.Records.Sum(x => x.CreditAmountEqu.HasValue ? x.CreditAmountEqu.Value : x.CreditAmount.Value),
+                            DebitAmount = item.Records.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.Value)
+                        });
+                }
+            }
+
+            var list2 = list.GroupBy(x => x.Date);
+
+            var list3 = new List<BalanceReportModel>();
+
+            foreach (var item in list2)
+            {
+                list3.Add(new BalanceReportModel()
+                    {
+                        Date = item.FirstOrDefault().Date,
+                        Balance = item.Sum(x => x.Balance)
+                    });
+            }
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService g = new AltasoftAPI.AccountsAPI.AccountsService();
+            g.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            List<AccountStatementRecord> sts = new List<AccountStatementRecord>();
+
+            foreach (var item in result)
+                sts.AddRange(g.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = startDate, End = endDate }, true, true, TransactionStatus.Green, true, 0, false).Records);//.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.Value);
+
+            var grouppedsts = sts.GroupBy(x => x.Date);
+
+            foreach (var item in grouppedsts)
+            {
+                list3.FirstOrDefault(x => x.Date == item.Key).DebitAmount = item.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.HasValue ? x.DebitAmount.Value : 0);
+                list3.FirstOrDefault(x => x.Date == item.Key).CreditAmount = item.Sum(x => x.CreditAmountEqu.HasValue ? x.CreditAmountEqu.Value : x.CreditAmount.HasValue ? x.CreditAmount.Value : 0);
+            }
+
+            return new SortableBindingList<BalanceReportModel>(list3);
+        }
+
+        public static SortableBindingList<BalanceReportModel> GetAccounts2(DateTime startDate, DateTime endDate, decimal? balCode, int? deptId)
+        {
+            var list = new List<AccountStatementRecord>();
+            var list2 = new List<object>();
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            var lll = new List<AccountStatement>();
+
+            var result = new List<string>();
+
+            result.Add("GE10AL0500000450100514");
+            result.Add("GE59AL0300000450100514");
+            result.Add("GE84AL0000000450100514");
+            result.Add("GE15AL0100000045010012");
+            result.Add("GE38AL0000000045010621");
+            result.Add("GE11AL0000000045010622");
+            result.Add("GE12AL0700000045010621");
+            result.Add("GE34AL0600000450100514");
+            result.Add("GE81AL0000000045010623");
+            result.Add("GE54AL0000000045010624");
+            result.Add("GE26AL0400000045010625");
+
+
+            foreach (var item in result)
+            {
+                AccountStatement bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item, Ccy = "GEL" }, new Period() { Start = startDate, End = endDate }, false, false, TransactionStatus.Green, true, 0, false);
+
+                lll.Add(bal);
+            }
+
+            foreach (var item in lll)
+                list.AddRange(item.Records.ToList());
+
+            foreach (var item in list)
+            {
+                list2.Add(new Kunchik()
+                {
+                    AccountNumber = item.PartnerAccountId.AccountNumber,
+                    AccountNumberSpecified = item.PartnerAccountId.AccountNumberSpecified,
+                    Balance = item.Balance,
+                    BalanceEqu = item.BalanceEqu,
+                    BalanceEquSpecified = item.BalanceEquSpecified,
+                    BranchId = item.PartnerAccountId.BranchId,
+                    BranchIdSpecified = item.PartnerAccountId.BranchIdSpecified,
+                    Ccy = item.PartnerAccountId.Ccy,
+                    CreditAmount = item.CreditAmount,
+                    CreditAmountEqu = item.CreditAmountEqu,
+                    CreditAmountEquSpecified = item.CreditAmountEquSpecified,
+                    CreditAmountSpecified = item.CreditAmountSpecified,
+                    Date = item.Date,
+                    DebitAmount = item.DebitAmount,
+                    DebitAmountEqu = item.DebitAmountEqu,
+                    DebitAmountEquSpecified = item.DebitAmountEquSpecified,
+                    DebitAmountSpecified = item.DebitAmountSpecified,
+                    DocNum = item.DocNum,
+                    DocNumSpecified = item.DocNumSpecified,
+                    ExtraDescription = item.ExtraDescription,
+                    IBAN = item.PartnerAccountId.IBAN,
+                    Id = item.PartnerAccountId.Id,
+                    IdSpecified = item.PartnerAccountId.IdSpecified,
+                    OpCode = item.OpCode,
+                    OrderDate = item.OrderDate,
+                    OrderDateSpecified = item.OrderDateSpecified,
+                    OrderId = item.OrderId,
+                    Purpose = item.Purpose,
+                    Status = item.Status,
+                    TransactionType = item.TransactionType
+                });
+            }
+
+            TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(list2), typeof(Kunchik));
+
+            //var list2 = list.GroupBy(x => x.Date);
+
+            //var list3 = new List<BalanceReportModel>();
+
+            //foreach (var item in list2)
+            //{
+            //    list3.Add(new BalanceReportModel()
+            //    {
+            //        Date = item.FirstOrDefault().Date,
+            //        Balance = item.Sum(x => x.Balance)
+            //    });
+            //}
+
+            //return new SortableBindingList<BalanceReportModel>(list3);
+
+            return null;
+        }
+        public static SortableBindingList<BalanceReportModel> GetAccounts3(DateTime startDate, DateTime endDate, decimal? balCode, int? deptId)
+        {
+
+            var list3 = new List<BalanceReportModel>();
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService g = new AltasoftAPI.AccountsAPI.AccountsService();
+            g.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            var result = g.ListAccounts(new ListAccountsQuery()
+            {
+                ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
+                BalAcc = balCode,
+                BalAccSpecified = balCode.HasValue,
+                DeptId = deptId,
+                DeptIdSpecified = deptId.HasValue
+            });
+
+            List<AccountStatementRecord> sts = new List<AccountStatementRecord>();
+
+            foreach (var item in result)
+                sts.AddRange(g.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = startDate, End = endDate }, true, true, TransactionStatus.Green, true, 0, false).Records);//.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.Value);
+
+            var grouppedsts = sts.GroupBy(x => x.Date);
+
+            foreach (var item in grouppedsts)
+            {
+                list3.Add(new BalanceReportModel() { DebitAmount = item.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.HasValue ? x.DebitAmount.Value : 0), CreditAmount = item.Sum(x => x.CreditAmountEqu.HasValue ? x.CreditAmountEqu.Value : x.CreditAmount.HasValue ? x.CreditAmount.Value : 0), Date = item.Key });
+            }
+
+            return new SortableBindingList<BalanceReportModel>(list3);
+
+        }
+
+
+        public static SortableBindingList<Kunchik> GetAccountsTest(DateTime startDate, DateTime endDate, decimal? balCode, int? deptId)
+        {
+            var list = new Dictionary<List<AccountStatementRecord>, AltasoftAPI.AccountsAPI.Account>();
+            var list2 = new List<Kunchik>();
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            var lll = new Dictionary<AccountStatement, AltasoftAPI.AccountsAPI.Account>();
+
+            var result = a.ListAccounts(new ListAccountsQuery()
+            {
+                ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
+                BalAcc = balCode,
+                BalAccSpecified = balCode.HasValue,
+                DeptId = deptId,
+                DeptIdSpecified = deptId.HasValue
+            });
+
+            foreach (var item in result)
+            {
+                AccountStatement bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = startDate, End = endDate }, true, true, TransactionStatus.Green, true, 0, false);
+
+                lll.Add(bal, item);
+            }
+
+            foreach (var item in lll)
+                foreach (var item2 in item.Key.Records)
+                    list.Add(item.Key.Records.ToList(), item.Value);
+
+            foreach (var item in list)
+            {
+                foreach (var itt in item.Key)
+                {
+
+                    list2.Add(new Kunchik()
+                    {
+                        AccountNumber = itt.PartnerAccountId.AccountNumber,
+                        AccountNumberSpecified = itt.PartnerAccountId.AccountNumberSpecified,
+                        Balance = itt.Balance,
+                        BalanceEqu = itt.BalanceEqu,
+                        BalanceEquSpecified = itt.BalanceEquSpecified,
+                        BranchId = itt.PartnerAccountId.BranchId,
+                        BranchIdSpecified = itt.PartnerAccountId.BranchIdSpecified,
+                        Ccy = itt.PartnerAccountId.Ccy,
+                        CreditAmount = itt.CreditAmount,
+                        CreditAmountEqu = itt.CreditAmountEqu,
+                        CreditAmountEquSpecified = itt.CreditAmountEquSpecified,
+                        CreditAmountSpecified = itt.CreditAmountSpecified,
+                        Date = itt.Date,
+                        DebitAmount = itt.DebitAmount,
+                        DebitAmountEqu = itt.DebitAmountEqu,
+                        DebitAmountEquSpecified = itt.DebitAmountEquSpecified,
+                        DebitAmountSpecified = itt.DebitAmountSpecified,
+                        DocNum = itt.DocNum,
+                        DocNumSpecified = itt.DocNumSpecified,
+                        ExtraDescription = itt.ExtraDescription,
+                        IBAN = itt.PartnerAccountId.IBAN,
+                        Id = itt.PartnerAccountId.Id,
+                        IdSpecified = itt.PartnerAccountId.IdSpecified,
+                        OpCode = itt.OpCode,
+                        OrderDate = itt.OrderDate,
+                        OrderDateSpecified = itt.OrderDateSpecified,
+                        OrderId = itt.OrderId,
+                        Purpose = itt.Purpose,
+                        Status = itt.Status,
+                        TransactionType = itt.TransactionType,
+                        AccountName = item.Value.DisplayName.ValueGeo
+                    });
+                }
+            }
+
+            return new SortableBindingList<Kunchik>(list2);
+
+            //TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(list2), typeof(Kunchik));
+
+            //var list2 = list.GroupBy(x => x.Date);
+
+            //var list3 = new List<BalanceReportModel>();
+
+            //foreach (var item in list2)
+            //{
+            //    list3.Add(new BalanceReportModel()
+            //    {
+            //        Date = item.FirstOrDefault().Date,
+            //        Balance = item.Sum(x => x.Balance)
+            //    });
+            //}
+
+            //return new SortableBindingList<BalanceReportModel>(list3);
+        }
+    }
+
+    public class Kunchik
+    {
+        public string AccountName { get; set; }
+
+        private System.Nullable<int> idField;
+
+        private bool idFieldSpecified;
+
+        private string iBANField;
+
+        private System.Nullable<ulong> accountNumberField;
+
+        private bool accountNumberFieldSpecified;
+
+        private System.Nullable<int> branchIdField;
+
+        private bool branchIdFieldSpecified;
+
+        private string ccyField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> Id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IdSpecified
+        {
+            get
+            {
+                return this.idFieldSpecified;
+            }
+            set
+            {
+                this.idFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string IBAN
+        {
+            get
+            {
+                return this.iBANField;
+            }
+            set
+            {
+                this.iBANField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<ulong> AccountNumber
+        {
+            get
+            {
+                return this.accountNumberField;
+            }
+            set
+            {
+                this.accountNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool AccountNumberSpecified
+        {
+            get
+            {
+                return this.accountNumberFieldSpecified;
+            }
+            set
+            {
+                this.accountNumberFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> BranchId
+        {
+            get
+            {
+                return this.branchIdField;
+            }
+            set
+            {
+                this.branchIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BranchIdSpecified
+        {
+            get
+            {
+                return this.branchIdFieldSpecified;
+            }
+            set
+            {
+                this.branchIdFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string Ccy
+        {
+            get
+            {
+                return this.ccyField;
+            }
+            set
+            {
+                this.ccyField = value;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        /////////////////////////////////////////////////
+
+        private long orderIdField;
+
+        private System.DateTime dateField;
+
+        private System.Nullable<System.DateTime> orderDateField;
+
+        private bool orderDateFieldSpecified;
+
+        private TransactionStatus statusField;
+
+        private byte transactionTypeField;
+
+        private System.Nullable<decimal> debitAmountField;
+
+        private bool debitAmountFieldSpecified;
+
+        private System.Nullable<decimal> creditAmountField;
+
+        private bool creditAmountFieldSpecified;
+
+        private System.Nullable<decimal> debitAmountEquField;
+
+        private bool debitAmountEquFieldSpecified;
+
+        private System.Nullable<decimal> creditAmountEquField;
+
+        private bool creditAmountEquFieldSpecified;
+
+
+
+        private string purposeField;
+
+        private string extraDescriptionField;
+
+        private string opCodeField;
+
+        private System.Nullable<int> docNumField;
+
+        private bool docNumFieldSpecified;
+
+        private decimal balanceField;
+
+        private System.Nullable<decimal> balanceEquField;
+
+        private bool balanceEquFieldSpecified;
+
+        /// <remarks/>
+        public long OrderId
+        {
+            get
+            {
+                return this.orderIdField;
+            }
+            set
+            {
+                this.orderIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        public System.DateTime Date
+        {
+            get
+            {
+                return this.dateField;
+            }
+            set
+            {
+                this.dateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<System.DateTime> OrderDate
+        {
+            get
+            {
+                return this.orderDateField;
+            }
+            set
+            {
+                this.orderDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool OrderDateSpecified
+        {
+            get
+            {
+                return this.orderDateFieldSpecified;
+            }
+            set
+            {
+                this.orderDateFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        public TransactionStatus Status
+        {
+            get
+            {
+                return this.statusField;
+            }
+            set
+            {
+                this.statusField = value;
+            }
+        }
+
+        /// <remarks/>
+        public byte TransactionType
+        {
+            get
+            {
+                return this.transactionTypeField;
+            }
+            set
+            {
+                this.transactionTypeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<decimal> DebitAmount
+        {
+            get
+            {
+                return this.debitAmountField;
+            }
+            set
+            {
+                this.debitAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DebitAmountSpecified
+        {
+            get
+            {
+                return this.debitAmountFieldSpecified;
+            }
+            set
+            {
+                this.debitAmountFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<decimal> CreditAmount
+        {
+            get
+            {
+                return this.creditAmountField;
+            }
+            set
+            {
+                this.creditAmountField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CreditAmountSpecified
+        {
+            get
+            {
+                return this.creditAmountFieldSpecified;
+            }
+            set
+            {
+                this.creditAmountFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<decimal> DebitAmountEqu
+        {
+            get
+            {
+                return this.debitAmountEquField;
+            }
+            set
+            {
+                this.debitAmountEquField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DebitAmountEquSpecified
+        {
+            get
+            {
+                return this.debitAmountEquFieldSpecified;
+            }
+            set
+            {
+                this.debitAmountEquFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<decimal> CreditAmountEqu
+        {
+            get
+            {
+                return this.creditAmountEquField;
+            }
+            set
+            {
+                this.creditAmountEquField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool CreditAmountEquSpecified
+        {
+            get
+            {
+                return this.creditAmountEquFieldSpecified;
+            }
+            set
+            {
+                this.creditAmountEquFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string Purpose
+        {
+            get
+            {
+                return this.purposeField;
+            }
+            set
+            {
+                this.purposeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string ExtraDescription
+        {
+            get
+            {
+                return this.extraDescriptionField;
+            }
+            set
+            {
+                this.extraDescriptionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public string OpCode
+        {
+            get
+            {
+                return this.opCodeField;
+            }
+            set
+            {
+                this.opCodeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<int> DocNum
+        {
+            get
+            {
+                return this.docNumField;
+            }
+            set
+            {
+                this.docNumField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DocNumSpecified
+        {
+            get
+            {
+                return this.docNumFieldSpecified;
+            }
+            set
+            {
+                this.docNumFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        public decimal Balance
+        {
+            get
+            {
+                return this.balanceField;
+            }
+            set
+            {
+                this.balanceField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<decimal> BalanceEqu
+        {
+            get
+            {
+                return this.balanceEquField;
+            }
+            set
+            {
+                this.balanceEquField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool BalanceEquSpecified
+        {
+            get
+            {
+                return this.balanceEquFieldSpecified;
+            }
+            set
+            {
+                this.balanceEquFieldSpecified = value;
+            }
         }
     }
 }

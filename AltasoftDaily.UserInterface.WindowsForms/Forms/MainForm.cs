@@ -29,6 +29,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void SyncUsers()
         {
+            return;
             #region Initialize Services
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
@@ -114,6 +115,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                         ინკასატორიToolStripMenuItem.Enabled = false;
                     }
 
+                    if (User.Username == "mesakia")
+                    {
+                        ბუღალტერიაToolStripMenuItem.Enabled = true;
+                        takoToolStripMenuItem.Enabled = false;
+                        ინკასატორიToolStripMenuItem.Enabled = false;
+                    }
+
                     this.WindowState = FormWindowState.Maximized; 
                 }
                 else
@@ -175,6 +183,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void კლიენტებიToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new OldPaymentsForm(User);
+            form.MdiParent = this;
+            form.Show();
+        }
+
+        private void b6ისრეპორტიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new BalanceReportForm();
             form.MdiParent = this;
             form.Show();
         }

@@ -48,7 +48,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void GetData()
         {
             var payments = db.DailyPayments.Where(x => x.LocalUserID == User.UserID && x.CalculationDate == Date).ToList();
-            gridData.DataSource = payments;
+            //gridData.DataSource = payments;
+            gridData.DataSource = new BindingList<DailyPayment>(payments);
         }
 
         public override void gridData_SelectionChanged(object sender, EventArgs e)
@@ -62,6 +63,11 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             var lst = new SortableBindingList<object>(obectList.Cast<object>().ToList());
 
             TaxOrderGenerator.ExportToExcel(lst, typeof(DailyPayment));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

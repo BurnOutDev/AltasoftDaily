@@ -37,6 +37,8 @@
             this.კომენტარებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.რეპორტებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.პრობლემურისესხებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ბუღალტერიაToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.b6ისრეპორტიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +47,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ინკასატორიToolStripMenuItem,
             this.takoToolStripMenuItem,
-            this.რეპორტებიToolStripMenuItem});
+            this.რეპორტებიToolStripMenuItem,
+            this.ბუღალტერიაToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(512, 24);
@@ -65,14 +68,14 @@
             // დეილიToolStripMenuItem
             // 
             this.დეილიToolStripMenuItem.Name = "დეილიToolStripMenuItem";
-            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.დეილიToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.დეილიToolStripMenuItem.Text = "დეილი";
             this.დეილიToolStripMenuItem.Click += new System.EventHandler(this.TmiDaily_Click);
             // 
             // კლიენტებიToolStripMenuItem
             // 
             this.კლიენტებიToolStripMenuItem.Name = "კლიენტებიToolStripMenuItem";
-            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.კლიენტებიToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.კლიენტებიToolStripMenuItem.Text = "გადახდები";
             this.კლიენტებიToolStripMenuItem.Click += new System.EventHandler(this.კლიენტებიToolStripMenuItem_Click);
             // 
@@ -90,7 +93,7 @@
             // კომენტარებიToolStripMenuItem
             // 
             this.კომენტარებიToolStripMenuItem.Name = "კომენტარებიToolStripMenuItem";
-            this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.კომენტარებიToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.კომენტარებიToolStripMenuItem.Text = "კომენტარები";
             this.კომენტარებიToolStripMenuItem.Click += new System.EventHandler(this.კომენტარებიToolStripMenuItem_Click);
             // 
@@ -110,6 +113,22 @@
             this.პრობლემურისესხებიToolStripMenuItem.Name = "პრობლემურისესხებიToolStripMenuItem";
             this.პრობლემურისესხებიToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.პრობლემურისესხებიToolStripMenuItem.Text = "პრობლემური სესხები";
+            // 
+            // ბუღალტერიაToolStripMenuItem
+            // 
+            this.ბუღალტერიაToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.b6ისრეპორტიToolStripMenuItem});
+            this.ბუღალტერიაToolStripMenuItem.Enabled = false;
+            this.ბუღალტერიაToolStripMenuItem.Name = "ბუღალტერიაToolStripMenuItem";
+            this.ბუღალტერიაToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.ბუღალტერიაToolStripMenuItem.Text = "ბუღალტერია";
+            // 
+            // b6ისრეპორტიToolStripMenuItem
+            // 
+            this.b6ისრეპორტიToolStripMenuItem.Name = "b6ისრეპორტიToolStripMenuItem";
+            this.b6ისრეპორტიToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.b6ისრეპორტიToolStripMenuItem.Text = "B6-ის რეპორტი...";
+            this.b6ისრეპორტიToolStripMenuItem.Click += new System.EventHandler(this.b6ისრეპორტიToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -142,5 +161,7 @@
         private System.Windows.Forms.ToolStripMenuItem რეპორტებიToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem პრობლემურისესხებიToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem კლიენტებიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ბუღალტერიაToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem b6ისრეპორტიToolStripMenuItem;
     }
 }

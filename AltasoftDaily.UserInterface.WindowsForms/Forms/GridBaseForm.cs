@@ -83,28 +83,28 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridData_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    gridData.Sort(gridData.Columns[e.ColumnIndex], ListSortDirection.Ascending);
-                    break;
-                case MouseButtons.Right:
-                    for (int i = 0; i < gridData.Columns.Count; i++)
-                    {
-                        gridData.Columns[i].DefaultCellStyle.BackColor = Color.Empty;
-                    }
+            //switch (e.Button)
+            //{
+            //    case MouseButtons.Left:
+            //        gridData.Sort(gridData.Columns[e.ColumnIndex], ListSortDirection.Ascending);
+            //        break;
+            //    case MouseButtons.Right:
+            //        for (int i = 0; i < gridData.Columns.Count; i++)
+            //        {
+            //            gridData.Columns[i].DefaultCellStyle.BackColor = Color.Empty;
+            //        }
 
-                    gridData.Columns[e.ColumnIndex].Frozen = !gridData.Columns[e.ColumnIndex].Frozen;
+            //        gridData.Columns[e.ColumnIndex].Frozen = !gridData.Columns[e.ColumnIndex].Frozen;
 
-                    for (int i = 0; i <= e.ColumnIndex; i++)
-                    {
-                        if (gridData.Columns[i].Frozen)
-                            gridData.Columns[i].DefaultCellStyle.BackColor = Color.FloralWhite;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            //        for (int i = 0; i <= e.ColumnIndex; i++)
+            //        {
+            //            if (gridData.Columns[i].Frozen)
+            //                gridData.Columns[i].DefaultCellStyle.BackColor = Color.FloralWhite;
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         public virtual void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -144,5 +144,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
 
         }
+
+        protected virtual void gridData_FilterStringChanged(object sender, EventArgs e) { }
+
+        protected virtual void gridData_SortStringChanged(object sender, EventArgs e) { }
     }
 }

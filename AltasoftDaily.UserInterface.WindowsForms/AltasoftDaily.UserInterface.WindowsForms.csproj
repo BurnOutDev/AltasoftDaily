@@ -55,6 +55,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="KasaGE, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\KasaGE.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework">
       <HintPath>..\..\..\..\AltasoftDaily - Copy\MetroFramework.dll</HintPath>
     </Reference>
@@ -94,6 +98,18 @@
     </Compile>
     <Compile Include="Controls\ChangePassword.Designer.cs">
       <DependentUpon>ChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BalanceReportFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BalanceReportFilterForm.Designer.cs">
+      <DependentUpon>BalanceReportFilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BalanceReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BalanceReportForm.Designer.cs">
+      <DependentUpon>BalanceReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ChangePasswordForm.cs">
       <SubType>Form</SubType>
@@ -209,6 +225,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ChangePassword.resx">
       <DependentUpon>ChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BalanceReportFilterForm.resx">
+      <DependentUpon>BalanceReportFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BalanceReportForm.resx">
+      <DependentUpon>BalanceReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
@@ -392,6 +414,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BC.ico" />
+    <Content Include="Libraries\KasaGE.dll" />
+    <Content Include="Libraries\KasaGE.pdb" />
+    <None Include="Resources\ECR-Export-32.png" />
+    <None Include="Resources\ECR-Import-32.png" />
+    <None Include="Resources\ZReport-48.png" />
     <None Include="Resources\pbxEditOrder.png" />
   </ItemGroup>
   <ItemGroup />

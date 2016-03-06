@@ -84,6 +84,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void btnStats_Click(object sender, EventArgs e)
         {
+            new ViewCollateralsForm(int.Parse(gridDaily.Rows[gridDaily.SelectedCells[0].RowIndex].Cells["LoanID"].Value.ToString())).Show();
+
+            return;
             var data = (SortableBindingList<DailyPayment>)gridDaily.DataSource;
             var resData = new List<DailyStats>();
 
@@ -404,6 +407,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     continue;
 
                 col.ReadOnly = true;
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            var data = (SortableBindingList<DailyPayment>)gridDaily.DataSource;
+
+            foreach (var item in data)
+            {
+                var loan = DailyManagement.GetLoanAndDailyModel(item.LoanID);
+                item.Comment = (item.CurrentDebtInGel - loan.DailyPayment.CurrentDebtInGel - item.Payment).ToString();
             }
         }
     }

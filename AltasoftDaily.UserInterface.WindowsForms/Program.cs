@@ -125,6 +125,28 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             //    db.SaveChanges();
             //}
 
+
+            //var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic | AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts, true, 2438, true);
+
+            //string opid;
+
+            //var user = l.ListUsers(new AltasoftAPI.LoansAPI.ListUsersQuery() { Id = 12, IdSpecified = true });
+
+            //var b = l.LoanPayment(new int[1] { 1 },
+            //    new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+            //    loan.Debts, "გადახდებია რა მოკლედ",
+            //    loan.Id.Value,
+            //    true,
+            //    new AltasoftAPI.LoansAPI.PayerDetails { Client = "მერი ეპიტაშვილი" },
+            //    loan.AccountIdentifier,
+            //    loan.AccountIdentifier.HasValue,
+            //    AltasoftAPI.LoansAPI.PaymentType.Payment,
+            //    true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+            //    false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+            //    true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+
+            //return;
+
             #region Old Comments
             //using (var db = new AltasoftDailyContext())
             //{

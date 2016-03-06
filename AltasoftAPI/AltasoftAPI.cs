@@ -97,6 +97,7 @@ namespace AltasoftAPI.LoansAPI
         public LoansService()
         {
             this.Url = "http://172.16.48.200:15005/LoansService.svc";
+            //this.Url = "http://192.168.8.20:8022/LoansService.svc";
             this.Timeout = int.MaxValue;
         }
 
@@ -15987,6 +15988,7 @@ namespace AltasoftAPI.AccountsAPI
         public AccountsService()
         {
             this.Url = "http://172.16.48.200:15005/AccountsService.svc";
+            //this.Url = "http://192.168.8.20:8022/AccountsService.svc";
         }
 
         public RequestHeaders RequestHeadersValue
@@ -20167,6 +20169,7 @@ namespace AltasoftAPI.CatalogsAPI
         public CatalogsService()
         {
             this.Url = "http://172.16.48.200:15005/CatalogsService.svc";
+            //this.Url = "http://192.168.8.20:8022/CatalogsService.svc";
         }
 
         public RequestHeaders RequestHeadersValue
@@ -23166,7 +23169,8 @@ namespace AltasoftAPI.CustomersAPI
         /// <remarks/>
         public CustomersService()
         {
-            this.Url = "http://172.16.48.200:15005/CustomersService.svc";
+            this.Url = "http://172.16.48.200:15005/customersservice.svc";
+            //this.Url = "http://192.168.8.20:8022/CustomersService.svc";
         }
 
         public RequestHeaders RequestHeadersValue
@@ -28334,6 +28338,7 @@ namespace AltasoftAPI.OrdersAPI
         public OrdersService()
         {
             this.Url = "http://172.16.48.200:15005/OrdersService.svc";
+            //this.Url = "http://192.168.8.20:8022/OrdersService.svc";
         }
 
         public RequestHeaders RequestHeadersValue

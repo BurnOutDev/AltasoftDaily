@@ -92,6 +92,8 @@
             // 
             // gridData
             // 
+            this.gridData.AllowUserToAddRows = false;
+            this.gridData.AllowUserToDeleteRows = false;
             this.gridData.AutoGenerateContextFilters = true;
             this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridData.DateWithTime = false;
@@ -101,6 +103,8 @@
             this.gridData.Size = new System.Drawing.Size(690, 343);
             this.gridData.TabIndex = 2;
             this.gridData.TimeFilter = false;
+            this.gridData.SortStringChanged += new System.EventHandler(this.gridData_SortStringChanged);
+            this.gridData.FilterStringChanged += new System.EventHandler(this.gridData_FilterStringChanged);
             this.gridData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellDoubleClick);
             this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
             this.gridData.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseDoubleClick);

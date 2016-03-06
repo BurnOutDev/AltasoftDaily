@@ -1,6 +1,6 @@
-﻿namespace AltasoftDaily.UserInterface.WindowsForms
+﻿namespace AltasoftDaily.UserInterface.WindowsForms.Forms
 {
-    partial class OldPaymentsForm
+    partial class BalanceReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet = new System.Data.DataSet();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -39,14 +41,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxRefresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExport)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
             // 
             // splitContainer2
             // 
@@ -59,23 +59,22 @@
             // 
             this.pbxExport.Click += new System.EventHandler(this.pbxExport_Click);
             // 
-            // button1
+            // bindingSource
             // 
-            this.button1.Location = new System.Drawing.Point(117, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bindingSource.DataSource = this.dataSet;
+            this.bindingSource.Position = 0;
             // 
-            // OldPaymentsForm
+            // dataSet
+            // 
+            this.dataSet.DataSetName = "NewDataSet";
+            // 
+            // BalanceReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 496);
-            this.Name = "OldPaymentsForm";
-            this.Text = "OldPaymentsForm";
+            this.Name = "BalanceReportForm";
+            this.Text = "BalanceReportForm";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -88,13 +87,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxRefresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExport)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-
+        private System.Windows.Forms.BindingSource bindingSource;
+        private System.Data.DataSet dataSet;
     }
 }

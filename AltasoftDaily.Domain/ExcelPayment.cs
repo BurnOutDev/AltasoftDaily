@@ -9,6 +9,7 @@ namespace AltasoftDaily.Domain
 {
     public class ExcelPayment
     {
+        public int N { get; set; }
         public int ClientNo { get; set; }
         public int LoanID { get; set; }
         public string ClientName { get; set; }
@@ -19,14 +20,15 @@ namespace AltasoftDaily.Domain
         public decimal CurrentDebt { get; set; }
         public decimal TotalDebt { get; set; }
         public decimal Payment { get; set; }
-        public DateTime CalculationDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public static explicit operator ExcelPayment(DailyPayment v)
         {
             return new ExcelPayment()
             {
                 BusinessAddress = v.BusinessAddress,
-                CalculationDate = v.CalculationDate,
+                StartDate = DateTime.Parse(v.StartDate),
                 ClientName = v.ClientName,
                 ClientNo = v.ClientNo,
                 CurrentDebt = v.CurrentDebtInGel,
@@ -35,7 +37,8 @@ namespace AltasoftDaily.Domain
                 Payment = v.Payment,
                 PersonalID = v.PersonalID,
                 Phone = v.Phone,
-                TotalDebt = v.TotalDebtInGel
+                TotalDebt = v.TotalDebtInGel,
+                EndDate = DateTime.Parse(v.EndDate)
             };
         }
     }

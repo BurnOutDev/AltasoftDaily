@@ -63,6 +63,26 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ECR_Export_32 {
+            get {
+                object obj = ResourceManager.GetObject("ECR_Export_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ECR_Import_32 {
+            get {
+                object obj = ResourceManager.GetObject("ECR_Import_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExportXLS {
             get {
                 object obj = ResourceManager.GetObject("ExportXLS", resourceCulture);
@@ -276,6 +296,16 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Properties {
         internal static System.Drawing.Bitmap SubmitOrders {
             get {
                 object obj = ResourceManager.GetObject("SubmitOrders", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ZReport_48 {
+            get {
+                object obj = ResourceManager.GetObject("ZReport_48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

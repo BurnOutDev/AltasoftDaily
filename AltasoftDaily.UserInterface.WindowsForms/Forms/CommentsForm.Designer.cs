@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommentsForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gridDaily = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -47,6 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblCountName = new System.Windows.Forms.Label();
             this.lblPmtSumName = new System.Windows.Forms.Label();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridDaily)).BeginInit();
             this.panel1.SuspendLayout();
@@ -164,7 +166,8 @@
             this.tsDailyForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsBtnSave,
             this.tsBtnExport,
-            this.tsBtnStats});
+            this.tsBtnStats,
+            this.toolStripButton1});
             this.tsDailyForm.Location = new System.Drawing.Point(0, 0);
             this.tsDailyForm.Name = "tsDailyForm";
             this.tsDailyForm.Size = new System.Drawing.Size(798, 25);
@@ -291,6 +294,16 @@
             this.lblPmtSumName.Text = "Payment sum:";
             this.lblPmtSumName.Visible = false;
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // CommentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -342,5 +355,6 @@
         private MetroFramework.Controls.MetroCheckBox cbxOnlyZeroPayment;
         private System.Windows.Forms.Label lblCountName;
         private System.Windows.Forms.Label lblPmtSumName;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

@@ -40,6 +40,7 @@ namespace AltasoftDaily.Domain.POCO
         public string ClientAddressFact { get; set; }
         public decimal InterestPenaltyInGel { get; set; }
         public decimal PrincipalPenaltyInGel { get; set; }
+        //public decimal LatePrincipalInGel { get; set; }
         public decimal OverdueInterestInGel { get; set; }
         public decimal AccruedInterestInGel { get; set; }
         public decimal OverduePrincipalInGel { get; set; }
