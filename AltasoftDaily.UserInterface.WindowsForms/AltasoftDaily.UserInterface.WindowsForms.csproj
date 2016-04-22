@@ -59,6 +59,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\KasaGE.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialSkin">
+      <HintPath>..\packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework">
       <HintPath>..\..\..\..\AltasoftDaily - Copy\MetroFramework.dll</HintPath>
     </Reference>
@@ -87,6 +93,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MdiClientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\AddCommentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddCommentForm.Designer.cs">
+      <DependentUpon>AddCommentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AuthenticationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +162,24 @@
     <Compile Include="Forms\DailyPaymentsForm.Designer.cs">
       <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EditAgreementTermsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditAgreementTermsForm.Designer.cs">
+      <DependentUpon>EditAgreementTermsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EnforcementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EnforcementForm.Designer.cs">
+      <DependentUpon>EnforcementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EntitiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EntitiesForm.Designer.cs">
+      <DependentUpon>EntitiesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EntityBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,11 +210,29 @@
     <Compile Include="Forms\OldPaymentsForm.Designer.cs">
       <DependentUpon>OldPaymentsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OrderLogsFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OrderLogsFilterForm.Designer.cs">
+      <DependentUpon>OrderLogsFilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OrderLogsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OrderLogsForm.Designer.cs">
+      <DependentUpon>OrderLogsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PaymentsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\PaymentsForm.Designer.cs">
       <DependentUpon>PaymentsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TakoMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TakoMainForm.Designer.cs">
+      <DependentUpon>TakoMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -220,6 +271,9 @@
     <Compile Include="Forms\ViewCollateralsForm.Designer.cs">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\AddCommentForm.resx">
+      <DependentUpon>AddCommentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AuthenticationForm.resx">
       <DependentUpon>AuthenticationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,6 +304,15 @@
     <EmbeddedResource Include="Forms\DailyPaymentsForm.resx">
       <DependentUpon>DailyPaymentsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditAgreementTermsForm.resx">
+      <DependentUpon>EditAgreementTermsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EnforcementForm.resx">
+      <DependentUpon>EnforcementForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EntitiesForm.resx">
+      <DependentUpon>EntitiesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EntityBaseForm.resx">
       <DependentUpon>EntityBaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -264,6 +327,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OldPaymentsForm.resx">
       <DependentUpon>OldPaymentsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OrderLogsFilterForm.resx">
+      <DependentUpon>OrderLogsFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OrderLogsForm.resx">
+      <DependentUpon>OrderLogsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PaymentsForm.resx">
       <DependentUpon>PaymentsForm.cs</DependentUpon>

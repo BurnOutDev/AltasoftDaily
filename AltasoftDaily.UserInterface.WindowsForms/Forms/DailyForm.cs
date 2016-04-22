@@ -44,8 +44,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             try
             {
                 var calcDate = DailyManagement.GetCalculationDate();
-
-                DailyManagement.GetUpdatesByAltasoftUser(User);
+                string str = "";
+                DailyManagement.GetUpdatesByAltasoftUser(User, ref str);
                 gridDaily.DataSource = new SortableBindingList<DailyPayment>(db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).ToList());
 
                 foreach (DataGridViewTextBoxColumn col in gridDaily.Columns)

@@ -37,6 +37,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.cbxPorts = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -175,17 +176,28 @@
             this.pictureBox3.Tag = "Z რეპორტი";
             this.pictureBox3.Click += new System.EventHandler(this.pictureBox2_Click_1);
             // 
+            // cbxPorts
+            // 
+            this.cbxPorts.FormattingEnabled = true;
+            this.cbxPorts.Location = new System.Drawing.Point(628, 33);
+            this.cbxPorts.Name = "cbxPorts";
+            this.cbxPorts.Size = new System.Drawing.Size(82, 21);
+            this.cbxPorts.TabIndex = 4;
+            // 
             // DailyPaymentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 496);
+            this.Controls.Add(this.cbxPorts);
             this.Font = new System.Drawing.Font("Calibri", 8.25F);
             this.Name = "DailyPaymentsForm";
             this.Text = "დღევანდელი გადახდები";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GG_FormClosing);
             this.Load += new System.EventHandler(this.GG_Load);
             this.Shown += new System.EventHandler(this.GG_Shown);
+            this.Controls.SetChildIndex(this.splitContainer1, 0);
+            this.Controls.SetChildIndex(this.cbxPorts, 0);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -220,6 +232,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.ComboBox cbxPorts;
 
     }
 }

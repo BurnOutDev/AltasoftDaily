@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommentsForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.gridDaily = new System.Windows.Forms.DataGridView();
@@ -40,6 +41,7 @@
             this.tsBtnSave = new System.Windows.Forms.ToolStripButton();
             this.tsBtnExport = new System.Windows.Forms.ToolStripButton();
             this.tsBtnStats = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.lblPmtCount = new System.Windows.Forms.Label();
             this.lblSum = new System.Windows.Forms.Label();
             this.lblSumName = new System.Windows.Forms.Label();
@@ -48,11 +50,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblCountName = new System.Windows.Forms.Label();
             this.lblPmtSumName = new System.Windows.Forms.Label();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.კომენტარისდამატებაToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ისტორიაToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridDaily)).BeginInit();
             this.panel1.SuspendLayout();
             this.tsDailyForm.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -90,6 +95,7 @@
             this.gridDaily.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridDaily_ColumnHeaderMouseClick);
             this.gridDaily.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridDaily_ColumnHeaderMouseDoubleClick);
             this.gridDaily.SelectionChanged += new System.EventHandler(this.gridDaily_SelectionChanged);
+            this.gridDaily.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridDaily_MouseClick);
             // 
             // panel1
             // 
@@ -210,6 +216,16 @@
             this.tsBtnStats.ToolTipText = "სტატისტიკა";
             this.tsBtnStats.Click += new System.EventHandler(this.btnStats_Click);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // lblPmtCount
             // 
             this.lblPmtCount.AutoSize = true;
@@ -294,15 +310,26 @@
             this.lblPmtSumName.Text = "Payment sum:";
             this.lblPmtSumName.Visible = false;
             // 
-            // toolStripButton1
+            // contextMenuStrip1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.კომენტარისდამატებაToolStripMenuItem,
+            this.ისტორიაToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 70);
+            // 
+            // კომენტარისდამატებაToolStripMenuItem
+            // 
+            this.კომენტარისდამატებაToolStripMenuItem.Name = "კომენტარისდამატებაToolStripMenuItem";
+            this.კომენტარისდამატებაToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.კომენტარისდამატებაToolStripMenuItem.Text = "კომენტარის დამატება...";
+            this.კომენტარისდამატებაToolStripMenuItem.Click += new System.EventHandler(this.კომენტარისდამატებაToolStripMenuItem_Click);
+            // 
+            // ისტორიაToolStripMenuItem
+            // 
+            this.ისტორიაToolStripMenuItem.Name = "ისტორიაToolStripMenuItem";
+            this.ისტორიაToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.ისტორიაToolStripMenuItem.Text = "ისტორია";
             // 
             // CommentsForm
             // 
@@ -329,6 +356,7 @@
             this.panel1.PerformLayout();
             this.tsDailyForm.ResumeLayout(false);
             this.tsDailyForm.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +384,8 @@
         private System.Windows.Forms.Label lblCountName;
         private System.Windows.Forms.Label lblPmtSumName;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem კომენტარისდამატებაToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ისტორიაToolStripMenuItem;
     }
 }

@@ -388,7 +388,7 @@ namespace AltasoftDaily.Core
                 var user = db.Users.FirstOrDefault(x => x.AltasoftUserID == altasoftUserId);
 
 
-                loansIds.Where(x => x != 2331).ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
+                loansIds.Where(x => x != 2331 /*&& x != 6*/).ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
 
                 try
                 {
@@ -439,6 +439,11 @@ namespace AltasoftDaily.Core
             var result = new DailyPaymentAndLoan();
             var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts | AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
 
+            var bbbb = from x in loan.Debts
+                       select x.Name;
+
+
+
             #region Create Item
             var item = new DailyPayment()
             {
@@ -451,7 +456,8 @@ namespace AltasoftDaily.Core
                 AccruedInterestInGel = loan.Debts.Where(x => x.Name == ("interest")).Sum(x => x.Amount),
                 OverduePrincipalInGel = loan.Debts.Where(x => x.Name.Contains("overdue_principal#")).Sum(x => x.Amount),
                 PrincipalInGel = loan.Debts.Where(x => x.Name == ("undue_principal")).Sum(x => x.Amount),
-                CurrentPrincipalInGel = loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount)
+                CurrentPrincipalInGel = loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount),
+                LatePrincipalInGel = loan.Debts.Where(x => x.Name.ToLower().Contains("late") && x.Name.ToLower().Contains("principal")).Sum(x => x.Amount)
             };
 
             result.OperatorID = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).UserId.Value;
@@ -476,19 +482,25 @@ namespace AltasoftDaily.Core
             var account = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { Id = loan.AccountIdentifier, IdSpecified = true }, item.LoanCCY);
 
             customer2 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, loan.BorrowerId.Value, true);
-            item.Phone = customer2.ContactInfo.MobilePhone;
+            if (customer2.ContactInfo != null)
+                item.Phone = customer2.ContactInfo.MobilePhone;
+
             item.ClientAccountDescrip = account.DisplayName.ValueGeo;
-            item.ClientName = customer.Name.ValueGeo;
+            item.ClientName = customer.Name.ValueGeo;//
+
+
             item.FirstName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.FirstName.ValueGeo;
             item.LastName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.LastName.ValueGeo;
             item.PersonalID = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
+
+
             item.ClientAccountBranchCode = customer.BranchId.Value.ToString();
             item.ClientAccountIban = account.IBAN;
 
             AltasoftAPI.CustomersAPI.Customer customer3;
 
             customer3 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, loan.BorrowerId.Value, true);
-            if (customer3.AddressActual != null)
+            if (customer3.AddressActual != null && customer3.AddressActual.Value != null)
             {
                 item.ClientAddressFact = customer3.AddressActual.Value.ValueGeo;
             }
@@ -501,7 +513,8 @@ namespace AltasoftDaily.Core
             bool notms;
             l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.ExtraFields, true, loan.Id.Value, true, out notm, out notms, out app);
 
-            item.BusinessAddress = app.Businesses.FirstOrDefault().Address;
+            if (app.Businesses != null)
+                item.BusinessAddress = app.Businesses.FirstOrDefault().Address;
 
             result.DailyPayment = item;
             #endregion
@@ -524,6 +537,11 @@ namespace AltasoftDaily.Core
             #region CustomersService
             AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
             a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
 
             var acc = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { IBAN = accountIBAN }, ccy);
@@ -583,6 +601,8 @@ namespace AltasoftDaily.Core
                                true, true, false, true, Order, out id, out specified);
             #endregion
 
+
+
             return id;
         }
         public static List<DailyPaymentIDOrderID> SubmitOrdersFromDatabase(User user)
@@ -597,7 +617,7 @@ namespace AltasoftDaily.Core
                 foreach (var item in localPayments)
                 {
                     DeleteOrder(item);
-                    result.Add(new DailyPaymentIDOrderID() { OrderID = SubmitOrder(item.TaxOrderNumber, "GEL", item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID), PaymentID = item.DailyPaymentID });
+                    result.Add(new DailyPaymentIDOrderID() { OrderID = SubmitOrder(item.TaxOrderNumber, "GEL", item.CalculationDate.Date, item.ClientAccountIban, item.Payment, item.AgreementNumber, "09", user.AltasoftUserID, user.DeptID), PaymentID = item.DailyPaymentID, CoverLoanID = !item.IsOld ? CoverLoan(item.LoanID, item.Payment) : "Not Covered" });
                 }
             }
 
@@ -637,7 +657,7 @@ namespace AltasoftDaily.Core
             }
             return true;
         }
-        public static int GetUpdatesByAltasoftUser(User user)
+        public static int GetUpdatesByAltasoftUser(User user, ref string status)
         {
             var calcDate = GetCalculationDate();
 
@@ -1036,7 +1056,7 @@ namespace AltasoftDaily.Core
 
             foreach (var item in result)
             {
-                AccountStatement bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = startDate, End = endDate }, true, true, TransactionStatus.Green, true, 0, false);
+                AccountStatement bal = a.GetStatement(new InternalAccountIdentification() { IBAN = item.IBAN, Ccy = item.Ccy }, new Period() { Start = startDate.Date, End = endDate.Date }, true, true, TransactionStatus.Green, true, 0, false);
 
                 lll.Add(bal, item);
             }
@@ -1052,14 +1072,14 @@ namespace AltasoftDaily.Core
 
                     list2.Add(new Kunchik()
                     {
-                        AccountNumber = itt.PartnerAccountId.AccountNumber,
-                        AccountNumberSpecified = itt.PartnerAccountId.AccountNumberSpecified,
+                        AccountNumber = item.Value.AccountNumber,
+                        AccountNumberSpecified = item.Value.AccountNumberSpecified,
                         Balance = itt.Balance,
                         BalanceEqu = itt.BalanceEqu,
                         BalanceEquSpecified = itt.BalanceEquSpecified,
-                        BranchId = itt.PartnerAccountId.BranchId,
-                        BranchIdSpecified = itt.PartnerAccountId.BranchIdSpecified,
-                        Ccy = itt.PartnerAccountId.Ccy,
+                        BranchId = item.Value.BranchId,
+                        BranchIdSpecified = item.Value.BranchIdSpecified,
+                        Ccy = item.Value.Ccy,
                         CreditAmount = itt.CreditAmount,
                         CreditAmountEqu = itt.CreditAmountEqu,
                         CreditAmountEquSpecified = itt.CreditAmountEquSpecified,
@@ -1072,9 +1092,9 @@ namespace AltasoftDaily.Core
                         DocNum = itt.DocNum,
                         DocNumSpecified = itt.DocNumSpecified,
                         ExtraDescription = itt.ExtraDescription,
-                        IBAN = itt.PartnerAccountId.IBAN,
-                        Id = itt.PartnerAccountId.Id,
-                        IdSpecified = itt.PartnerAccountId.IdSpecified,
+                        IBAN = item.Value.IBAN,
+                        Id = item.Value.Id,
+                        IdSpecified = item.Value.IdSpecified,
                         OpCode = itt.OpCode,
                         OrderDate = itt.OrderDate,
                         OrderDateSpecified = itt.OrderDateSpecified,
@@ -1082,12 +1102,13 @@ namespace AltasoftDaily.Core
                         Purpose = itt.Purpose,
                         Status = itt.Status,
                         TransactionType = itt.TransactionType,
-                        AccountName = item.Value.DisplayName.ValueGeo
+                        AccountName = item.Value.DisplayName.ValueGeo,
+                        BC_IBAN = itt.PartnerAccountId.IBAN
                     });
                 }
             }
 
-            return new SortableBindingList<Kunchik>(list2);
+            return new SortableBindingList<Kunchik>(list2.GroupBy(x => x.OrderId).Select(x => x.First()).ToList());
 
             //TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(list2), typeof(Kunchik));
 
@@ -1106,6 +1127,351 @@ namespace AltasoftDaily.Core
 
             //return new SortableBindingList<BalanceReportModel>(list3);
         }
+
+        private static string CoverLoan(int loanid, decimal amount)
+        {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+            var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic | AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts, true, loanid, true);
+            //var money = amount;
+            //var priorities = "fee,overdue_interest_penalty,overdue_nu_interest_penalty,overdue_principal_penalty,overdue_interest,overdue_principal_interest,overdue_nu_interest,late_interest,late_nu_interest,interest,nu_interest,overdue_principal,late_principal,principal,writeoff_penalty,writeoff_interest,writeoff_nu_interest,writeoff_principal,undue_principal".Split(',');
+            //var substractedDebts = new List<Tuple<string, string, decimal>>();
+            //var loanAmounts = new List<AltasoftAPI.LoansAPI.NameAmountCollectionItem>();
+            var user = l.ListUsers(new AltasoftAPI.LoansAPI.ListUsersQuery() { Id = 12, IdSpecified = true });
+            string opid;
+            var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.IdentityDocuments, true, loan.BorrowerId.Value, true);
+            string b = "";
+            string etag = "";
+
+            //#region Fill Substracted Debts
+
+            //foreach (var debt in loan.Debts)
+            //{
+            //    if (debt.Name.Contains('#'))
+            //        substractedDebts.Add(new Tuple<string, string, decimal>(debt.Name.Substring(0, debt.Name.IndexOf('#')), debt.Name, debt.Amount));
+            //    else
+            //        substractedDebts.Add(new Tuple<string, string, decimal>(debt.Name, debt.Name, debt.Amount));
+            //}
+            //#endregion
+
+            //#region Fill Loan Amounts
+            //for (int i = 0; i < priorities.Length; i++)
+            //{
+            //    if (money == 0) break;
+
+            //    var ddd = substractedDebts.Where(x => x.Item1 == priorities[i]);
+
+            //    if (priorities[i] == "fee")
+            //        ddd = substractedDebts.Where(x => x.Item1.Contains(priorities[i]));
+
+            //    if (ddd.Count() == 0) continue;
+
+            //    foreach (var r in ddd)
+            //    {
+            //        if (r.Item3 <= money)
+            //        {
+            //            loanAmounts.Add(new AltasoftAPI.LoansAPI.NameAmountCollectionItem()
+            //            {
+            //                Name = r.Item2,
+            //                Amount = r.Item3
+            //            });
+
+            //            money -= r.Item3;
+            //        }
+            //        else
+            //        {
+            //            loanAmounts.Add(new AltasoftAPI.LoansAPI.NameAmountCollectionItem()
+            //            {
+            //                Name = r.Item2,
+            //                Amount = money
+            //            });
+
+            //            money -= money;
+            //        }
+            //    }
+            //}
+            //#endregion
+
+            var first = loan.Debts.Except(loan.Debts.Where(x => x.Name.Contains("undue_principal"))).Sum(x => x.Amount);
+            var second = loan.Debts.Sum(x => x.Amount);
+            var third = loan.Debts.Sum(x => x.Amount) <= amount;
+
+            if (loan.Debts.Except(loan.Debts.Where(x => x.Name.Contains("undue_principal"))).Sum(x => x.Amount) >= amount)
+            {
+                b = l.LoanPayment(new int[0],
+                        new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+                        new AltasoftAPI.LoansAPI.NameAmountCollectionItem[1] { new AltasoftAPI.LoansAPI.NameAmountCollectionItem() { Name = "payment", Amount = amount } }, "დავალიანების დაფარვა",
+                        loan.Id.Value,
+                        true,
+                        new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+                        loan.AccountIdentifier,
+                        loan.AccountIdentifier.HasValue,
+                        AltasoftAPI.LoansAPI.PaymentType.Payment,
+                        true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+                        false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+                        true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+                etag = l.GetLoanOperationDetails(ref opid);
+                l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+                return opid;
+            }
+            else if (loan.Debts.Sum(x => x.Amount) > amount)
+            {
+                b = l.LoanPayment(new int[0],
+                       new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+                       new AltasoftAPI.LoansAPI.NameAmountCollectionItem[1] { new AltasoftAPI.LoansAPI.NameAmountCollectionItem() { Name = "payment", Amount = amount } }, "დავალიანების დაფარვა",
+                       loan.Id.Value,
+                       true,
+                       new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+                       loan.AccountIdentifier,
+                       loan.AccountIdentifier.HasValue,
+                       AltasoftAPI.LoansAPI.PaymentType.Prepayment,
+                       true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+                       true, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+                       true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+                etag = l.GetLoanOperationDetails(ref opid);
+                l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+                return opid;
+            }
+            else if (loan.Debts.Sum(x => x.Amount) <= amount)
+            {
+                b = l.LoanPayment(new int[0],
+                       new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+                       new AltasoftAPI.LoansAPI.NameAmountCollectionItem[1] { new AltasoftAPI.LoansAPI.NameAmountCollectionItem() { Name = "payment", Amount = loan.Debts.Sum(x => x.Amount) } }, "დავალიანების დაფარვა",
+                       loan.Id.Value,
+                       true,
+                       new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+                       loan.AccountIdentifier,
+                       loan.AccountIdentifier.HasValue,
+                       AltasoftAPI.LoansAPI.PaymentType.PrepaymentAndClose,
+                       true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+                       false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+                       true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+                etag = l.GetLoanOperationDetails(ref opid);
+                l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+                return opid;
+            }
+
+            //if (loan.Debts.Sum(x => x.Amount) <= amount)
+            //{
+            //    b = l.LoanPayment(new int[0],
+            //            new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+            //            new AltasoftAPI.LoansAPI.NameAmountCollectionItem[1] { new AltasoftAPI.LoansAPI.NameAmountCollectionItem() { Name = "payment", Amount = amount } }, "დავალიანების დაფარვა",
+            //            loan.Id.Value,
+            //            true,
+            //            new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+            //            loan.AccountIdentifier,
+            //            loan.AccountIdentifier.HasValue,
+            //            AltasoftAPI.LoansAPI.PaymentType.PrepaymentAndClose,
+            //            true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+            //            false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+            //            true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+            //    etag = l.GetLoanOperationDetails(ref opid);
+            //    l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+            //    return opid;
+            //}
+            //else if (loan.Debts.Where(x => x.Name.Contains("undue_principal")).Count() > 0)
+            //{
+            //    if (loan.Debts.FirstOrDefault(x => x.Name.Contains("undue_principal")).Amount == 0)
+            //    {
+            //        throw new Exception("In loanAmounts undue_principal is 0");
+            //    }
+            //    if (loan.Debts.Where(x => x.Name.Contains("undue_principal")).Sum(x => x.Amount) > 0)
+            //    {
+            //        b = l.LoanPayment(new int[1] { 1 },
+            //                new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+            //                loanAmounts.ToArray(), "დავალიანების დაფარვა",
+            //                loan.Id.Value,
+            //                true,
+            //                new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+            //                loan.AccountIdentifier,
+            //                loan.AccountIdentifier.HasValue,
+            //                AltasoftAPI.LoansAPI.PaymentType.Prepayment,
+            //                true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+            //                false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+            //                true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+            //        etag = l.GetLoanOperationDetails(ref opid);
+            //        l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+            //        return opid;
+            //    }
+            //}
+            //else
+            //{
+            //    b = l.LoanPayment(new int[1] { 1 },
+            //            new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = 1, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = 12, IdSpecified = true, Name = "ნინო საჩალელი" } },
+            //            loanAmounts.ToArray(), "დავალიანების დაფარვა",
+            //            loan.Id.Value,
+            //            true,
+            //            new AltasoftAPI.LoansAPI.PayerDetails { Client = customer.Name.ValueGeo },
+            //            loan.AccountIdentifier,
+            //            loan.AccountIdentifier.HasValue,
+            //            AltasoftAPI.LoansAPI.PaymentType.Payment,
+            //            true, AltasoftAPI.LoansAPI.PrepaymentRescheduleStrategy.ByPMT,
+            //            false, AltasoftAPI.LoansAPI.PaymentSource.ClientResource,
+            //            true, true, true, loan.Version.Value, loan.VersionSpecified, out opid);
+            //    etag = l.GetLoanOperationDetails(ref opid);
+            //    l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+            //    return opid;
+            //}
+
+
+            throw new Exception("Loan not covered. LoanID: " + loan.Id);
+            //l.ExecuteOperationAction(AltasoftAPI.LoansAPI.LoanOperationAction.IncrementAuthorization, true, "ავტორიზაცია", ref etag, ref opid, new AltasoftAPI.LoansAPI.UserAndDeptId() { DeptId = user.FirstOrDefault().DeptId, DeptIdSpecified = true, UserIdentification = new AltasoftAPI.LoansAPI.UserIdentification() { Id = user.FirstOrDefault().Id, IdSpecified = true, Name = user.FirstOrDefault().DisplayName } });
+        }
+
+
+
+        /////////////////////////////////////////////////
+
+        public static List<DailyPayment> GetDailyByUserTest(int altasoftUserId)
+        {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+            List<DailyPayment> list = new List<DailyPayment>();
+            List<DailyPaymentAndLoan> data = new List<DailyPaymentAndLoan>();
+
+            var loanss = l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts | AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } });
+
+            foreach (var loan in loanss)
+            {
+                var result = new DailyPaymentAndLoan();
+
+                #region Create Item
+                var item = new DailyPayment()
+                {
+                    LoanID = loan.Id.Value,
+                    CurrentDebtInGel = loan.Debts.Where(x => !x.Name.Contains("undue_principal")).Sum(x => x.Amount),
+                    TotalDebtInGel = loan.Debts.Sum(x => x.Amount),
+                    InterestPenaltyInGel = loan.Debts.Where(x => x.Name.Contains("overdue_interest_penalty")).Sum(x => x.Amount),
+                    PrincipalPenaltyInGel = loan.Debts.Where(x => x.Name.Contains("overdue_principal_penalty")).Sum(x => x.Amount),
+                    OverdueInterestInGel = loan.Debts.Where(x => x.Name.Contains("overdue_interest#") || x.Name.Contains("overdue_principal_interest")).Sum(x => x.Amount),
+                    AccruedInterestInGel = loan.Debts.Where(x => x.Name == ("interest")).Sum(x => x.Amount),
+                    OverduePrincipalInGel = loan.Debts.Where(x => x.Name.Contains("overdue_principal#")).Sum(x => x.Amount),
+                    PrincipalInGel = loan.Debts.Where(x => x.Name == ("undue_principal")).Sum(x => x.Amount),
+                    CurrentPrincipalInGel = loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount)
+                };
+
+                result.OperatorID = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).UserId.Value;
+                item.ResponsibleUser = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.PrimaryResponsible).Name;
+
+                item.DeptID = loan.BranchId.Value;
+                item.CalculationDate = loan.CalcDate.Value.Date;
+                item.LoanAmountInGel = loan.Amount.Amount;
+                item.LoanCCY = loan.Amount.Ccy;
+                item.ClientNo = loan.BorrowerId.Value;
+                item.AgreementNumber = loan.AgreementNo;
+                item.StartDate = loan.Term.Start.ToShortDateString();
+                item.EndDate = loan.Term.End.ToShortDateString();
+
+                result.ClientID = loan.BorrowerId.Value;
+                result.DeptID = loan.BranchId.Value;
+
+                var customer = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic, true, loan.BorrowerId.Value, true);
+                AltasoftAPI.CustomersAPI.Customer customer2;
+                var account = a.GetAccount(AltasoftAPI.AccountsAPI.AccountControlFlags.Basic, true, new AltasoftAPI.AccountsAPI.InternalAccountIdentification() { Id = loan.AccountIdentifier, IdSpecified = true }, item.LoanCCY);
+
+                customer2 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, loan.BorrowerId.Value, true);
+                item.Phone = customer2.ContactInfo.MobilePhone;
+                item.ClientAccountDescrip = account.DisplayName.ValueGeo;
+                item.ClientName = customer.Name.ValueGeo;
+                item.FirstName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.FirstName.ValueGeo;
+                item.LastName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.LastName.ValueGeo;
+                item.PersonalID = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
+                item.ClientAccountBranchCode = customer.BranchId.Value.ToString();
+                item.ClientAccountIban = account.IBAN;
+
+                AltasoftAPI.CustomersAPI.Customer customer3;
+
+                customer3 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, loan.BorrowerId.Value, true);
+                if (customer3.AddressActual != null)
+                {
+                    item.ClientAddressFact = customer3.AddressActual.Value.ValueGeo;
+                }
+
+                item.NextScheduledPaymentInGel = l.GetLoanSchedule(AltasoftAPI.LoansAPI.DebtComponentDetalization.Detailed, true, AltasoftAPI.LoansAPI.GetLoanScheduleControlFlags.Full, true, item.LoanID, true).FirstOrDefault(x => x.Date == DateTime.Today) != null ?
+                    l.GetLoanSchedule(AltasoftAPI.LoansAPI.DebtComponentDetalization.Detailed, true, AltasoftAPI.LoansAPI.GetLoanScheduleControlFlags.Full, true, item.LoanID, true).FirstOrDefault(x => x.Date == DateTime.Today).Elements.Where(x => x.Name != "balance").Sum(x => x.Amount) : 0;
+
+                AltasoftAPI.LoansAPI.Application app;
+                bool? notm;
+                bool notms;
+                l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.ExtraFields, true, loan.Id.Value, true, out notm, out notms, out app);
+
+                item.BusinessAddress = app.Businesses.FirstOrDefault().Address;
+
+                result.DailyPayment = item;
+                data.Add(result);
+                #endregion
+            }
+
+
+            using (var db = new AltasoftDailyContext())
+            {
+                var user = db.Users.FirstOrDefault(x => x.AltasoftUserID == altasoftUserId);
+
+                try
+                {
+                    if (user.Filter.IsDeptFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.DeptID == x.DeptID)).ToList();
+
+                    if (user.Filter.IsCustomerFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.ClientID == x.ClientID)).ToList();
+
+                    if (user.Filter.IsOperatorFilterEnabled && data != null)
+                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.OperatorID == x.OperatorID)).ToList();
+                }
+                catch (NullReferenceException)
+                {
+                    return new List<DailyPayment>();
+                }
+
+                if (data != null)
+                    data.ForEach(x => { if (x != null) list.Add(x.DailyPayment); });
+            }
+            return list.OrderBy(x => x.LoanID).ToList();
+        }
+
+
+        /////////////////////////////////////////////////
+
     }
 
     public class Kunchik
@@ -1156,6 +1522,7 @@ namespace AltasoftDaily.Core
             }
         }
 
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
         public string IBAN
@@ -1169,6 +1536,8 @@ namespace AltasoftDaily.Core
                 this.iBANField = value;
             }
         }
+
+        public string BC_IBAN { get; set; }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]

@@ -10,5 +10,6 @@ namespace AltasoftDaily.Domain
     {
         public long? OrderID { get; set; }
         public int PaymentID { get; set; }
+        public string CoverLoanID { get; set; }
     }
 }

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessCredit.Core", "..\.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinssCredit.Domain", "..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinssCredit.Domain\BusinssCredit.Domain.csproj", "{63460D01-2BE9-45BA-906E-088645BAD220}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltasoftDaily.UserInterface.WPF", "AltasoftDaily.UserInterface.WPF\AltasoftDaily.UserInterface.WPF.csproj", "{A03D2020-1B4C-4B70-B41A-918ECADF47BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,11 +61,16 @@ Global
 		{63460D01-2BE9-45BA-906E-088645BAD220}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63460D01-2BE9-45BA-906E-088645BAD220}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63460D01-2BE9-45BA-906E-088645BAD220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A03D2020-1B4C-4B70-B41A-918ECADF47BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A03D2020-1B4C-4B70-B41A-918ECADF47BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A03D2020-1B4C-4B70-B41A-918ECADF47BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A03D2020-1B4C-4B70-B41A-918ECADF47BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CC5B21F1-F2F0-41D5-9F32-673D60C80FB3} = {740B705E-EE62-421D-9990-4F07CCCA4861}
+		{A03D2020-1B4C-4B70-B41A-918ECADF47BF} = {740B705E-EE62-421D-9990-4F07CCCA4861}
 	EndGlobalSection
 EndGlobal

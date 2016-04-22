@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{817EA42A-9CC8-465F-9276-B8A134634FBD}</ProjectGuid>
+    <ProjectGuid>{A03D2020-1B4C-4B70-B41A-918ECADF47BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AltasoftDaily.UserInterface.WPF</RootNamespace>
@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\packages\MaterialDesignThemes.1.5.0.523\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -51,7 +57,12 @@
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -59,6 +70,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -83,6 +97,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -91,6 +106,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinessCredit.Core\BusinessCredit.Core.csproj">
+      <Project>{10e1b965-9262-4ce5-b727-8c0f5e4d4ac4}</Project>
+      <Name>BusinessCredit.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinssCredit.Domain\BusinssCredit.Domain.csproj">
+      <Project>{63460d01-2be9-45ba-906e-088645bad220}</Project>
+      <Name>BusinssCredit.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
+      <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
+      <Name>AltasoftAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Domain\AltasoftDaily.Domain.csproj">
+      <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
+      <Name>AltasoftDaily.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDaily.Helpers\AltasoftDaily.Helpers.csproj">
+      <Project>{0407decb-3a9e-4533-80ca-71f92b9c5605}</Project>
+      <Name>AltasoftDaily.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltasoftDauly.Core\AltasoftDaily.Core.csproj">
+      <Project>{a4500228-a134-4a6b-abc7-0c4f77608638}</Project>
+      <Name>AltasoftDaily.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

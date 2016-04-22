@@ -2,6 +2,8 @@
 using AltasoftDaily.Domain.POCO;
 using AltasoftDaily.Helpers;
 using AltasoftDaily.UserInterface.WindowsForms.Forms;
+using MaterialSkin;
+using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,6 +26,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             SyncUsers();
             InitializeComponent();
+            //var materialSkinManager = MaterialSkinManager.Instance;
+            //materialSkinManager.AddFormToManage(this);
+            //materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            //materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -80,7 +86,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 var saved = db.SaveChanges();
             }
         }
-        private void TmiDaily_Click(object sender, EventArgs e)
+        private async void TmiDaily_Click(object sender, EventArgs e)
         {
             DailyPaymentsForm frmDaily = new DailyPaymentsForm(User);
             frmDaily.MdiParent = this;
@@ -191,6 +197,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             var form = new BalanceReportForm();
             form.MdiParent = this;
+            form.Show();
+        }
+
+        private void შეტვირთვებიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void პრობლემურებიToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new EnforcementForm();
             form.Show();
         }
     }

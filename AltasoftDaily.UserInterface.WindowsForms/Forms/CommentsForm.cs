@@ -2,6 +2,7 @@
 using AltasoftDaily.Domain;
 using AltasoftDaily.Domain.POCO;
 using AltasoftDaily.Helpers;
+using AltasoftDaily.UserInterface.WindowsForms.Forms;
 using MetroFramework.Forms;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 {
     public partial class CommentsForm : MetroForm
     {
+        private int _row;
         private AltasoftDailyContext _db;
         public AltasoftDailyContext db
         {
@@ -354,6 +356,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            gridDaily.DataSource = null;
+            gridDaily.Rows.Clear();
+            gridDaily.Refresh();
+
             try
             {
                 var calcDate = dateTimePicker1.Value.Date;
@@ -382,6 +388,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     }
                     gridDaily.DataSource = new SortableBindingList<DailyPayment>(lst);
                 }
+
+                ////
+
+                var expressPay = DailyManagement.GetAccountsTest(calcDate.Date, calcDate.Date, 2501, null);
+
+                foreach (var row in (SortableBindingList<DailyPayment>)gridDaily.DataSource)
+                {
+                    var expay = expressPay.Where(x => x.Purpose.Contains(row.AgreementNumber));
+
+                    if (expay.Count() > 0)
+                        row.Payment += expay.Sum(x => x.DebitAmount.Value);
+                }
+
+                gridDaily.Refresh();
             }
             catch (Exception ex)
             {
@@ -391,22 +411,25 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void gridDaily_DataSourceChanged(object sender, EventArgs e)
         {
-            gridDaily.Columns["Payment"].DefaultCellStyle.BackColor = Color.Yellow;
-
-            #region Hide Columns
-            gridDaily.Columns[0].Visible = false;
-            gridDaily.Columns[gridDaily.Columns.Count - 2].Visible = false;
-            gridDaily.Columns["FirstName"].Visible = false;
-            gridDaily.Columns["LastName"].Visible = false;
-            gridDaily.Columns["LocalUserID"].Visible = false;
-            #endregion
-
-            foreach (DataGridViewColumn col in gridDaily.Columns)
+            if (((DataGridView)sender).DataSource != null)
             {
-                if (col.Name == "Comment")
-                    continue;
+                gridDaily.Columns["Payment"].DefaultCellStyle.BackColor = Color.Yellow;
 
-                col.ReadOnly = true;
+                #region Hide Columns
+                gridDaily.Columns[0].Visible = false;
+                gridDaily.Columns[gridDaily.Columns.Count - 2].Visible = false;
+                gridDaily.Columns["FirstName"].Visible = false;
+                gridDaily.Columns["LastName"].Visible = false;
+                gridDaily.Columns["LocalUserID"].Visible = false;
+                #endregion
+
+                foreach (DataGridViewColumn col in gridDaily.Columns)
+                {
+                    if (col.Name == "Comment")
+                        continue;
+
+                    col.ReadOnly = true;
+                } 
             }
         }
 
@@ -419,6 +442,25 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 var loan = DailyManagement.GetLoanAndDailyModel(item.LoanID);
                 item.Comment = (item.CurrentDebtInGel - loan.DailyPayment.CurrentDebtInGel - item.Payment).ToString();
             }
+        }
+
+        private void gridDaily_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip m = contextMenuStrip1;
+
+                _row = gridDaily.HitTest(e.X, e.Y).RowIndex;
+
+                m.Show(gridDaily, new Point(e.X, e.Y));
+            }
+        }
+
+        private void კომენტარისდამატებაToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var pid = (int)gridDaily.Rows[_row].Cells["DailyPaymentID"].Value;
+            var form = new AddCommentForm(pid, User);
+            form.Show();
         }
     }
 }

@@ -20,6 +20,8 @@ namespace AltasoftDaily.Core
         public DbSet<CommentLog> CommentLogs { get; set; }
         public DbSet<OrderLog> OrderLogs { get; set; }
         public DbSet<SignLog> SignLogs { get; set; }
+        public DbSet<EnforcementLoan> EnforcementLoans { get; set; }
+        public DbSet<AgreementAndSummaryJudgementTerms> AgreementAndSummaryJudgementTerms { get; set; }
     }
 
     public class CustomDatabaseInitializer : CreateDatabaseIfNotExists<AltasoftDailyContext>

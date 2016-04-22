@@ -39,6 +39,11 @@
             this.პრობლემურისესხებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ბუღალტერიაToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.b6ისრეპორტიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ლოგირებაToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.შეტვირთვებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.შეცდომებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuitemEnforcement = new System.Windows.Forms.ToolStripMenuItem();
+            this.პრობლემურებიToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +53,9 @@
             this.ინკასატორიToolStripMenuItem,
             this.takoToolStripMenuItem,
             this.რეპორტებიToolStripMenuItem,
-            this.ბუღალტერიაToolStripMenuItem});
+            this.ბუღალტერიაToolStripMenuItem,
+            this.menuitemEnforcement,
+            this.ლოგირებაToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(512, 24);
@@ -130,6 +137,43 @@
             this.b6ისრეპორტიToolStripMenuItem.Text = "B6-ის რეპორტი...";
             this.b6ისრეპორტიToolStripMenuItem.Click += new System.EventHandler(this.b6ისრეპორტიToolStripMenuItem_Click);
             // 
+            // ლოგირებაToolStripMenuItem
+            // 
+            this.ლოგირებაToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.შეტვირთვებიToolStripMenuItem,
+            this.შეცდომებიToolStripMenuItem});
+            this.ლოგირებაToolStripMenuItem.Name = "ლოგირებაToolStripMenuItem";
+            this.ლოგირებაToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.ლოგირებაToolStripMenuItem.Text = "ლოგირება";
+            // 
+            // შეტვირთვებიToolStripMenuItem
+            // 
+            this.შეტვირთვებიToolStripMenuItem.Name = "შეტვირთვებიToolStripMenuItem";
+            this.შეტვირთვებიToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.შეტვირთვებიToolStripMenuItem.Text = "შეტვირთვები";
+            this.შეტვირთვებიToolStripMenuItem.Click += new System.EventHandler(this.შეტვირთვებიToolStripMenuItem_Click);
+            // 
+            // შეცდომებიToolStripMenuItem
+            // 
+            this.შეცდომებიToolStripMenuItem.Name = "შეცდომებიToolStripMenuItem";
+            this.შეცდომებიToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.შეცდომებიToolStripMenuItem.Text = "შეცდომები";
+            // 
+            // menuitemEnforcement
+            // 
+            this.menuitemEnforcement.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.პრობლემურებიToolStripMenuItem});
+            this.menuitemEnforcement.Name = "menuitemEnforcement";
+            this.menuitemEnforcement.Size = new System.Drawing.Size(92, 20);
+            this.menuitemEnforcement.Text = "აღსრულება";
+            // 
+            // პრობლემურებიToolStripMenuItem
+            // 
+            this.პრობლემურებიToolStripMenuItem.Name = "პრობლემურებიToolStripMenuItem";
+            this.პრობლემურებიToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.პრობლემურებიToolStripMenuItem.Text = "პრობლემურები";
+            this.პრობლემურებიToolStripMenuItem.Click += new System.EventHandler(this.პრობლემურებიToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,5 +207,10 @@
         private System.Windows.Forms.ToolStripMenuItem კლიენტებიToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ბუღალტერიაToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem b6ისრეპორტიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ლოგირებაToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem შეტვირთვებიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem შეცდომებიToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuitemEnforcement;
+        private System.Windows.Forms.ToolStripMenuItem პრობლემურებიToolStripMenuItem;
     }
 }

@@ -16,6 +16,7 @@ using KasaGE.Core;
 using KasaGE.Commands;
 using KasaGE.Responses;
 using KasaGE;
+using System.IO.Ports;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -28,7 +29,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             get
             {
                 if (_ecr == null)
-                    _ecr = new Dp25("COM3");
+                    _ecr = new Dp25(cbxPorts.SelectedItem.ToString());
                 return _ecr;
             }
         }
@@ -50,17 +51,26 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             User = user;
             InitializeComponent();
+
+            cbxPorts.Items.AddRange(SerialPort.GetPortNames());
         }
 
         private void GG_Load(object sender, EventArgs e)
         {
+            string status = "Loading...";
             //try
             //{
             var calcDate = DailyManagement.GetCalculationDate();
 
-            if (!string.IsNullOrWhiteSpace(User.ConnectionString))
-                DailyManagement.GetUpdatesByBusinesscreditUser(User);
-            DailyManagement.GetUpdatesByAltasoftUser(User);
+            LoadingForm = new LoadingForm();
+            if (MessageBox.Show("გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                LoadingForm.Show();
+
+                if (!string.IsNullOrWhiteSpace(User.ConnectionString))
+                    DailyManagement.GetUpdatesByBusinesscreditUser(User);
+                DailyManagement.GetUpdatesByAltasoftUser(User, ref status);
+            }
 
             var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
             gridData.DataSource = new SortableBindingList<DailyPayment>(payments);
@@ -73,8 +83,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 col.ReadOnly = true;
             }
 
-            LoadingForm = new LoadingForm();
-            LoadingForm.Show();
             //}
             //catch (Exception ex)
             //{
@@ -110,21 +118,21 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             TaxOrderGenerator.ExportToExcel(exPayments);
 
-            var LIST = new SortableBindingList<Article>();
-            i = 0;
-            foreach (var item in (SortableBindingList<DailyPayment>)gridData.DataSource)
-            {
-                LIST.Add(new Article()
-                    {
-                        Number = i + 1,
-                        Dept = 1,
-                        Name = item.LoanID + "/" + item.PersonalID,
-                        Price = 1
-                    });
-                i++;
-            }
+            //var LIST = new SortableBindingList<Article>();
+            //i = 0;
+            //foreach (var item in (SortableBindingList<DailyPayment>)gridData.DataSource)
+            //{
+            //    LIST.Add(new Article()
+            //        {
+            //            Number = i + 1,
+            //            Dept = 1,
+            //            Name = item.LoanID + "/" + item.PersonalID,
+            //            Price = 1
+            //        });
+            //    i++;
+            //}
 
-            TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(LIST.Cast<object>().ToList()), typeof(Article));
+            //TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(LIST.Cast<object>().ToList()), typeof(Article));
         }
 
         private void GG_FormClosing(object sender, FormClosingEventArgs e)
@@ -311,24 +319,25 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             //try
             //{
-            List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
+                List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
 
-            if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                result = DailyManagement.SubmitOrdersFromDatabase(User);
-                //DailyManagement.InsertPaymentsInBusinessCreditDb(User);
-            }
+                if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    result = DailyManagement.SubmitOrdersFromDatabase(User);
+                    //DailyManagement.InsertPaymentsInBusinessCreditDb(User);
+                }
 
-            foreach (var item in result)
-            {
-                var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID);
-                payment.OrderID = item.OrderID;
-                LoggingManagement.LogOrder(payment, User);
-            }
+                foreach (var item in result)
+                {
+                    var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID);
+                    payment.OrderID = item.OrderID;
 
-            db.SaveChanges();
+                    LoggingManagement.LogOrder(payment, User);
+                }
 
-            MessageBox.Show(string.Format("წარმატებით აიტვირთა {0} გადახდა.", result.Count));
+                db.SaveChanges();
+
+                MessageBox.Show(string.Format("წარმატებით აიტვირთა {0} გადახდა.", result.Count));
             //}
             //catch (Exception ex)
             //{
@@ -379,71 +388,96 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-            var data = (SortableBindingList<DailyPayment>)gridData.DataSource;
-
-            if (MessageBox.Show("ნამდვილად გსურთ ჩაწერა?", "საქონლის ჩაწერა", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            try
             {
-                if (MessageBox.Show("ამოიბეჭდოს Z ანგარიში?", "განულება", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                var data = (SortableBindingList<DailyPayment>)gridData.DataSource;
+
+                if (MessageBox.Show("ნამდვილად გსურთ ჩაწერა?", "საქონლის ჩაწერა", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    Ecr.PrintReport(ReportType.Z);
+                    if (MessageBox.Show("ამოიბეჭდოს Z ანგარიში?", "განულება", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        Ecr.PrintReport(ReportType.Z);
+                    }
+                    Ecr.DeleteItems(1, 10000);
+
+                    var list = new SortableBindingList<object>();
+
+                    for (int i = 1; i <= data.Count; i++)
+                        list.Add(Ecr.ProgramItem(data[i - 1].LoanID + "/" + data[i - 1].PersonalID + " " + data[i - 1].LastName, i, KasaGE.Commands.TaxGr.A, 1, 1, 1));
+
+                    TaxOrderGenerator.ExportToExcel(list, typeof(ProgramItemResponse));
+
+                    var success = list.All(x => ((ProgramItemResponse)x).CommandPassed);
+
+                    if (success)
+                        MessageBox.Show("ჩაიწერა წარმატებით.");
+                    else
+                        MessageBox.Show("მოხდა შეცდომა, გადახედე გახსნილ ექსელის ფაილს.");
                 }
-                Ecr.DeleteItems(1, 10000);
-
-                var list = new SortableBindingList<object>();
-
-                for (int i = 1; i <= data.Count; i++)
-                    list.Add(Ecr.ProgramItem(data[i - 1].LoanID + "/" + data[i - 1].PersonalID + " " + data[i - 1].LastName, i, KasaGE.Commands.TaxGr.A, 1, 1, 1));
-
-                TaxOrderGenerator.ExportToExcel(list, typeof(ProgramItemResponse));
-
-                var success = list.All(x => ((ProgramItemResponse)x).CommandPassed);
-
-                if (success)
-                    MessageBox.Show("ჩაიწერა წარმატებით.");
-                else
-                    MessageBox.Show("მოხდა შეცდომა, გადახედე გახსნილ ექსელის ფაილს.");
+            }
+            catch (Exception ex)
+            {
+                _ecr = null;
+                throw;
             }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            var data = (SortableBindingList<DailyPayment>)gridData.DataSource;
-            var items = new List<ReadNextItemResponse>();
-
-            var firsIitem = Ecr.ExecuteCustomCommand<ReadItemsResponse>(new ReadItemsCommand(1));
-
-            ReadNextItemResponse response = null;
-
-            if (firsIitem.CommandPassed)
+            try
             {
-                do
-                {
-                    response = Ecr.ExecuteCustomCommand<ReadNextItemResponse>(new ReadNextItemCommand());
-                    items.Add(response);
-                } while (response.CommandPassed);
+                var data = (SortableBindingList<DailyPayment>)gridData.DataSource;
+                var items = new List<ReadNextItemResponse>();
 
-                data.FirstOrDefault(x => x.LoanID == int.Parse(firsIitem.Name.Substring(0, firsIitem.Name.IndexOf("/")))).Payment = firsIitem.Turnover;
+                var firsIitem = Ecr.ExecuteCustomCommand<ReadItemsResponse>(new ReadItemsCommand(1));
 
-                foreach (var pay in items)
+                ReadNextItemResponse response = null;
+
+                if (firsIitem.CommandPassed)
                 {
-                    if (pay.CommandPassed)
+                    do
                     {
-                        data.FirstOrDefault(x => x.LoanID == int.Parse(pay.Name.Substring(0, pay.Name.IndexOf("/")))).Payment = pay.Turnover;
+                        response = Ecr.ExecuteCustomCommand<ReadNextItemResponse>(new ReadNextItemCommand());
+                        items.Add(response);
+                    } while (response.CommandPassed);
+
+                    data.FirstOrDefault(x => x.LoanID == int.Parse(firsIitem.Name.Substring(0, firsIitem.Name.IndexOf("/")))).Payment = firsIitem.Turnover;
+
+                    foreach (var pay in items)
+                    {
+                        if (pay.CommandPassed)
+                        {
+                            data.FirstOrDefault(x => x.LoanID == int.Parse(pay.Name.Substring(0, pay.Name.IndexOf("/")))).Payment = pay.Turnover;
+                        }
                     }
                 }
-            }
 
-            MessageBox.Show(string.Format("განახლდა {0} გადახდა. გთხოვთ ატვირთოთ. \nჯამი: {1}", items.Count, items.Sum(x => x.Turnover) + firsIitem.Turnover));
+                MessageBox.Show(string.Format("განახლდა {0} გადახდა. გთხოვთ ატვირთოთ. \nჯამი: {1}", items.Count, items.Sum(x => x.Turnover) + firsIitem.Turnover));
+
+            }
+            catch (Exception ex)
+            {
+                _ecr = null;
+                throw;
+            }
         }
 
         private void pictureBox2_Click_1(object sender, EventArgs e)
         {
-            if (MessageBox.Show("დაიბეჭდოს Z ანგარიში?", "დღის დასრულება", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            try
             {
-                if (Ecr.PrintReport(ReportType.Z).CommandPassed)
-                    MessageBox.Show("რეპორტი დაიბეჭდა.");
-                else
-                    MessageBox.Show("შეცდომა: რეპორტი არ დაიბეჭდა.");
+                if (MessageBox.Show("ნამდვილად გსურთ Z რეპორტის დაბეჭდვა?", "Z რეპორტი", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (Ecr.PrintReport(ReportType.Z).CommandPassed)
+                        MessageBox.Show("რეპორტი დაიბეჭდა.");
+                    else
+                        MessageBox.Show("შეცდომა: რეპორტი არ დაიბეჭდა.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _ecr = null;
+                throw;
             }
         }
     }

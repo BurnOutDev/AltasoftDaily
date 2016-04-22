@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using AltasoftDaily.Domain.POCO;
 
 namespace AltasoftDaily.UserInterface.WPF
 {
@@ -13,5 +14,17 @@ namespace AltasoftDaily.UserInterface.WPF
     /// </summary>
     public partial class App : Application
     {
+        public User User { get; set; }
+        public bool _userLogged { get; set; }
+        public bool UserLoggedIn
+        {
+            get
+            {
+                if (User != null)
+                    return _userLogged;
+                _userLogged = false;
+                return false;
+            }
+        }
     }
 }

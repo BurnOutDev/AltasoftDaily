@@ -95,6 +95,26 @@
     <Compile Include="Migrations\201512151131366_AddedIsOldPropertyToDailyPayments.Designer.cs">
       <DependentUpon>201512151131366_AddedIsOldPropertyToDailyPayments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603071500045_AddedLatePrincipal.cs" />
+    <Compile Include="Migrations\201603071500045_AddedLatePrincipal.Designer.cs">
+      <DependentUpon>201603071500045_AddedLatePrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604080809271_AddedCommentTypeToCommentLog.cs" />
+    <Compile Include="Migrations\201604080809271_AddedCommentTypeToCommentLog.Designer.cs">
+      <DependentUpon>201604080809271_AddedCommentTypeToCommentLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604190946173_AddedEnforcementTable.cs" />
+    <Compile Include="Migrations\201604190946173_AddedEnforcementTable.Designer.cs">
+      <DependentUpon>201604190946173_AddedEnforcementTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604191121092_AddedLoanAgreementNumber.cs" />
+    <Compile Include="Migrations\201604191121092_AddedLoanAgreementNumber.Designer.cs">
+      <DependentUpon>201604191121092_AddedLoanAgreementNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604201543075_AddedAgreementTermsToEnforcementLoan.cs" />
+    <Compile Include="Migrations\201604201543075_AddedAgreementTermsToEnforcementLoan.Designer.cs">
+      <DependentUpon>201604201543075_AddedAgreementTermsToEnforcementLoan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
@@ -149,6 +169,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512151131366_AddedIsOldPropertyToDailyPayments.resx">
       <DependentUpon>201512151131366_AddedIsOldPropertyToDailyPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603071500045_AddedLatePrincipal.resx">
+      <DependentUpon>201603071500045_AddedLatePrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604080809271_AddedCommentTypeToCommentLog.resx">
+      <DependentUpon>201604080809271_AddedCommentTypeToCommentLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604190946173_AddedEnforcementTable.resx">
+      <DependentUpon>201604190946173_AddedEnforcementTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604191121092_AddedLoanAgreementNumber.resx">
+      <DependentUpon>201604191121092_AddedLoanAgreementNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604201543075_AddedAgreementTermsToEnforcementLoan.resx">
+      <DependentUpon>201604201543075_AddedAgreementTermsToEnforcementLoan.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
