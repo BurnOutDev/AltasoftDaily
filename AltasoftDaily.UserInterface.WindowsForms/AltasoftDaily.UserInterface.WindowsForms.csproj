@@ -126,6 +126,12 @@
     <Compile Include="Forms\BalanceReportForm.Designer.cs">
       <DependentUpon>BalanceReportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CellViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CellViewForm.Designer.cs">
+      <DependentUpon>CellViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangePasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,12 @@
     </Compile>
     <Compile Include="Forms\EditAgreementTermsForm.Designer.cs">
       <DependentUpon>EditAgreementTermsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditEnforcementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditEnforcementForm.Designer.cs">
+      <DependentUpon>EditEnforcementForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EnforcementForm.cs">
       <SubType>Form</SubType>
@@ -286,6 +298,9 @@
     <EmbeddedResource Include="Forms\BalanceReportForm.resx">
       <DependentUpon>BalanceReportForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CellViewForm.resx">
+      <DependentUpon>CellViewForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -306,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EditAgreementTermsForm.resx">
       <DependentUpon>EditAgreementTermsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditEnforcementForm.resx">
+      <DependentUpon>EditEnforcementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EnforcementForm.resx">
       <DependentUpon>EnforcementForm.cs</DependentUpon>

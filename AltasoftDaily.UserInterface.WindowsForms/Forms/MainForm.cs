@@ -1,4 +1,5 @@
-﻿using AltasoftDaily.Core;
+﻿using AltasoftAPI.AccountsAPI;
+using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
 using AltasoftDaily.Helpers;
 using AltasoftDaily.UserInterface.WindowsForms.Forms;
@@ -24,18 +25,32 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         public MainForm()
         {
-            SyncUsers();
+            //SyncUsers();
             InitializeComponent();
             //var materialSkinManager = MaterialSkinManager.Instance;
             //materialSkinManager.AddFormToManage(this);
             //materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
             //materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
             this.WindowState = FormWindowState.Minimized;
+
+            // using (var db = new AltasoftDailyContext())
+            //{
+            //    db.EnforcementLoans.Where(x => x.LoanAgreementNumber.Contains("-")).ToList().ForEach(x => x.LoanID = int.Parse(x.LoanAgreementNumber.Substring(x.LoanAgreementNumber.LastIndexOf('-') + 1)));
+            //    db.SaveChanges();
+            //    return;
+            // }
+
+            // using (var db = new AltasoftDailyContext())
+            //{
+            //    db.EnforcementLoans.Where(x => x.LoanAgreementNumber.Contains("-")).ToList().ForEach(x => x.LoanID = int.Parse(x.LoanAgreementNumber.Substring(x.LoanAgreementNumber.LastIndexOf('-') + 1)));
+            //    db.SaveChanges();
+            //    return;
+            // }
         }
 
         private void SyncUsers()
         {
-            return;
+            //return;
             #region Initialize Services
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
@@ -58,6 +73,24 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             #endregion
             #endregion
 
+            #region Makuna
+
+
+            var result = a.ListAccounts(new ListAccountsQuery()
+            {
+                ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
+                BalAcc = 4501.4M,
+                BalAccSpecified = true,
+                DeptId = 5,
+                DeptIdSpecified = true,
+                IBAN = "GE27AL0500000045010845"
+            });
+
+
+            //a.GetAccount(AccountControlFlags.Basic, true, new InternalAccountIdentification() { IBAN = "GE38AL000000001703001", Ccy = "GEL",  }, "GEL");
+
+            #endregion
+
             var apiUsers = l.ListUsers(new AltasoftAPI.LoansAPI.ListUsersQuery());
 
             using (var db = new AltasoftDailyContext())
@@ -78,6 +111,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                         newUser.Name = user.DisplayName.Split(' ').FirstOrDefault();
                         newUser.Password = "123456";
                         newUser.LastName = user.DisplayName.Split(' ').LastOrDefault();
+                        newUser.LastPasswordChange = DateTime.Now;
 
                         db.Users.Add(newUser);
                     }
@@ -207,7 +241,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void პრობლემურებიToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new EnforcementForm();
+            var form = new EnforcementForm(User);
             form.Show();
         }
     }

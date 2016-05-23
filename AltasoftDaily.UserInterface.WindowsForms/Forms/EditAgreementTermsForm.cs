@@ -23,12 +23,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
         {
             ID = AgreementAndSummaryJudgementTermsID;
             Terms = db.AgreementAndSummaryJudgementTerms.FirstOrDefault(x => x.ID == AgreementAndSummaryJudgementTermsID);
+            this.Text = db.EnforcementLoans.FirstOrDefault(x => x.AgreementAndSummaryJudgementTerms.ID == AgreementAndSummaryJudgementTermsID).BorrowerName;
             _db = db;
             InitializeComponent();
 
             tbxAdmittedAmount.Text = Terms.AdmittedAmount.ToString();
-            tbxMonthlyPayment.Text = Terms.MonthlyPayment.ToString();
-            dtpPaymentDate.Value = Terms.PaymentDate;
+            tbxPayment.Text = Terms.Payment.ToString();
+            tbxPaymentDay.Text = Terms.PaymentDay.ToString();
             dtpStartDate.Value = Terms.Start;
             dtpEndDate.Value = Terms.End;
         }
@@ -36,8 +37,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             var term = _db.AgreementAndSummaryJudgementTerms.FirstOrDefault(x => x.ID == ID);
-            term.MonthlyPayment = decimal.Parse(tbxMonthlyPayment.Text);
-            term.PaymentDate = dtpPaymentDate.Value;
+            term.Payment = tbxPayment.Text;
+            term.PaymentDay = int.Parse(tbxPaymentDay.Text);
             term.AdmittedAmount = decimal.Parse(tbxAdmittedAmount.Text);
             term.End = dtpEndDate.Value;
             term.Start = dtpStartDate.Value;

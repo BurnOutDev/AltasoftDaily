@@ -105,7 +105,9 @@
             this.gridData.TimeFilter = false;
             this.gridData.SortStringChanged += new System.EventHandler(this.gridData_SortStringChanged);
             this.gridData.FilterStringChanged += new System.EventHandler(this.gridData_FilterStringChanged);
+            this.gridData.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellContentDoubleClick);
             this.gridData.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellDoubleClick);
+            this.gridData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridData_CellFormatting);
             this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
             this.gridData.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseDoubleClick);
             this.gridData.SelectionChanged += new System.EventHandler(this.gridData_SelectionChanged);

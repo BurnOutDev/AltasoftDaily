@@ -115,6 +115,26 @@
     <Compile Include="Migrations\201604201543075_AddedAgreementTermsToEnforcementLoan.Designer.cs">
       <DependentUpon>201604201543075_AddedAgreementTermsToEnforcementLoan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604251653349_AddedProblemManagerIDToEnforcementLoans.cs" />
+    <Compile Include="Migrations\201604251653349_AddedProblemManagerIDToEnforcementLoans.Designer.cs">
+      <DependentUpon>201604251653349_AddedProblemManagerIDToEnforcementLoans.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604280958538_DeletedGuarantorColumnsInEnforcementLoan.cs" />
+    <Compile Include="Migrations\201604280958538_DeletedGuarantorColumnsInEnforcementLoan.Designer.cs">
+      <DependentUpon>201604280958538_DeletedGuarantorColumnsInEnforcementLoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605101259252_EnforcementEnding.cs" />
+    <Compile Include="Migrations\201605101259252_EnforcementEnding.Designer.cs">
+      <DependentUpon>201605101259252_EnforcementEnding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605161044089_EnforcementModelUpdate.cs" />
+    <Compile Include="Migrations\201605161044089_EnforcementModelUpdate.Designer.cs">
+      <DependentUpon>201605161044089_EnforcementModelUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605191656164_EditedAgreementAndSummaryJudgementTermsTable.cs" />
+    <Compile Include="Migrations\201605191656164_EditedAgreementAndSummaryJudgementTermsTable.Designer.cs">
+      <DependentUpon>201605191656164_EditedAgreementAndSummaryJudgementTermsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
@@ -184,6 +204,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604201543075_AddedAgreementTermsToEnforcementLoan.resx">
       <DependentUpon>201604201543075_AddedAgreementTermsToEnforcementLoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604251653349_AddedProblemManagerIDToEnforcementLoans.resx">
+      <DependentUpon>201604251653349_AddedProblemManagerIDToEnforcementLoans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604280958538_DeletedGuarantorColumnsInEnforcementLoan.resx">
+      <DependentUpon>201604280958538_DeletedGuarantorColumnsInEnforcementLoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605101259252_EnforcementEnding.resx">
+      <DependentUpon>201605101259252_EnforcementEnding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605161044089_EnforcementModelUpdate.resx">
+      <DependentUpon>201605161044089_EnforcementModelUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605191656164_EditedAgreementAndSummaryJudgementTermsTable.resx">
+      <DependentUpon>201605191656164_EditedAgreementAndSummaryJudgementTermsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

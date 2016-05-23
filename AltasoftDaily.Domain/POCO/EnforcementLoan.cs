@@ -12,63 +12,148 @@ namespace AltasoftDaily.Domain.POCO
     {
         [Key]
         public int EnforcementID { get; set; }
+        [DisplayName("აქტიური")]
         public bool IsActive { get; set; }
+
+        [DisplayName("სტატუსი")]
         public EnforcementLoanStatus Status { get; set; }
+
+        [DisplayName("საქმის სტატუსი")]
         public EnforcementCaseStatus CaseStatus { get; set; }
+
+        [DisplayName("სესხის #")]
         public int LoanID { get; set; }
+
+        [DisplayName("სესხის ხელშ. #")]
         public string LoanAgreementNumber { get; set; }
+
+        [DisplayName("სახელი")]
         public string BorrowerName { get; set; }
+
+        [DisplayName("პირადი #")]
         public string BorrowerPrivateNumber { get; set; }
+
+        [DisplayName("ტელეფონი")]
         public string BorrowerPhone { get; set; }
+
+        [DisplayName("მისამართი")]
         public string BorrowerAddress { get; set; }
-        public string GuarantorName { get; set; }
-        public string GuarantorPrivateNumber { get; set; }
-        public string GuarantorPhone { get; set; }
-        public string GuarantorAddress { get; set; }
+        //[DisplayName("აქტიური")]
+        //public string GuarantorName { get; set; }
+        //[DisplayName("აქტიური")]
+        //public string GuarantorPrivateNumber { get; set; }
+        //[DisplayName("აქტიური")]
+        //public string GuarantorPhone { get; set; }
+        //[DisplayName("აქტიური")]
+        //public string GuarantorAddress { get; set; }
+        [DisplayName("საკონტ. პირი")]
         public string ContactPerson { get; set; }
+
+        [DisplayName("საქმის #")]
         public string CaseNo { get; set; }
-        public string ID { get; set; }
+
+        //[DisplayName("აქტიური")]
+        //public string ID { get; set; }
+
+        [DisplayName("შეტყობინებების რეესტრი")]
         public string NotificationRegistry { get; set; }
+
+        [DisplayName("კომენტარი")]
         public string Comment { get; set; }
 
-        [Description("ყადაღა სააპლიკაციოს შეტანისას/იძულებითი აღსრულებისას")]
+        [DisplayName("ყადაღა სააპლიკაციო/აღსრულება")]
         public string IncumbranceApplicationOrEnforcement { get; set; }
+
+        [DisplayName("მორიგების პირობები")]
         public virtual AgreementAndSummaryJudgementTerms AgreementAndSummaryJudgementTerms { get; set; }
+
+        [DisplayName("ფილიალი")]
         public string Branch { get; set; }
+
+        [DisplayName("ექსპერტი")]
         public string CreditExpert { get; set; }
+
+        [DisplayName("გაცემის თარიღი")]
         public DateTime LoanStartDate { get; set; }
+
+        [DisplayName("აპლიკაციის შეტანის თარიღი")]
         public DateTime ApplicationSubmitDate { get; set; }
+
+        [DisplayName("PLD გადაცემის თარიღი")]
         public DateTime GivePLD { get; set; }
+
+        [DisplayName("ძირი")]
         public decimal LoanPrincipal { get; set; }
+
+        [DisplayName("პროცენტი")]
         public decimal LoanInterest { get; set; }
+
+        [DisplayName("ჯარიმა")]
         public decimal LoanPenalty { get; set; }
+
+        [DisplayName("სულ დავალიანება")]
+        public decimal TotalLoanDebt { get; set; }
+
+        [DisplayName("აპლიკაციის საფასური")]
         public decimal ApplicationCost { get; set; }
+
+        [DisplayName("ყადაღის საფასური")]
         public decimal IncumbranceCost { get; set; }
+
+        [DisplayName("საგარანტიოს საფასური")]
         public decimal InsuranceCost { get; set; }
-        public decimal EnforcementCostTotal { get; set; }
-        public decimal TotalDebtInApplication { get; set; }
+
+        [DisplayName("ჯამი")]
+        public decimal LoanSum
+        {
+            get
+            {
+                return LoanPrincipal + LoanInterest + LoanPenalty + ApplicationCost + IncumbranceCost + InsuranceCost;
+            }
+        }
+
+        //[DisplayName("აღსრულების ხარჯი სულ")]
+        //public decimal EnforcementCostTotal
+        //{
+        //    get
+        //    {
+        //        return ApplicationCost + IncumbranceCost + InsuranceCost;
+        //    }
+        //}
+
+        [DisplayName("პრობ. მენეჯერის #")]
+        public int ProblemManagerID { get; set; }
+
+        [DisplayName("პრობ. მენეჯერის სახელი")]
+        public string ProblemManagerName { get; set; }
 
     }
 
     public enum EnforcementLoanStatus
     {
-        Active = 1,
-        Passive = 0
+        [Description("დასრულებული")]
+        Passive = 0,
+        [Description("აქტიური")]
+        Active = 1
     }
 
     public enum EnforcementCaseStatus
     {
         [Description("გამარტივებული წარმოება")]
-        SummaryJudgement,
+        SummaryJudgement = 0,
         [Description("მორიგება")]
-        Agreement,
+        Agreement = 1,
         [Description("იძულებითი აღსრულება")]
-        EnforcementExecution,
+        EnforcementExecution = 2,
         [Description("განწილვადება")]
-        EnforcementReschedule,
+        EnforcementReschedule = 3,
         [Description("სასამართლო მიმდინარე")]
-        CourtCurrent,
+        CourtCurrent = 4,
         [Description("სასამართლო დასრულებული")]
-        CourtFinished,
+        CourtFinished = 5,
+        [Description("დასრულებული")]
+        Finished = 6,
+        [Description("ახალი")]
+        NewCase = 7
     }
 }

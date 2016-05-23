@@ -19,8 +19,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
-
-
             //var accs = from x in a.ListAccounts(new AltasoftAPI.AccountsAPI.ListAccountsQuery()
             //   {
             //       ControlFlags = AltasoftAPI.AccountsAPI.AccountControlFlags.Basic

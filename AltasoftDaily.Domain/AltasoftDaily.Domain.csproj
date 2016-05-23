@@ -55,6 +55,7 @@
     <Compile Include="CollateralModel.cs" />
     <Compile Include="CommentsPaymentModel.cs" />
     <Compile Include="CommentView.cs" />
+    <Compile Include="LoanDebts.cs" />
     <Compile Include="POCO\AgreementAndSummaryJudgementTerms.cs" />
     <Compile Include="POCO\EnforcementLoan.cs" />
     <Compile Include="POCO\FormWindow.cs" />

@@ -442,9 +442,9 @@ namespace AltasoftDaily.Core
             var bbbb = from x in loan.Debts
                        select x.Name;
 
-
-
             #region Create Item
+            var pm = loan.Authorities.LastOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.ProblemManager);
+
             var item = new DailyPayment()
             {
                 LoanID = loanId,
@@ -457,7 +457,8 @@ namespace AltasoftDaily.Core
                 OverduePrincipalInGel = loan.Debts.Where(x => x.Name.Contains("overdue_principal#")).Sum(x => x.Amount),
                 PrincipalInGel = loan.Debts.Where(x => x.Name == ("undue_principal")).Sum(x => x.Amount),
                 CurrentPrincipalInGel = loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount),
-                LatePrincipalInGel = loan.Debts.Where(x => x.Name.ToLower().Contains("late") && x.Name.ToLower().Contains("principal")).Sum(x => x.Amount)
+                LatePrincipalInGel = loan.Debts.Where(x => x.Name.ToLower().Contains("late") && x.Name.ToLower().Contains("principal")).Sum(x => x.Amount),
+                ProblemManager = pm != null ? pm.Name : ""
             };
 
             result.OperatorID = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).UserId.Value;
@@ -1469,9 +1470,174 @@ namespace AltasoftDaily.Core
             return list.OrderBy(x => x.LoanID).ToList();
         }
 
-
         /////////////////////////////////////////////////
 
+        public static List<EnforcementLoan> ListEnForcementLoans(User problemManager, params int[] localIds)
+        {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+            var loansIds = (from x in l.ListLoans
+                            (new AltasoftAPI.LoansAPI.ListLoansQuery()
+                                {
+                                    ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic,
+                                    Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late }
+                                }) select x.Id.Value).Except(localIds).ToArray();
+
+            var list1 = new List<EnforcementLoan>();
+
+            foreach (var i in loansIds)
+            {
+                var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic | AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts, true, i, true);
+
+                if (loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.ProblemManager && x.UserId.Value == problemManager.AltasoftUserID) == null)
+                    continue;
+
+                var cus1 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses | AltasoftAPI.CustomersAPI.CustomerControlFlags.ContactPersons | AltasoftAPI.CustomersAPI.CustomerControlFlags.Extensions, true, loan.BorrowerId.Value, true);
+
+                /////////////////////////////////
+                AltasoftAPI.LoansAPI.Application app;
+                bool? n;
+                bool n2;
+                
+                l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.Basic | AltasoftAPI.LoansAPI.ApplicationControlFlags.Extensions, true, i, true, out n, out n2, out app);
+
+                var collaterals = l.ListLinkedCollaterals(new AltasoftAPI.LoansAPI.ListLinkedCollateralsQuery()
+                {
+                    ControlFlags = AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Basic | AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Attributes,
+                    ApplicationId = app.Id.Value,
+                    ApplicationIdSpecified = app.IdSpecified
+                });
+
+                /////////////////////////////////
+
+                var enf = new EnforcementLoan();
+
+                enf.LoanID = loan.Id.Value;
+                enf.AgreementAndSummaryJudgementTerms = new AgreementAndSummaryJudgementTerms() { End = DateTime.Now, Start = DateTime.Now, PaymentDay = 0 };
+                try
+                {
+                    enf.BorrowerAddress = cus1.AddressActual != null ? cus1.AddressActual.Value.ValueGeo : "";
+                }
+                catch { }
+                enf.BorrowerName = cus1.Name != null ? cus1.Name.ValueGeo : "";
+                enf.BorrowerPhone = cus1.ContactInfo != null ? cus1.ContactInfo.MobilePhone : "";
+                enf.CreditExpert = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).Name;
+                enf.LoanAgreementNumber = loan.AgreementNo;
+                enf.Status = EnforcementLoanStatus.Active;
+                enf.GivePLD = DateTime.Now;
+                enf.ProblemManagerName = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.ProblemManager).Name;
+                enf.ProblemManagerID = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.ProblemManager).UserId.Value;
+                enf.BorrowerPrivateNumber = (cus1.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
+
+                enf.CaseStatus = EnforcementCaseStatus.NewCase;
+
+                ///////////////////////////////////////////
+                enf.LoanPrincipal = loan.Debts.Where(x => x.Name.Contains("overdue_principal#")).Sum(x => x.Amount)                                         //OverduePrincipalInGel
+                                  + loan.Debts.Where(x => x.Name == ("undue_principal")).Sum(x => x.Amount)                                                 //PrincipalInGel
+                                  + loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount)                                                       //CurrentPrincipalInGel
+                                  + loan.Debts.Where(x => x.Name.ToLower().Contains("late") && x.Name.ToLower().Contains("principal")).Sum(x => x.Amount);  //LatePrincipalInGel
+
+                enf.LoanInterest = loan.Debts.Where(x => x.Name.Contains("overdue_interest#") || x.Name.Contains("overdue_principal_interest")).Sum(x => x.Amount) //OverdueInterestInGel
+                                 + loan.Debts.Where(x => x.Name == ("interest")).Sum(x => x.Amount);                                                               //AccruedInterestInGel
+
+                enf.LoanPenalty = loan.Debts.Where(x => x.Name.Contains("overdue_interest_penalty")).Sum(x => x.Amount)          //InterestPenaltyInGel 
+                                + loan.Debts.Where(x => x.Name.Contains("overdue_principal_penalty")).Sum(x => x.Amount);        //PrincipalPenaltyInGel
+                enf.TotalLoanDebt = loan.Debts.Sum(x => x.Amount);
+                ///////////////////////////////////////////
+
+                enf.ApplicationSubmitDate = DateTime.Now;
+                enf.LoanStartDate = loan.Term.Start;
+
+                if (collaterals.Count() > 0)
+                {
+                    var coll = l.ListCollaterals(new AltasoftAPI.LoansAPI.ListCollateralsQuery()
+                    {
+                        Id = collaterals.FirstOrDefault().CollateralId,
+                        IdSpecified = collaterals.FirstOrDefault().CollateralIdSpecified,
+                        ControlFlags = AltasoftAPI.LoansAPI.CollateralControlFlags.Basic | AltasoftAPI.LoansAPI.CollateralControlFlags.Attributes
+                    });
+
+                    var col1 = c.GetCustomer(AltasoftAPI.CustomersAPI.CustomerControlFlags.Basic | AltasoftAPI.CustomersAPI.CustomerControlFlags.Addresses, true, coll[0].OwnerId.Value, true);
+                }
+
+                if (loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.ProblemManager) != null)
+                    list1.Add(enf);
+            }
+
+            return list1;
+        }
+
+        public static List<LoanDebts> ListLoanDebts(int[] loanIds)
+        {
+            #region Initialize Services
+            #region OrdersService
+            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region CustomersService
+            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region AccountsService
+            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+
+            #region LoansService
+            AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            #endregion
+            #endregion
+
+            var result = new List<LoanDebts>();
+
+            foreach (var i in loanIds)
+            {
+                var loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic | AltasoftAPI.LoansAPI.LoanControlFlags.Authorities | AltasoftAPI.LoansAPI.LoanControlFlags.Debts, true, i, true);
+
+                var enf = new LoanDebts() { LoanID = i };
+
+                ///////////////////////////////////////////
+                enf.Principal = loan.Debts.Where(x => x.Name.Contains("overdue_principal#")).Sum(x => x.Amount)                                         //OverduePrincipalInGel
+                                  + loan.Debts.Where(x => x.Name == ("undue_principal")).Sum(x => x.Amount)                                                 //PrincipalInGel
+                                  + loan.Debts.Where(x => x.Name == ("principal")).Sum(x => x.Amount)                                                       //CurrentPrincipalInGel
+                                  + loan.Debts.Where(x => x.Name.ToLower().Contains("late") && x.Name.ToLower().Contains("principal")).Sum(x => x.Amount);  //LatePrincipalInGel
+
+                enf.Interest = loan.Debts.Where(x => x.Name.Contains("overdue_interest#") || x.Name.Contains("overdue_principal_interest")).Sum(x => x.Amount) //OverdueInterestInGel
+                                 + loan.Debts.Where(x => x.Name == ("interest")).Sum(x => x.Amount);                                                               //AccruedInterestInGel
+
+                enf.Penalty = loan.Debts.Where(x => x.Name.Contains("overdue_interest_penalty")).Sum(x => x.Amount)          //InterestPenaltyInGel 
+                                + loan.Debts.Where(x => x.Name.Contains("overdue_principal_penalty")).Sum(x => x.Amount);        //PrincipalPenaltyInGel
+                enf.Other = loan.Debts.Sum(x => x.Amount) - (enf.Principal + enf.Interest + enf.Penalty);
+                ///////////////////////////////////////////
+
+                result.Add(enf);
+            }
+
+            return result;
+        }
     }
 
     public class Kunchik

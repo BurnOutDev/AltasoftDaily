@@ -148,5 +148,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         protected virtual void gridData_FilterStringChanged(object sender, EventArgs e) { }
 
         protected virtual void gridData_SortStringChanged(object sender, EventArgs e) { }
+
+        protected virtual void gridData_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) { }
+
+        protected virtual void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) { }
     }
 }

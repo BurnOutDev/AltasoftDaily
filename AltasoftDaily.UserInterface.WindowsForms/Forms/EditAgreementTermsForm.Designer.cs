@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbxPaymentDay = new System.Windows.Forms.MaskedTextBox();
             this.tbxAdmittedAmount = new System.Windows.Forms.MaskedTextBox();
-            this.dtpPaymentDate = new System.Windows.Forms.DateTimePicker();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
-            this.tbxMonthlyPayment = new System.Windows.Forms.MaskedTextBox();
+            this.tbxPayment = new System.Windows.Forms.MaskedTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,11 +49,11 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.tbxPaymentDay, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.tbxAdmittedAmount, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dtpPaymentDate, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.dtpStartDate, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.dtpEndDate, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.tbxMonthlyPayment, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbxPayment, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
@@ -74,6 +74,14 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(278, 157);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // tbxPaymentDay
+            // 
+            this.tbxPaymentDay.Location = new System.Drawing.Point(142, 55);
+            this.tbxPaymentDay.Mask = "99";
+            this.tbxPaymentDay.Name = "tbxPaymentDay";
+            this.tbxPaymentDay.Size = new System.Drawing.Size(133, 20);
+            this.tbxPaymentDay.TabIndex = 5;
+            // 
             // tbxAdmittedAmount
             // 
             this.tbxAdmittedAmount.Location = new System.Drawing.Point(142, 3);
@@ -81,14 +89,6 @@
             this.tbxAdmittedAmount.Name = "tbxAdmittedAmount";
             this.tbxAdmittedAmount.Size = new System.Drawing.Size(133, 20);
             this.tbxAdmittedAmount.TabIndex = 0;
-            // 
-            // dtpPaymentDate
-            // 
-            this.dtpPaymentDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpPaymentDate.Location = new System.Drawing.Point(142, 55);
-            this.dtpPaymentDate.Name = "dtpPaymentDate";
-            this.dtpPaymentDate.Size = new System.Drawing.Size(133, 20);
-            this.dtpPaymentDate.TabIndex = 1;
             // 
             // dtpStartDate
             // 
@@ -106,13 +106,12 @@
             this.dtpEndDate.Size = new System.Drawing.Size(133, 20);
             this.dtpEndDate.TabIndex = 1;
             // 
-            // tbxMonthlyPayment
+            // tbxPayment
             // 
-            this.tbxMonthlyPayment.Location = new System.Drawing.Point(142, 29);
-            this.tbxMonthlyPayment.Mask = "000000";
-            this.tbxMonthlyPayment.Name = "tbxMonthlyPayment";
-            this.tbxMonthlyPayment.Size = new System.Drawing.Size(133, 20);
-            this.tbxMonthlyPayment.TabIndex = 0;
+            this.tbxPayment.Location = new System.Drawing.Point(142, 29);
+            this.tbxPayment.Name = "tbxPayment";
+            this.tbxPayment.Size = new System.Drawing.Size(133, 20);
+            this.tbxPayment.TabIndex = 0;
             // 
             // label1
             // 
@@ -197,8 +196,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.MaskedTextBox tbxAdmittedAmount;
-        private System.Windows.Forms.MaskedTextBox tbxMonthlyPayment;
-        private System.Windows.Forms.DateTimePicker dtpPaymentDate;
+        private System.Windows.Forms.MaskedTextBox tbxPayment;
         private System.Windows.Forms.DateTimePicker dtpStartDate;
         private System.Windows.Forms.DateTimePicker dtpEndDate;
         private System.Windows.Forms.Label label1;
@@ -208,6 +206,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.MaskedTextBox tbxPaymentDay;
 
     }
 }
