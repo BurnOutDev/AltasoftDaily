@@ -1034,7 +1034,7 @@ namespace AltasoftDaily.Core
         }
 
 
-        public static SortableBindingList<Kunchik> GetAccountsTest(DateTime startDate, DateTime endDate, decimal? balCode, int? deptId)
+        public static SortableBindingList<Kunchik> GetAccountsTest(DateTime startDate, DateTime endDate, decimal[] balCodes, int? deptId)
         {
             var list = new Dictionary<List<AccountStatementRecord>, AltasoftAPI.AccountsAPI.Account>();
             var list2 = new List<Kunchik>();
@@ -1046,14 +1046,19 @@ namespace AltasoftDaily.Core
 
             var lll = new Dictionary<AccountStatement, AltasoftAPI.AccountsAPI.Account>();
 
-            var result = a.ListAccounts(new ListAccountsQuery()
+            var result = new List<AltasoftAPI.AccountsAPI.Account>();
+
+            foreach (var balCode in balCodes)
             {
-                ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
-                BalAcc = balCode,
-                BalAccSpecified = balCode.HasValue,
-                DeptId = deptId,
-                DeptIdSpecified = deptId.HasValue
-            });
+                result.AddRange(a.ListAccounts(new ListAccountsQuery()
+                {
+                    ControlFlags = AccountControlFlags.Basic | AccountControlFlags.Balances,
+                    BalAcc = balCode,
+                    BalAccSpecified = true,
+                    DeptId = deptId,
+                    DeptIdSpecified = deptId.HasValue
+                }));
+            }
 
             foreach (var item in result)
             {
@@ -1589,26 +1594,9 @@ namespace AltasoftDaily.Core
 
         public static List<LoanDebts> ListLoanDebts(int[] loanIds)
         {
-            #region Initialize Services
-            #region OrdersService
-            AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
-            o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion
-
-            #region CustomersService
-            AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
-            c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion
-
-            #region AccountsService
-            AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
-            a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion
-
             #region LoansService
             AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
-            #endregion
             #endregion
 
             var result = new List<LoanDebts>();

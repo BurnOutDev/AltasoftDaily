@@ -391,7 +391,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
                 ////
 
-                var expressPay = DailyManagement.GetAccountsTest(calcDate.Date, calcDate.Date, 2501, null);
+                var expressPay = DailyManagement.GetAccountsTest(calcDate.Date, calcDate.Date, new decimal[] { 2501 }, null);
 
                 foreach (var row in (SortableBindingList<DailyPayment>)gridDaily.DataSource)
                 {

@@ -13,5 +13,11 @@ namespace AltasoftDaily.Domain
         public decimal Interest { get; set; }
         public decimal Penalty { get; set; }
         public decimal Other { get; set; }
+
+
+        public decimal GetSum()
+        {
+            return Principal + Interest + Penalty + Other;
+        }
     }
 }

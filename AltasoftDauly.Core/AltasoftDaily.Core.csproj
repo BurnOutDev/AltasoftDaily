@@ -135,6 +135,10 @@
     <Compile Include="Migrations\201605191656164_EditedAgreementAndSummaryJudgementTermsTable.Designer.cs">
       <DependentUpon>201605191656164_EditedAgreementAndSummaryJudgementTermsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605250629448_AddedColumnsInEnforcementAndChangeLogModel.cs" />
+    <Compile Include="Migrations\201605250629448_AddedColumnsInEnforcementAndChangeLogModel.Designer.cs">
+      <DependentUpon>201605250629448_AddedColumnsInEnforcementAndChangeLogModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
@@ -219,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605191656164_EditedAgreementAndSummaryJudgementTermsTable.resx">
       <DependentUpon>201605191656164_EditedAgreementAndSummaryJudgementTermsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605250629448_AddedColumnsInEnforcementAndChangeLogModel.resx">
+      <DependentUpon>201605250629448_AddedColumnsInEnforcementAndChangeLogModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

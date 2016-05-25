@@ -44,6 +44,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
             dtpApplicationSubmitDate.Value = Entity.ApplicationSubmitDate;
             dtpGivePLD.Value = Entity.GivePLD;
             tbxComment.Text = Entity.Comment;
+
+            tbxAppPrincipal.Text = Entity.AppPrincipal.ToString();
+            tbxAppInterest.Text = Entity.AppInterest.ToString();
+            tbxAppPenalty.Text = Entity.AppPenalty.ToString();
         }
 
         public static string GetEnumDescription(Enum value)
@@ -74,6 +78,9 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
             Entity.Status = (EnforcementLoanStatus)cbxStatus.SelectedIndex;
             Entity.CaseStatus = (EnforcementCaseStatus)cbxCaseStatus.SelectedIndex;
             Entity.Comment = tbxComment.Text;
+            Entity.AppPrincipal = decimal.Parse(tbxAppPrincipal.Text);
+            Entity.AppInterest = decimal.Parse(tbxAppInterest.Text);
+            Entity.AppPenalty = decimal.Parse(tbxAppPenalty.Text);
             
             Save = true;
             this.Close();

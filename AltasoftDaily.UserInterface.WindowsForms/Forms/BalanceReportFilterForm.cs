@@ -15,7 +15,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int? BranchID { get; set; }
-        public decimal? BalCode { get; set; }
+        public decimal[] BalCode { get; set; }
 
         public BalanceReportFilterForm()
         {
@@ -33,7 +33,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
             EndDate = dtpEnd.Value;
 
             if (!string.IsNullOrWhiteSpace(txtBalCode.Text))
-                BalCode = decimal.Parse(txtBalCode.Text);
+                BalCode = (from x in txtBalCode.Text.Split(',')
+                              select decimal.Parse(x)).ToArray();
 
             if (!string.IsNullOrWhiteSpace(txtBranchID.Text))
                 BranchID = int.Parse(txtBranchID.Text);

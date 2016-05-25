@@ -58,14 +58,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbxComment = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.tbxAppPrincipal = new System.Windows.Forms.TextBox();
+            this.tbxAppInterest = new System.Windows.Forms.TextBox();
+            this.tbxAppPenalty = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 245F));
             this.tableLayoutPanel1.Controls.Add(this.lblStatus, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.cbxStatus, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.cbxCaseStatus, 1, 1);
@@ -92,8 +102,6 @@
             this.tableLayoutPanel1.Controls.Add(this.lblInsuranceCost, 0, 12);
             this.tableLayoutPanel1.Controls.Add(this.lblIncumbranceCost, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.tbxInsuranceCost, 1, 12);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 13);
-            this.tableLayoutPanel1.Controls.Add(this.tbxComment, 1, 13);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 14;
@@ -112,7 +120,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(380, 361);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(441, 338);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lblStatus
@@ -129,9 +137,9 @@
             this.cbxStatus.DisplayMember = "DisplayMember";
             this.cbxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxStatus.FormattingEnabled = true;
-            this.cbxStatus.Location = new System.Drawing.Point(215, 3);
+            this.cbxStatus.Location = new System.Drawing.Point(199, 3);
             this.cbxStatus.Name = "cbxStatus";
-            this.cbxStatus.Size = new System.Drawing.Size(160, 21);
+            this.cbxStatus.Size = new System.Drawing.Size(239, 21);
             this.cbxStatus.TabIndex = 1;
             this.cbxStatus.ValueMember = "ValueMember";
             // 
@@ -140,9 +148,9 @@
             this.cbxCaseStatus.DisplayMember = "DisplayMember";
             this.cbxCaseStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbxCaseStatus.FormattingEnabled = true;
-            this.cbxCaseStatus.Location = new System.Drawing.Point(215, 29);
+            this.cbxCaseStatus.Location = new System.Drawing.Point(199, 29);
             this.cbxCaseStatus.Name = "cbxCaseStatus";
-            this.cbxCaseStatus.Size = new System.Drawing.Size(160, 21);
+            this.cbxCaseStatus.Size = new System.Drawing.Size(239, 21);
             this.cbxCaseStatus.TabIndex = 1;
             this.cbxCaseStatus.ValueMember = "ValueMember";
             // 
@@ -166,10 +174,10 @@
             // 
             // tbxLoanID
             // 
-            this.tbxLoanID.Location = new System.Drawing.Point(215, 55);
+            this.tbxLoanID.Location = new System.Drawing.Point(199, 55);
             this.tbxLoanID.Name = "tbxLoanID";
             this.tbxLoanID.ReadOnly = true;
-            this.tbxLoanID.Size = new System.Drawing.Size(160, 20);
+            this.tbxLoanID.Size = new System.Drawing.Size(239, 20);
             this.tbxLoanID.TabIndex = 2;
             // 
             // lblAgreementNo
@@ -183,10 +191,10 @@
             // 
             // tbxAgreementNo
             // 
-            this.tbxAgreementNo.Location = new System.Drawing.Point(215, 81);
+            this.tbxAgreementNo.Location = new System.Drawing.Point(199, 81);
             this.tbxAgreementNo.Name = "tbxAgreementNo";
             this.tbxAgreementNo.ReadOnly = true;
-            this.tbxAgreementNo.Size = new System.Drawing.Size(160, 20);
+            this.tbxAgreementNo.Size = new System.Drawing.Size(239, 20);
             this.tbxAgreementNo.TabIndex = 2;
             // 
             // lblContactPerson
@@ -200,9 +208,9 @@
             // 
             // tbxContactPerson
             // 
-            this.tbxContactPerson.Location = new System.Drawing.Point(215, 107);
+            this.tbxContactPerson.Location = new System.Drawing.Point(199, 107);
             this.tbxContactPerson.Name = "tbxContactPerson";
-            this.tbxContactPerson.Size = new System.Drawing.Size(160, 20);
+            this.tbxContactPerson.Size = new System.Drawing.Size(239, 20);
             this.tbxContactPerson.TabIndex = 2;
             // 
             // CaseNo
@@ -216,16 +224,16 @@
             // 
             // tbxCaseNo
             // 
-            this.tbxCaseNo.Location = new System.Drawing.Point(215, 133);
+            this.tbxCaseNo.Location = new System.Drawing.Point(199, 133);
             this.tbxCaseNo.Name = "tbxCaseNo";
-            this.tbxCaseNo.Size = new System.Drawing.Size(160, 20);
+            this.tbxCaseNo.Size = new System.Drawing.Size(239, 20);
             this.tbxCaseNo.TabIndex = 2;
             // 
             // tbxNotificationRegistry
             // 
-            this.tbxNotificationRegistry.Location = new System.Drawing.Point(215, 159);
+            this.tbxNotificationRegistry.Location = new System.Drawing.Point(199, 159);
             this.tbxNotificationRegistry.Name = "tbxNotificationRegistry";
-            this.tbxNotificationRegistry.Size = new System.Drawing.Size(160, 20);
+            this.tbxNotificationRegistry.Size = new System.Drawing.Size(239, 20);
             this.tbxNotificationRegistry.TabIndex = 2;
             // 
             // NotificationRegistry
@@ -239,9 +247,9 @@
             // 
             // tbxIncumbranceApplicationOrEnforcement
             // 
-            this.tbxIncumbranceApplicationOrEnforcement.Location = new System.Drawing.Point(215, 185);
+            this.tbxIncumbranceApplicationOrEnforcement.Location = new System.Drawing.Point(199, 185);
             this.tbxIncumbranceApplicationOrEnforcement.Name = "tbxIncumbranceApplicationOrEnforcement";
-            this.tbxIncumbranceApplicationOrEnforcement.Size = new System.Drawing.Size(160, 20);
+            this.tbxIncumbranceApplicationOrEnforcement.Size = new System.Drawing.Size(239, 20);
             this.tbxIncumbranceApplicationOrEnforcement.TabIndex = 2;
             // 
             // lblIncumbranceApplicationOrEnforcement
@@ -256,9 +264,9 @@
             // dtpApplicationSubmitDate
             // 
             this.dtpApplicationSubmitDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpApplicationSubmitDate.Location = new System.Drawing.Point(215, 211);
+            this.dtpApplicationSubmitDate.Location = new System.Drawing.Point(199, 211);
             this.dtpApplicationSubmitDate.Name = "dtpApplicationSubmitDate";
-            this.dtpApplicationSubmitDate.Size = new System.Drawing.Size(160, 20);
+            this.dtpApplicationSubmitDate.Size = new System.Drawing.Size(239, 20);
             this.dtpApplicationSubmitDate.TabIndex = 3;
             // 
             // lblApplicationSubmitDate
@@ -273,9 +281,9 @@
             // dtpGivePLD
             // 
             this.dtpGivePLD.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpGivePLD.Location = new System.Drawing.Point(215, 237);
+            this.dtpGivePLD.Location = new System.Drawing.Point(199, 237);
             this.dtpGivePLD.Name = "dtpGivePLD";
-            this.dtpGivePLD.Size = new System.Drawing.Size(160, 20);
+            this.dtpGivePLD.Size = new System.Drawing.Size(239, 20);
             this.dtpGivePLD.TabIndex = 3;
             // 
             // lblGivePLD
@@ -289,9 +297,9 @@
             // 
             // tbxApplicationCost
             // 
-            this.tbxApplicationCost.Location = new System.Drawing.Point(215, 262);
+            this.tbxApplicationCost.Location = new System.Drawing.Point(199, 262);
             this.tbxApplicationCost.Name = "tbxApplicationCost";
-            this.tbxApplicationCost.Size = new System.Drawing.Size(160, 20);
+            this.tbxApplicationCost.Size = new System.Drawing.Size(239, 20);
             this.tbxApplicationCost.TabIndex = 2;
             // 
             // lblApplicationCost
@@ -305,9 +313,9 @@
             // 
             // tbxIncumbranceCost
             // 
-            this.tbxIncumbranceCost.Location = new System.Drawing.Point(215, 288);
+            this.tbxIncumbranceCost.Location = new System.Drawing.Point(199, 288);
             this.tbxIncumbranceCost.Name = "tbxIncumbranceCost";
-            this.tbxIncumbranceCost.Size = new System.Drawing.Size(160, 20);
+            this.tbxIncumbranceCost.Size = new System.Drawing.Size(239, 20);
             this.tbxIncumbranceCost.TabIndex = 2;
             // 
             // lblInsuranceCost
@@ -330,15 +338,15 @@
             // 
             // tbxInsuranceCost
             // 
-            this.tbxInsuranceCost.Location = new System.Drawing.Point(215, 314);
+            this.tbxInsuranceCost.Location = new System.Drawing.Point(199, 314);
             this.tbxInsuranceCost.Name = "tbxInsuranceCost";
-            this.tbxInsuranceCost.Size = new System.Drawing.Size(160, 20);
+            this.tbxInsuranceCost.Size = new System.Drawing.Size(239, 20);
             this.tbxInsuranceCost.TabIndex = 2;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 334);
+            this.label1.Location = new System.Drawing.Point(194, 417);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 13);
             this.label1.TabIndex = 4;
@@ -346,14 +354,20 @@
             // 
             // tbxComment
             // 
-            this.tbxComment.Location = new System.Drawing.Point(215, 337);
+            this.tbxComment.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbxComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.tbxComment.Location = new System.Drawing.Point(3, 3);
+            this.tbxComment.Multiline = true;
             this.tbxComment.Name = "tbxComment";
-            this.tbxComment.Size = new System.Drawing.Size(160, 20);
+            this.tbxComment.Size = new System.Drawing.Size(435, 125);
             this.tbxComment.TabIndex = 2;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(317, 402);
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(378, 570);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 1;
@@ -361,20 +375,106 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // tbxAppPrincipal
+            // 
+            this.tbxAppPrincipal.Location = new System.Drawing.Point(6, 19);
+            this.tbxAppPrincipal.Name = "tbxAppPrincipal";
+            this.tbxAppPrincipal.Size = new System.Drawing.Size(141, 20);
+            this.tbxAppPrincipal.TabIndex = 5;
+            // 
+            // tbxAppInterest
+            // 
+            this.tbxAppInterest.Location = new System.Drawing.Point(153, 19);
+            this.tbxAppInterest.Name = "tbxAppInterest";
+            this.tbxAppInterest.Size = new System.Drawing.Size(144, 20);
+            this.tbxAppInterest.TabIndex = 5;
+            // 
+            // tbxAppPenalty
+            // 
+            this.tbxAppPenalty.Location = new System.Drawing.Point(303, 19);
+            this.tbxAppPenalty.Name = "tbxAppPenalty";
+            this.tbxAppPenalty.Size = new System.Drawing.Size(132, 20);
+            this.tbxAppPenalty.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "ძირი";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(150, 42);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "პროცენტი";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(303, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "ჯარიმა";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tbxAppPenalty);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.tbxAppPrincipal);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.tbxAppInterest);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 352);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(441, 62);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "აპლიკაციის შეტანისას";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.tbxComment, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 433);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(441, 131);
+            this.tableLayoutPanel2.TabIndex = 8;
+            // 
             // EditEnforcementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 428);
+            this.ClientSize = new System.Drawing.Size(468, 600);
+            this.Controls.Add(this.tableLayoutPanel2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditEnforcementForm";
             this.Text = "EditEnforcementForm";
             this.Load += new System.EventHandler(this.EditEnforcementForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -410,5 +510,13 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbxComment;
+        private System.Windows.Forms.TextBox tbxAppPrincipal;
+        private System.Windows.Forms.TextBox tbxAppInterest;
+        private System.Windows.Forms.TextBox tbxAppPenalty;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

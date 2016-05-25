@@ -52,8 +52,8 @@ namespace AltasoftDaily.Domain.POCO
         [DisplayName("საქმის #")]
         public string CaseNo { get; set; }
 
-        //[DisplayName("აქტიური")]
-        //public string ID { get; set; }
+        [DisplayName("იდენტიფიკატორი")]
+        public string Identificator { get; set; }
 
         [DisplayName("შეტყობინებების რეესტრი")]
         public string NotificationRegistry { get; set; }
@@ -90,6 +90,15 @@ namespace AltasoftDaily.Domain.POCO
 
         [DisplayName("ჯარიმა")]
         public decimal LoanPenalty { get; set; }
+
+        [DisplayName("აპლ. ძირი")]
+        public decimal AppPrincipal { get; set; }
+
+        [DisplayName("აპლ. პროცენტი")]
+        public decimal AppInterest { get; set; }
+
+        [DisplayName("აპლ. ჯარიმა")]
+        public decimal AppPenalty { get; set; }
 
         [DisplayName("სულ დავალიანება")]
         public decimal TotalLoanDebt { get; set; }

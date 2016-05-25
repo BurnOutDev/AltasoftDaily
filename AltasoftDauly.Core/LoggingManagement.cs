@@ -24,6 +24,20 @@ namespace AltasoftDaily.Core
             return true;
         }
 
+        public static bool LogChange(ChangeLog log)
+        {
+            //if (log == null)
+            //    return false;
+
+            //using (var db = new AltasoftDailyContext())
+            //{
+            //    db.ChangeLogs.Add(log);
+            //    db.SaveChanges();
+            //}
+
+            return true;
+        }
+
         private static ExceptionLog CreateExceptionLog(Exception ex, User user, bool isInner = false)
         {
             var exLog = new ExceptionLog();

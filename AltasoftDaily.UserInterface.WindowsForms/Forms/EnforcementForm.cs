@@ -46,6 +46,19 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
             {
                 var loanids = (from x in db.EnforcementLoans select x.LoanID).ToArray();
 
+                var loanDebts = DailyManagement.ListLoanDebts(loanids);
+
+                foreach (var debt in loanDebts)
+                {
+                    var tempLoan = db.EnforcementLoans.FirstOrDefault(x => x.LoanID == debt.LoanID);
+                    tempLoan.LoanInterest = debt.Interest;
+                    tempLoan.LoanPrincipal = debt.Principal;
+                    tempLoan.LoanPenalty = debt.Penalty;
+                    tempLoan.TotalLoanDebt = debt.GetSum();
+                }
+
+                db.SaveChanges();
+
                 db.EnforcementLoans.AddRange(DailyManagement.ListEnForcementLoans(User, loanids));
                 db.SaveChanges();
             }
