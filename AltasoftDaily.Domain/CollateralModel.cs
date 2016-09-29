@@ -17,5 +17,6 @@ namespace AltasoftDaily.Domain
         public decimal LiquidationAmount { get; set; }
         public string AgreementNumber { get; set; }
         public DateTime? CloseDate { get; set; }
+        public bool Closed { get; set; }
     }
 }

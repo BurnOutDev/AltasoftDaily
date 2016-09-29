@@ -25,6 +25,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             tbxUsername.Text = Properties.Settings.Default.Username;
             cbxDept.SelectedIndex = Properties.Settings.Default.SelectedBranch;
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -32,33 +33,68 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             Application.Exit();
         }
 
-        private void btnEnter_Click(object sender, EventArgs e)
+        private void ShowLoading()
         {
-            try
+            pictureBox1.Visible = true;
+            foreach (Control item in this.Controls)
             {
-                bool authenticated;
-                string response;
-                _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
-
-                if (!authenticated)
+                if (item is PictureBox)
                 {
-                    MessageBox.Show(response);
-
-                    return;
+                    continue;
                 }
-                LoggingManagement.LogSign(SignType.SignIn, _user);
-
-                Properties.Settings.Default.Username = tbxUsername.Text;
-                Properties.Settings.Default.SelectedBranch = cbxDept.SelectedIndex;
-                Properties.Settings.Default.Save();
-
-                Close();
+                item.Enabled = false;
             }
-            catch (Exception ex)
+            pictureBox1.Refresh();
+        }
+
+        private void HideLoading()
+        {
+            pictureBox1.Visible = false;
+            foreach (Control item in this.Controls)
             {
-                LoggingManagement.LogException(ex, null);
-                throw;
+                if (item is PictureBox)
+                {
+                    continue;
+                }
+                item.Enabled = true;
             }
+            pictureBox1.Refresh();
+        }
+
+        private async void btnEnter_Click(object sender, EventArgs e)
+        {
+            ShowLoading();
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    bool authenticated;
+                    string response;
+                    _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
+
+                    if (!authenticated)
+                    {
+                        MessageBox.Show(response);
+
+                        return;
+                    }
+                    LoggingManagement.LogSign(SignType.SignIn, _user);
+
+                    Properties.Settings.Default.Username = tbxUsername.Text;
+                    Properties.Settings.Default.SelectedBranch = cbxDept.SelectedIndex;
+                    Properties.Settings.Default.Save();
+
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    LoggingManagement.LogException(ex, null);
+                    throw;
+                }
+            });
+
+            HideLoading();
         }
 
         public User GetUser()

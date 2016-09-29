@@ -66,14 +66,12 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             if (MessageBox.Show("გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 LoadingForm.Show();
-
-                if (!string.IsNullOrWhiteSpace(User.ConnectionString))
-                    DailyManagement.GetUpdatesByBusinesscreditUser(User);
+                
                 DailyManagement.GetUpdatesByAltasoftUser(User, ref status);
             }
 
             var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
-            gridData.DataSource = new SortableBindingList<DailyPayment>(payments);
+            gridData.DataSource = new SortableBindingList<DailyPayment>(payments.OrderBy(x => x.ResponsibleUser).ThenBy(x => x.LoanID).ToList());
 
             foreach (DataGridViewColumn col in gridData.Columns)
             {

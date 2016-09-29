@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AltasoftDaily.UserInterface.WindowsForms</RootNamespace>
     <AssemblyName>AltasoftDaily.UserInterface.WindowsForms</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,6 +94,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LoadingCircle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadingCircle.Designer.cs">
+      <DependentUpon>LoadingCircle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MdiClientPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -155,6 +162,9 @@
     </Compile>
     <Compile Include="Forms\CustomerForm.Designer.cs">
       <DependentUpon>CustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CustomMetroForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\DailyForm.cs">
       <SubType>Form</SubType>
@@ -396,14 +406,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinessCredit.Core\BusinessCredit.Core.csproj">
-      <Project>{10e1b965-9262-4ce5-b727-8c0f5e4d4ac4}</Project>
-      <Name>BusinessCredit.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Documents\Visual Studio 2013\Projects\BusinessCredit\BusinssCredit.Domain\BusinssCredit.Domain.csproj">
-      <Project>{63460d01-2be9-45ba-906e-088645bad220}</Project>
-      <Name>BusinssCredit.Domain</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AltasoftAPI\AltasoftAPI.csproj">
       <Project>{04488e8b-e169-40ae-bebc-0ecff12a5cbc}</Project>
       <Name>AltasoftAPI</Name>
@@ -506,6 +508,10 @@
     <Content Include="BC.ico" />
     <Content Include="Libraries\KasaGE.dll" />
     <Content Include="Libraries\KasaGE.pdb" />
+    <Content Include="Libraries\MetroFramework.Design.dll" />
+    <Content Include="Libraries\MetroFramework.dll" />
+    <Content Include="Libraries\MetroFramework.Fonts.dll" />
+    <Content Include="Resources\Loading.gif" />
     <None Include="Resources\ECR-Export-32.png" />
     <None Include="Resources\ECR-Import-32.png" />
     <None Include="Resources\ZReport-48.png" />

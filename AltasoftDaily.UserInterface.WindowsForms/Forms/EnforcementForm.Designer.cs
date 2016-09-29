@@ -31,6 +31,8 @@
             this.cbxShowPassive = new System.Windows.Forms.CheckBox();
             this.tbxSearchString = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.cbxClosedLoans = new System.Windows.Forms.CheckBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -41,6 +43,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxRefresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExport)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -48,6 +51,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.tbxSearchString);
             this.splitContainer1.Size = new System.Drawing.Size(779, 453);
@@ -59,8 +63,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.cbxShowPassive);
+            this.splitContainer2.Panel2.Controls.Add(this.cbxClosedLoans);
             this.splitContainer2.Size = new System.Drawing.Size(779, 408);
-            this.splitContainer2.SplitterDistance = 376;
+            this.splitContainer2.SplitterDistance = 368;
             // 
             // pbxRefresh
             // 
@@ -84,7 +89,7 @@
             // 
             this.cbxShowPassive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbxShowPassive.AutoSize = true;
-            this.cbxShowPassive.Location = new System.Drawing.Point(814, 10);
+            this.cbxShowPassive.Location = new System.Drawing.Point(631, 8);
             this.cbxShowPassive.Name = "cbxShowPassive";
             this.cbxShowPassive.Size = new System.Drawing.Size(140, 17);
             this.cbxShowPassive.TabIndex = 2;
@@ -110,6 +115,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // cbxClosedLoans
+            // 
+            this.cbxClosedLoans.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxClosedLoans.AutoSize = true;
+            this.cbxClosedLoans.Location = new System.Drawing.Point(317, 8);
+            this.cbxClosedLoans.Name = "cbxClosedLoans";
+            this.cbxClosedLoans.Size = new System.Drawing.Size(167, 17);
+            this.cbxClosedLoans.TabIndex = 3;
+            this.cbxClosedLoans.Text = "დასრულებული საქმეები";
+            this.cbxClosedLoans.UseVisualStyleBackColor = true;
+            this.cbxClosedLoans.CheckedChanged += new System.EventHandler(this.cbxClosedLoans_CheckedChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.pbxExport;
+            this.pictureBox1.Location = new System.Drawing.Point(117, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Tag = "ექსპორტი";
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // EnforcementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -130,6 +158,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbxRefresh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxExport)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -139,5 +168,7 @@
         private System.Windows.Forms.CheckBox cbxShowPassive;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox tbxSearchString;
+        private System.Windows.Forms.CheckBox cbxClosedLoans;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

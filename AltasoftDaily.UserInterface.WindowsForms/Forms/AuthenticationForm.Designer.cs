@@ -33,6 +33,8 @@
             this.btnExit = new MetroFramework.Controls.MetroButton();
             this.cbxDept = new MetroFramework.Controls.MetroComboBox();
             this.tbxUsername = new MetroFramework.Controls.MetroTextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tbxPassword
@@ -106,12 +108,24 @@
             this.tbxUsername.TabIndex = 0;
             this.tbxUsername.UseSelectable = true;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.Loading;
+            this.pictureBox1.Location = new System.Drawing.Point(23, 95);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(215, 134);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
             // AuthenticationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(261, 287);
             this.ControlBox = false;
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.cbxDept);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnEnter);
@@ -121,6 +135,7 @@
             this.Text = "შესვლა";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
             this.Load += new System.EventHandler(this.AuthenticationForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -132,5 +147,6 @@
         private MetroFramework.Controls.MetroButton btnEnter;
         private MetroFramework.Controls.MetroButton btnExit;
         private MetroFramework.Controls.MetroComboBox cbxDept;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -43,32 +43,41 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
 
                 gridData.DataSource = bindingSource;
 
-                var b = ConvertToDataTable<Kunchik>(DailyManagement.GetAccountsTest(StartDate, EndDate, BalCode, BranchID).ToList());
+                var b = DailyManagement.GetAccountsTest(StartDate, EndDate, BalCode, BranchID);
 
-                var view = b.AsDataView();
+                var objlst = b.Cast<object>().ToList();
 
-                var tttable = view.ToTable(true, b.Columns.Cast<DataColumn>()
-                                     .Select(x => x.ColumnName)
-                                     .ToArray());
+                var converted = new SortableBindingList<object>(objlst);
+                //var converted = new SortableBindingList<object>(((SortableBindingList<Kunchik>)(gridData.DataSource)).Cast<object>().ToList());
 
-                b.TableName = "Table";
+                TaxOrderGenerator.ExportToExcel(converted, typeof(Kunchik));
 
-                dataSet.Tables.Clear();
-                dataSet.Tables.Add(b);
+                return;
 
-                bindingSource.DataMember = "Table";
+                //var view = b.AsDataView();
 
-                //dataSet.Tables[0].AsDataView().ToTable(true, dataSet.Tables[0].Columns.Cast<DataColumn>()
+                //var tttable = view.ToTable(true, b.Columns.Cast<DataColumn>()
                 //                     .Select(x => x.ColumnName)
                 //                     .ToArray());
 
-                foreach (DataGridViewColumn item in gridData.Columns)
-                {
-                    if (item.Name.Contains("Specified"))
-                        item.Visible = false;
-                }
+                //b.TableName = "Table";
 
-                f.Close();
+                //dataSet.Tables.Clear();
+                //dataSet.Tables.Add(b);
+
+                //bindingSource.DataMember = "Table";
+
+                ////dataSet.Tables[0].AsDataView().ToTable(true, dataSet.Tables[0].Columns.Cast<DataColumn>()
+                ////                     .Select(x => x.ColumnName)
+                ////                     .ToArray());
+
+                //foreach (DataGridViewColumn item in gridData.Columns)
+                //{
+                //    if (item.Name.Contains("Specified"))
+                //        item.Visible = false;
+                //}
+
+                //f.Close();
             }
         }
 

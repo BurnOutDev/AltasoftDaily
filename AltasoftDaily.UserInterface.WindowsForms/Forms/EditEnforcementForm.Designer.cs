@@ -209,6 +209,7 @@
             // tbxContactPerson
             // 
             this.tbxContactPerson.Location = new System.Drawing.Point(199, 107);
+            this.tbxContactPerson.MaxLength = 2147483647;
             this.tbxContactPerson.Name = "tbxContactPerson";
             this.tbxContactPerson.Size = new System.Drawing.Size(239, 20);
             this.tbxContactPerson.TabIndex = 2;
@@ -225,6 +226,7 @@
             // tbxCaseNo
             // 
             this.tbxCaseNo.Location = new System.Drawing.Point(199, 133);
+            this.tbxCaseNo.MaxLength = 2147483647;
             this.tbxCaseNo.Name = "tbxCaseNo";
             this.tbxCaseNo.Size = new System.Drawing.Size(239, 20);
             this.tbxCaseNo.TabIndex = 2;
@@ -232,6 +234,7 @@
             // tbxNotificationRegistry
             // 
             this.tbxNotificationRegistry.Location = new System.Drawing.Point(199, 159);
+            this.tbxNotificationRegistry.MaxLength = 2147483647;
             this.tbxNotificationRegistry.Name = "tbxNotificationRegistry";
             this.tbxNotificationRegistry.Size = new System.Drawing.Size(239, 20);
             this.tbxNotificationRegistry.TabIndex = 2;
@@ -248,6 +251,7 @@
             // tbxIncumbranceApplicationOrEnforcement
             // 
             this.tbxIncumbranceApplicationOrEnforcement.Location = new System.Drawing.Point(199, 185);
+            this.tbxIncumbranceApplicationOrEnforcement.MaxLength = 2147483647;
             this.tbxIncumbranceApplicationOrEnforcement.Name = "tbxIncumbranceApplicationOrEnforcement";
             this.tbxIncumbranceApplicationOrEnforcement.Size = new System.Drawing.Size(239, 20);
             this.tbxIncumbranceApplicationOrEnforcement.TabIndex = 2;
@@ -298,6 +302,7 @@
             // tbxApplicationCost
             // 
             this.tbxApplicationCost.Location = new System.Drawing.Point(199, 262);
+            this.tbxApplicationCost.MaxLength = 2147483647;
             this.tbxApplicationCost.Name = "tbxApplicationCost";
             this.tbxApplicationCost.Size = new System.Drawing.Size(239, 20);
             this.tbxApplicationCost.TabIndex = 2;
@@ -314,6 +319,7 @@
             // tbxIncumbranceCost
             // 
             this.tbxIncumbranceCost.Location = new System.Drawing.Point(199, 288);
+            this.tbxIncumbranceCost.MaxLength = 2147483647;
             this.tbxIncumbranceCost.Name = "tbxIncumbranceCost";
             this.tbxIncumbranceCost.Size = new System.Drawing.Size(239, 20);
             this.tbxIncumbranceCost.TabIndex = 2;
@@ -339,6 +345,7 @@
             // tbxInsuranceCost
             // 
             this.tbxInsuranceCost.Location = new System.Drawing.Point(199, 314);
+            this.tbxInsuranceCost.MaxLength = 2147483647;
             this.tbxInsuranceCost.Name = "tbxInsuranceCost";
             this.tbxInsuranceCost.Size = new System.Drawing.Size(239, 20);
             this.tbxInsuranceCost.TabIndex = 2;
@@ -378,6 +385,7 @@
             // tbxAppPrincipal
             // 
             this.tbxAppPrincipal.Location = new System.Drawing.Point(6, 19);
+            this.tbxAppPrincipal.MaxLength = 2147483647;
             this.tbxAppPrincipal.Name = "tbxAppPrincipal";
             this.tbxAppPrincipal.Size = new System.Drawing.Size(141, 20);
             this.tbxAppPrincipal.TabIndex = 5;
@@ -385,6 +393,7 @@
             // tbxAppInterest
             // 
             this.tbxAppInterest.Location = new System.Drawing.Point(153, 19);
+            this.tbxAppInterest.MaxLength = 2147483647;
             this.tbxAppInterest.Name = "tbxAppInterest";
             this.tbxAppInterest.Size = new System.Drawing.Size(144, 20);
             this.tbxAppInterest.TabIndex = 5;
@@ -392,6 +401,7 @@
             // tbxAppPenalty
             // 
             this.tbxAppPenalty.Location = new System.Drawing.Point(303, 19);
+            this.tbxAppPenalty.MaxLength = 2147483647;
             this.tbxAppPenalty.Name = "tbxAppPenalty";
             this.tbxAppPenalty.Size = new System.Drawing.Size(132, 20);
             this.tbxAppPenalty.TabIndex = 5;

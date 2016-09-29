@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
 using System.Reflection;
+using AltasoftDaily.Helpers;
 
 namespace AltasoftDaily.UserInterface.WindowsForms.Forms
 {
@@ -44,7 +45,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
         {
             if (MessageBox.Show("გსურთ მონაცემების განახლება?", "მონაცემების განახლება", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                var loanids = (from x in db.EnforcementLoans select x.LoanID).ToArray();
+                var loanids = (from x in db.EnforcementLoans select x.LoanID).Where(x => x > 0).ToArray();
 
                 var loanDebts = DailyManagement.ListLoanDebts(loanids);
 
@@ -65,12 +66,17 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
 
             var data = db.EnforcementLoans.Where(x => x.Status == EnforcementLoanStatus.Active).Where(x => x.ProblemManagerID == User.AltasoftUserID || User.AltasoftUserID == 33).ToList(); //33 - დაჩი იორამაშვილი
 
+            gridData.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+
             gridData.DataSource = data;
+
+            gridData.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing;
 
             gridData.ReadOnly = true;
 
             #region Hide Columns
             gridData.Columns["IsActive"].Visible = false;
+            gridData.Columns["TotalLoanDebt"].Visible = false;
             #endregion
 
             //for (int i = 0; i < gridData.Rows.Count; i++)
@@ -129,6 +135,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
                 MessageBox.Show(string.Format("სესხი იდენტიფიკატორით {0} არ მოიძებნა!", gridData.Rows[gridData.SelectedCells[0].RowIndex].Cells["LoanID"].Value.ToString()));
             }
         }
+
+        private void ExportToExcel()
+        {
+            var exPayments = (List<EnforcementLoan>)gridData.DataSource;
+            
+            TaxOrderGenerator.ExportToExcel(new SortableBindingList<object>(exPayments.Cast<object>().ToList()), typeof(EnforcementLoan));
+        }
+
 
         private void pbxFilter_Click(object sender, EventArgs e)
         {
@@ -231,6 +245,21 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
         {
             cIndex = 0;
             rIndex = 0;
+        }
+
+        private void cbxClosedLoans_CheckedChanged(object sender, EventArgs e)
+        {
+            gridData.SuspendLayout();
+            if (cbxClosedLoans.Checked)
+                gridData.DataSource = db.EnforcementLoans.Where(x => x.ProblemManagerID == User.AltasoftUserID || User.AltasoftUserID == 33).ToList();
+            else if (!cbxClosedLoans.Checked)
+                gridData.DataSource = db.EnforcementLoans.Where(x => x.Status == EnforcementLoanStatus.Active).Where(x => x.ProblemManagerID == User.AltasoftUserID || User.AltasoftUserID == 33).ToList();
+            gridData.ResumeLayout();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            ExportToExcel();
         }
     }
 }

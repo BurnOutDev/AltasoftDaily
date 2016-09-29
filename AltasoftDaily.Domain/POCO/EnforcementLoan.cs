@@ -46,8 +46,8 @@ namespace AltasoftDaily.Domain.POCO
         //public string GuarantorPhone { get; set; }
         //[DisplayName("აქტიური")]
         //public string GuarantorAddress { get; set; }
-        [DisplayName("საკონტ. პირი")]
-        public string ContactPerson { get; set; }
+        [DisplayName("კომენტარი")]
+        public string Comment { get; set; }
 
         [DisplayName("საქმის #")]
         public string CaseNo { get; set; }
@@ -58,8 +58,8 @@ namespace AltasoftDaily.Domain.POCO
         [DisplayName("შეტყობინებების რეესტრი")]
         public string NotificationRegistry { get; set; }
 
-        [DisplayName("კომენტარი")]
-        public string Comment { get; set; }
+        [DisplayName("საკონტ. პირი")]
+        public string ContactPerson { get; set; }
 
         [DisplayName("ყადაღა სააპლიკაციო/აღსრულება")]
         public string IncumbranceApplicationOrEnforcement { get; set; }

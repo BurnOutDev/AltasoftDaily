@@ -74,14 +74,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             if (LoadingForm != null)
                 LoadingForm.Close();
-
-            int count = 0;
-            //((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => count++);
-            //lblPmtCount.Text = count.ToString();
-
-            //decimal sum = 0;
-            //((SortableBindingList<DailyPayment>)gridDaily.DataSource).Where(x => x.Payment > 0).ToList().ForEach(x => sum += x.Payment);
-            //lblPmtSum.Text = Math.Round(sum, 2).ToString();
         }
 
         private void btnStats_Click(object sender, EventArgs e)
@@ -323,17 +315,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     break;
                 case MouseButtons.Right:
                     for (int i = 0; i < gridDaily.Columns.Count; i++)
-                    {
                         gridDaily.Columns[i].DefaultCellStyle.BackColor = Color.Empty;
-                    }
 
                     gridDaily.Columns[e.ColumnIndex].Frozen = !gridDaily.Columns[e.ColumnIndex].Frozen;
 
                     for (int i = 0; i <= e.ColumnIndex; i++)
-                    {
                         if (gridDaily.Columns[i].Frozen)
                             gridDaily.Columns[i].DefaultCellStyle.BackColor = Color.FloralWhite;
-                    }
+
                     break;
                 default:
                     break;
@@ -384,14 +373,21 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     var lst = new List<DailyPayment>();
                     foreach (var user in users)
                     {
-                        lst.AddRange(db.DailyPayments.Where(x => user.UserID == x.LocalUserID && x.CalculationDate == calcDate).ToList());
+                        var dblist = db.DailyPayments.Where(x => user.UserID == x.LocalUserID && x.CalculationDate == calcDate).ToList();
+                        dblist.ForEach(x => { db.Entry<DailyPayment>(x).Reload(); });
+                        lst.AddRange(dblist);
                     }
                     gridDaily.DataSource = new SortableBindingList<DailyPayment>(lst);
                 }
 
                 ////
 
-                var expressPay = DailyManagement.GetAccountsTest(calcDate.Date, calcDate.Date, new decimal[] { 2501 }, null);
+                SortableBindingList<Kunchik> expressPay = new SortableBindingList<Kunchik>();
+
+                if (calcDate.Date.DayOfWeek == DayOfWeek.Monday || (calcDate.Date.DayOfWeek == DayOfWeek.Sunday && comboBox1.SelectedIndex == 4))
+                    expressPay = DailyManagement.GetAccountsTest(calcDate.Date.AddDays(-1), calcDate.Date, new decimal[] { 2501 }, null);
+                else
+                    expressPay = DailyManagement.GetAccountsTest(calcDate.Date, calcDate.Date, new decimal[] { 2501 }, null);
 
                 foreach (var row in (SortableBindingList<DailyPayment>)gridDaily.DataSource)
                 {
@@ -429,7 +425,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                         continue;
 
                     col.ReadOnly = true;
-                } 
+                }
             }
         }
 
