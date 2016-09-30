@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
 using System.Reflection;
+using AltasoftDaily.UserInterface.WindowsForms.Controls;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -35,30 +36,26 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void ShowLoading()
         {
-            pictureBox1.Visible = true;
+            loadingControl1.Visible = true;
             foreach (Control item in this.Controls)
             {
-                if (item is PictureBox)
-                {
+                if (item is LoadingControl)
                     continue;
-                }
                 item.Enabled = false;
             }
-            pictureBox1.Refresh();
+            loadingControl1.Refresh();
         }
 
         private void HideLoading()
         {
-            pictureBox1.Visible = false;
+            loadingControl1.Visible = false;
             foreach (Control item in this.Controls)
             {
-                if (item is PictureBox)
-                {
+                if (item is LoadingControl)
                     continue;
-                }
                 item.Enabled = true;
             }
-            pictureBox1.Refresh();
+            loadingControl1.Refresh();
         }
 
         private async void btnEnter_Click(object sender, EventArgs e)

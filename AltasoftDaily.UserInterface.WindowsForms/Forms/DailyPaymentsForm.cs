@@ -46,7 +46,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         }
         public User User { get; set; }
         public int DeptId { get; set; }
-        public LoadingForm LoadingForm { get; set; }
         public DailyPaymentsForm(User user)
         {
             User = user;
@@ -55,38 +54,40 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             cbxPorts.Items.AddRange(SerialPort.GetPortNames());
         }
 
-        private void GG_Load(object sender, EventArgs e)
+        private async void GG_Load(object sender, EventArgs e)
         {
-            string status = "Loading...";
-            //try
-            //{
-            var calcDate = DailyManagement.GetCalculationDate();
+            ShowLoading();
 
-            LoadingForm = new LoadingForm();
-            if (MessageBox.Show("გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            await Task.Run(() =>
             {
-                LoadingForm.Show();
-                
-                DailyManagement.GetUpdatesByAltasoftUser(User, ref status);
-            }
+                try
+                {
+                    var calcDate = DailyManagement.GetCalculationDate();
+            
+                    if (MessageBox.Show("გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        DailyManagement.GetUpdatesByAltasoftUser(User);
+                    }
+            
+                    var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
+                    gridData.DataSource = new SortableBindingList<DailyPayment>(payments.OrderBy(x => x.ResponsibleUser).ThenBy(x => x.LoanID).ToList());
+            
+                    foreach (DataGridViewColumn col in gridData.Columns)
+                    {
+                        if (col.Name == "Payment")
+                            continue;
+            
+                        col.ReadOnly = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LoggingManagement.LogException(ex, User);
+                    throw;
+                }
+            });
 
-            var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
-            gridData.DataSource = new SortableBindingList<DailyPayment>(payments.OrderBy(x => x.ResponsibleUser).ThenBy(x => x.LoanID).ToList());
-
-            foreach (DataGridViewColumn col in gridData.Columns)
-            {
-                if (col.Name == "Payment")
-                    continue;
-
-                col.ReadOnly = true;
-            }
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    LoggingManagement.LogException(ex, User);
-            //    throw;
-            //}
+            HideLoading();
         }
 
         private void pbxSave_Click(object sender, EventArgs e)
@@ -317,25 +318,25 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             //try
             //{
-                List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
+            List<DailyPaymentIDOrderID> result = new List<DailyPaymentIDOrderID>();
 
-                if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    result = DailyManagement.SubmitOrdersFromDatabase(User);
-                    //DailyManagement.InsertPaymentsInBusinessCreditDb(User);
-                }
+            if (MessageBox.Show("ნამდვილად გსურთ ატვირთვა?", "ატვირთვა", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                result = DailyManagement.SubmitOrdersFromDatabase(User);
+                //DailyManagement.InsertPaymentsInBusinessCreditDb(User);
+            }
 
-                foreach (var item in result)
-                {
-                    var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID);
-                    payment.OrderID = item.OrderID;
+            foreach (var item in result)
+            {
+                var payment = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == item.PaymentID);
+                payment.OrderID = item.OrderID;
 
-                    LoggingManagement.LogOrder(payment, User);
-                }
+                LoggingManagement.LogOrder(payment, User);
+            }
 
-                db.SaveChanges();
+            db.SaveChanges();
 
-                MessageBox.Show(string.Format("წარმატებით აიტვირთა {0} გადახდა.", result.Count));
+            MessageBox.Show(string.Format("წარმატებით აიტვირთა {0} გადახდა.", result.Count));
             //}
             //catch (Exception ex)
             //{
@@ -346,8 +347,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void GG_Shown(object sender, EventArgs e)
         {
-            if (LoadingForm != null)
-                LoadingForm.Close();
+
         }
 
         public override void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

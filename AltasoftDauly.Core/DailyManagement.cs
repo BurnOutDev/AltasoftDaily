@@ -445,7 +445,7 @@ namespace AltasoftDaily.Core
             }
             return true;
         }
-        public static int GetUpdatesByAltasoftUser(User user, ref string status)
+        public static int GetUpdatesByAltasoftUser(User user)
         {
             var calcDate = GetCalculationDate();
 

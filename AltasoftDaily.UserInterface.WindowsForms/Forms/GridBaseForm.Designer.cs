@@ -38,6 +38,7 @@
             this.pbxFilter = new System.Windows.Forms.PictureBox();
             this.pbxExport = new System.Windows.Forms.PictureBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.loadingControl1 = new AltasoftDaily.UserInterface.WindowsForms.Controls.LoadingControl();
             ((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -176,6 +177,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.loadingControl1);
             this.splitContainer2.Panel1.Controls.Add(this.gridData);
             // 
             // splitContainer2.Panel2
@@ -187,6 +189,17 @@
             this.splitContainer2.Size = new System.Drawing.Size(690, 374);
             this.splitContainer2.SplitterDistance = 343;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // loadingControl1
+            // 
+            this.loadingControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadingControl1.Location = new System.Drawing.Point(0, -1);
+            this.loadingControl1.Name = "loadingControl1";
+            this.loadingControl1.Size = new System.Drawing.Size(690, 344);
+            this.loadingControl1.TabIndex = 3;
+            this.loadingControl1.Visible = false;
             // 
             // GridBaseForm
             // 
@@ -228,6 +241,6 @@
         public System.Windows.Forms.PictureBox pbxRefresh;
         public System.Windows.Forms.PictureBox pbxFilter;
         public System.Windows.Forms.PictureBox pbxExport;
-
+        private Controls.LoadingControl loadingControl1;
     }
 }

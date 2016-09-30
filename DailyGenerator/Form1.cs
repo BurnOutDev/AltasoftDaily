@@ -45,7 +45,7 @@ namespace DailyGenerator
             button1.Text = status;
             foreach (var user in users)
             {
-                DailyManagement.GetUpdatesByAltasoftUser(user, ref status);
+                DailyManagement.GetUpdatesByAltasoftUser(user);
             }
 
             button1.Enabled = true;

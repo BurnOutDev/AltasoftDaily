@@ -100,7 +100,16 @@
     <Compile Include="Controls\LoadingCircle.Designer.cs">
       <DependentUpon>LoadingCircle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LoadingControl.Designer.cs">
+      <DependentUpon>LoadingControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MdiClientPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TransparentControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\AddCommentForm.cs">
@@ -293,6 +302,9 @@
     <Compile Include="Forms\ViewCollateralsForm.Designer.cs">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\LoadingControl.resx">
+      <DependentUpon>LoadingControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddCommentForm.resx">
       <DependentUpon>AddCommentForm.cs</DependentUpon>
     </EmbeddedResource>

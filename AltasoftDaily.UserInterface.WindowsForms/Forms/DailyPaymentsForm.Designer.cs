@@ -38,11 +38,13 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.cbxPorts = new System.Windows.Forms.ComboBox();
+            this.loadingControl1 = new AltasoftDaily.UserInterface.WindowsForms.Controls.LoadingControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxRefresh)).BeginInit();
@@ -75,6 +77,10 @@
             // 
             // splitContainer2
             // 
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.loadingControl1);
             // 
             // pbxFilter
             // 
@@ -184,6 +190,13 @@
             this.cbxPorts.Size = new System.Drawing.Size(82, 21);
             this.cbxPorts.TabIndex = 4;
             // 
+            // loadingControl1
+            // 
+            this.loadingControl1.Location = new System.Drawing.Point(0, -42);
+            this.loadingControl1.Name = "loadingControl1";
+            this.loadingControl1.Size = new System.Drawing.Size(150, 150);
+            this.loadingControl1.TabIndex = 3;
+            // 
             // DailyPaymentsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +216,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -233,6 +247,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.ComboBox cbxPorts;
-
+        private Controls.LoadingControl loadingControl1;
     }
 }
