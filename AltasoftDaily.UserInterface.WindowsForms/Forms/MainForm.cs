@@ -34,7 +34,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void SyncUsers()
         {
-            return;
             #region Initialize Services
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();

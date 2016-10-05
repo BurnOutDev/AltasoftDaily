@@ -83,7 +83,8 @@
             "ლილოს სერვის ცენტრი",
             "ელიავა სერვის ცენტრი",
             "ვაგზლის სერვის ცენტრი",
-            "გლდანის სერვის ცენტრი"});
+            "გლდანის სერვის ცენტრი",
+            "ბათუმის სერვის ცენტრი"});
             this.cbxDept.Location = new System.Drawing.Point(23, 165);
             this.cbxDept.Name = "cbxDept";
             this.cbxDept.Size = new System.Drawing.Size(215, 29);

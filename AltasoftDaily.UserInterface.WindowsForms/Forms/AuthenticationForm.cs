@@ -62,6 +62,63 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             ShowLoading();
 
+
+            #region cOMMENT
+            //await Task.Run(() => {
+            //    #region Initialize Services
+            //    #region OrdersService
+            //    AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
+            //    o.RequestHeadersValue = new AltasoftAPI.OrdersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //    #endregion
+
+            //    #region CustomersService
+            //    AltasoftAPI.CustomersAPI.CustomersService c = new AltasoftAPI.CustomersAPI.CustomersService();
+            //    c.RequestHeadersValue = new AltasoftAPI.CustomersAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //    #endregion
+
+            //    #region AccountsService
+            //    AltasoftAPI.AccountsAPI.AccountsService a = new AltasoftAPI.AccountsAPI.AccountsService();
+            //    a.RequestHeadersValue = new AltasoftAPI.AccountsAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //    #endregion
+
+            //    #region LoansService
+            //    AltasoftAPI.LoansAPI.LoansService l = new AltasoftAPI.LoansAPI.LoansService();
+            //    l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
+            //    #endregion
+            //    #endregion
+
+            //    var apiUsers = l.ListUsers(new AltasoftAPI.LoansAPI.ListUsersQuery());
+
+            //    using (var db = new AltasoftDailyContext())
+            //    {
+            //        var dbUsers = db.Users.ToList();
+
+            //        foreach (var user in apiUsers)
+            //        {
+            //            var dbUser = dbUsers.FirstOrDefault(x => x.AltasoftUserID == user.Id);
+
+            //            if (dbUser == null)
+            //            {
+            //                var newUser = new User();
+
+            //                newUser.Username = user.LoginName.Replace("@businesscredit.ge", "");
+            //                newUser.AltasoftUserID = user.Id;
+            //                newUser.DeptID = user.DeptId;
+            //                newUser.Name = user.DisplayName.Split(' ').FirstOrDefault();
+            //                newUser.Password = "123456";
+            //                newUser.LastName = user.DisplayName.Split(' ').LastOrDefault();
+            //                newUser.LastPasswordChange = DateTime.Now;
+
+            //                db.Users.Add(newUser);
+            //            }
+            //        }
+
+            //        var saved = db.SaveChanges();
+            //    }
+            //});
+
+            #endregion
+
             await Task.Run(() =>
             {
                 try

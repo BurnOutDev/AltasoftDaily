@@ -149,29 +149,5 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         protected virtual void gridData_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) { }
 
         protected virtual void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) { }
-
-        protected void ShowLoading()
-        {
-            loadingControl1.Visible = true;
-            foreach (Control item in this.Controls)
-            {
-                if (item is LoadingControl)
-                    continue;
-                item.Enabled = false;
-            }
-            loadingControl1.Refresh();
-        }
-
-        protected void HideLoading()
-        {
-            loadingControl1.Visible = false;
-            foreach (Control item in this.Controls)
-            {
-                if (item is LoadingControl)
-                    continue;
-                item.Enabled = true;
-            }
-            loadingControl1.Refresh();
-        }
     }
 }

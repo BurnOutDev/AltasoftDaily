@@ -145,7 +145,8 @@
             "ლილოს სერვის ცენტრი",
             "ელიავა სერვის ცენტრი",
             "ვაგზლის სერვის ცენტრი",
-            "გლდანის სერვის ცენტრი"});
+            "გლდანის სერვის ცენტრი",
+            "ბათუმის სერვის ცენტრი"});
             this.comboBox1.Location = new System.Drawing.Point(116, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(206, 29);

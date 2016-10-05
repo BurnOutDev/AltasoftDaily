@@ -16,5 +16,15 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Controls
         {
             InitializeComponent();
         }
+
+        public void ShowLoading()
+        {
+            this.Visible = true;
+        }
+
+        public void HideLoading()
+        {
+            this.Visible = false;
+        }
     }
 }

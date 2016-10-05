@@ -199,7 +199,6 @@
             this.loadingControl1.Name = "loadingControl1";
             this.loadingControl1.Size = new System.Drawing.Size(690, 344);
             this.loadingControl1.TabIndex = 3;
-            this.loadingControl1.Visible = false;
             // 
             // GridBaseForm
             // 
@@ -241,6 +240,6 @@
         public System.Windows.Forms.PictureBox pbxRefresh;
         public System.Windows.Forms.PictureBox pbxFilter;
         public System.Windows.Forms.PictureBox pbxExport;
-        private Controls.LoadingControl loadingControl1;
+        public Controls.LoadingControl loadingControl1;
     }
 }

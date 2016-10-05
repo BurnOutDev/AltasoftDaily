@@ -56,7 +56,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private async void GG_Load(object sender, EventArgs e)
         {
-            ShowLoading();
+            loadingControl1.ShowLoading();
 
             await Task.Run(() =>
             {
@@ -64,7 +64,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 {
                     var calcDate = DailyManagement.GetCalculationDate();
             
-                    if (MessageBox.Show("გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show(this, "გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         DailyManagement.GetUpdatesByAltasoftUser(User);
                     }
@@ -87,7 +87,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 }
             });
 
-            HideLoading();
+            loadingControl1.HideLoading();
         }
 
         private void pbxSave_Click(object sender, EventArgs e)

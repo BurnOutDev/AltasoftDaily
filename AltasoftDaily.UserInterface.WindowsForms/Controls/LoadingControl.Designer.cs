@@ -51,6 +51,7 @@
             this.Name = "LoadingControl";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.Visible = false;
 
         }
 
