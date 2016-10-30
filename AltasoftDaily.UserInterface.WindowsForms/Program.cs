@@ -17,6 +17,28 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
+            //using (var db = new AltasoftDaily.Core.AltasoftDailyContext())
+            //{
+            //    var users = db.Users.Where(x => x.Username == "shkheladze" ||
+            //                                    x.Username == "skandelaki" ||
+            //                                    x.Username == "belisashvili" ||
+            //                                    x.Username == "dsakhokia" ||
+            //                                    x.Username == "vmamulia" ||
+            //                                    x.Username == "iiremashvili" ||
+            //                                    x.Username == "lchachanidze" ||
+            //                                    x.Username == "dtsiteladze" ||
+            //                                    x.Username == "gshaverdashvili" ||
+            //                                    x.Username == "gkoridze").ToList();
+
+            //    foreach (var user in users)
+            //    {
+            //        DailyManagement.GetUpdatesByAltasoftUser(user);
+            //    }
+
+            //    MessageBox.Show("Finished");
+            //}
+
+            //return;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

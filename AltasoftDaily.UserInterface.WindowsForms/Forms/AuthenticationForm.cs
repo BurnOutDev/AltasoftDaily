@@ -119,10 +119,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
             #endregion
 
-            await Task.Run(() =>
-            {
-                try
-                {
+            //await Task.Run(() =>
+            //{
+            //    try
+            //    {
                     bool authenticated;
                     string response;
                     _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
@@ -140,13 +140,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     Properties.Settings.Default.Save();
 
                     Close();
-                }
-                catch (Exception ex)
-                {
-                    LoggingManagement.LogException(ex, null);
-                    throw;
-                }
-            });
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LoggingManagement.LogException(ex, null);
+            //        throw;
+            //    }
+            //});
 
             HideLoading();
         }

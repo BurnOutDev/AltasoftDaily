@@ -58,10 +58,10 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
             loadingControl1.ShowLoading();
 
-            await Task.Run(() =>
-            {
-                try
-                {
+            //await Task.Run(() =>
+            //{
+            //    try
+            //    {
                     var calcDate = DailyManagement.GetCalculationDate();
             
                     if (MessageBox.Show(this, "გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -79,13 +79,13 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             
                         col.ReadOnly = true;
                     }
-                }
-                catch (Exception ex)
-                {
-                    LoggingManagement.LogException(ex, User);
-                    throw;
-                }
-            });
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LoggingManagement.LogException(ex, User);
+            //        throw;
+            //    }
+            //});
 
             loadingControl1.HideLoading();
         }

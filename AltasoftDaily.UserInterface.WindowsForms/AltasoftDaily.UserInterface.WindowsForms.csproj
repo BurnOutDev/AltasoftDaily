@@ -82,6 +82,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -302,6 +304,11 @@
     <Compile Include="Forms\ViewCollateralsForm.Designer.cs">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service References\AltaService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Controls\LoadingControl.resx">
       <DependentUpon>LoadingControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,6 +418,230 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.AdministrationDebtsList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.Application.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ApplicationsList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CalculateEffectiveRateForApplicationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CalculatePaymentDebtsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ChangeLoanAmountResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ChangeLoanConditionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CollateralLinkList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CollateralsList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CollateralTypeList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.CreditLinesList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DebtDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DeleteAdministrationDebtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DeleteApplicationAttachmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DeleteCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DeleteLinkCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.DisburseApplicationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.EffectiveRate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.EnvironmentVariables.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ExecuteOperationActionResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.FillScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GenerateScheduleDatesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetApplicationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetApplicationShcheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetEnvironmentVariablesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetLoanOperationDetailsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetLoanProductResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetLoanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.GetLoanScheduleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListAdministrationDebtsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListApplicationsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListCollateralsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListCollateralTypesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListCreditLinesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListLinkedCollateralsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListLoanProductsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListLoansResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListOpsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ListUsersResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.Loan.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.LoanPaymentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.LoanProduct.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.LoanProductsList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.LoanSchedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.LoansList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.NameAmountCollection.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.OperationsList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PatchLoanAttributesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostAdministrationDebtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostApplicationAttachmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostApplicationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostCreditLineResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PostLoanDebtsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutAdministrationDebtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutApplicationAttachmentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutApplicationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutCollateralLinkResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutCollateralResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutCreditLineResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutDebtAbatementResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.PutLoanAttributesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.ResponseHeaders.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.SetLoanProblemStatusResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.UsersList.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\AltasoftDaily.UserInterface.WindowsForms.AltaService.WriteoffLoanResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AltaService\LoansService.wsdl" />
+    <None Include="Service References\AltaService\LoansService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService1.wsdl" />
+    <None Include="Service References\AltaService\LoansService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AltaService\LoansService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -524,12 +755,24 @@
     <Content Include="Libraries\MetroFramework.dll" />
     <Content Include="Libraries\MetroFramework.Fonts.dll" />
     <Content Include="Resources\Loading.gif" />
+    <None Include="Service References\AltaService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AltaService\configuration.svcinfo" />
+    <None Include="Service References\AltaService\configuration91.svcinfo" />
+    <None Include="Service References\AltaService\LoansService.disco" />
     <None Include="Resources\ECR-Export-32.png" />
     <None Include="Resources\ECR-Import-32.png" />
     <None Include="Resources\ZReport-48.png" />
     <None Include="Resources\pbxEditOrder.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AltaService\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

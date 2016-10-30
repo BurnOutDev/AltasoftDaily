@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="529c478a-5e44-4f2c-9183-8d55e7cd6bf0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.16.48.200:15005/LoansService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LoansService.xsd" MetadataType="Schema" ID="ecd26f9e-37fb-4a16-b608-561634a3372f" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd5" />
+    <MetadataFile FileName="LoansService1.xsd" MetadataType="Schema" ID="9444aa59-ae3c-4290-a586-e3283cc4b423" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd1" />
+    <MetadataFile FileName="LoansService2.xsd" MetadataType="Schema" ID="c0e1e835-bfd2-4914-9150-0d9ff181d6cd" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd7" />
+    <MetadataFile FileName="LoansService.wsdl" MetadataType="Wsdl" ID="f59d200d-5dbf-409a-bcc5-eb6ac7cc6d92" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?wsdl=wsdl0" />
+    <MetadataFile FileName="LoansService1.wsdl" MetadataType="Wsdl" ID="235efad7-5f0e-4618-b740-f571be13c385" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?wsdl" />
+    <MetadataFile FileName="LoansService.disco" MetadataType="Disco" ID="1eb69f9d-02aa-4f1f-8adf-7e02c1d20a8d" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?disco" />
+    <MetadataFile FileName="LoansService3.xsd" MetadataType="Schema" ID="42e0ec03-5115-41ff-8eb4-2cb6eec616dc" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd3" />
+    <MetadataFile FileName="LoansService4.xsd" MetadataType="Schema" ID="2ad7ddd2-b1d6-48b2-994e-c7770a1443cf" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd4" />
+    <MetadataFile FileName="LoansService5.xsd" MetadataType="Schema" ID="509898be-5064-43db-ba97-89ee735a7002" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd6" />
+    <MetadataFile FileName="LoansService6.xsd" MetadataType="Schema" ID="73782ec9-1d43-4df3-ba2f-8ced76404ed9" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd2" />
+    <MetadataFile FileName="LoansService7.xsd" MetadataType="Schema" ID="377c9872-edf7-40d4-be1b-96ac62e25a35" SourceId="1" SourceUrl="http://172.16.48.200:15005/LoansService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

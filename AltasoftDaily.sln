@@ -25,6 +25,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Altasoft", "Altasoft", "{DA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyGenerator", "DailyGenerator\DailyGenerator.csproj", "{B75E8562-47D5-4129-966B-03CCBE38AE79}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowsServices", "WindowsServices", "{2F8D29DD-C284-42A0-A863-71B54EB4EC83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltasoftDaily.WindowsService.Generator", "AltasoftDaily.WindowsService.Generator\AltasoftDaily.WindowsService.Generator.csproj", "{1ABDE2B6-050B-4F8C-B371-555EBA0804FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltasoftDaily.Console.Generator", "AltasoftDaily.Console.Generator\AltasoftDaily.Console.Generator.csproj", "{D6718708-C073-4C49-A044-9871D930A18F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +69,14 @@ Global
 		{B75E8562-47D5-4129-966B-03CCBE38AE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B75E8562-47D5-4129-966B-03CCBE38AE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B75E8562-47D5-4129-966B-03CCBE38AE79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ABDE2B6-050B-4F8C-B371-555EBA0804FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ABDE2B6-050B-4F8C-B371-555EBA0804FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ABDE2B6-050B-4F8C-B371-555EBA0804FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ABDE2B6-050B-4F8C-B371-555EBA0804FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6718708-C073-4C49-A044-9871D930A18F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6718708-C073-4C49-A044-9871D930A18F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6718708-C073-4C49-A044-9871D930A18F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6718708-C073-4C49-A044-9871D930A18F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +90,7 @@ Global
 		{0407DECB-3A9E-4533-80CA-71F92B9C5605} = {69B2A60D-785B-4EEF-9C7D-D4CBE773ACBB}
 		{A03D2020-1B4C-4B70-B41A-918ECADF47BF} = {740B705E-EE62-421D-9990-4F07CCCA4861}
 		{B75E8562-47D5-4129-966B-03CCBE38AE79} = {740B705E-EE62-421D-9990-4F07CCCA4861}
+		{1ABDE2B6-050B-4F8C-B371-555EBA0804FC} = {2F8D29DD-C284-42A0-A863-71B54EB4EC83}
+		{D6718708-C073-4C49-A044-9871D930A18F} = {2F8D29DD-C284-42A0-A863-71B54EB4EC83}
 	EndGlobalSection
 EndGlobal

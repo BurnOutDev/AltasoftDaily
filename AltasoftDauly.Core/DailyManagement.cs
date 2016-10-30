@@ -248,7 +248,7 @@ namespace AltasoftDaily.Core
                 ProblemManager = pm != null ? pm.Name : ""
             };
 
-            result.OperatorID = loan.Authorities.LastOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.Operator).UserId.Value;
+            result.OperatorID = loan.Authorities.LastOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.PrimaryResponsible).UserId.Value;
             item.ResponsibleUser = loan.Authorities.FirstOrDefault(x => x.Role == AltasoftAPI.LoansAPI.AuthorityRole.PrimaryResponsible).Name;
 
             loan = l.GetLoan(AltasoftAPI.LoansAPI.LoanControlFlags.Basic, true, loanId, true);
