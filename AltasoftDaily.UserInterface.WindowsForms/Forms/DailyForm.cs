@@ -112,21 +112,21 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             {
                 orders.Add(new TaxOrder()
                 {
-                    Date = item.CalculationDate.ToShortDateString(),
-                    TaxOrderID = item.TaxOrderNumber,
-                    TaxOrderNumber = item.TaxOrderNumber,
-                    AccountFirstName = item.FirstName,
-                    AccountLastName = item.LastName,
-                    AccountPrivateNumber = item.PersonalID,
-                    Basis = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
-                    CollectorFirstName = User.Name,
-                    CollectorLastName = User.LastName,
-                    CollectorPrivateNumber = User.PrivateNumber
+                    //Date = item.CalculationDate.ToShortDateString(),
+                    //TaxOrderID = item.TaxOrderNumber,
+                    //TaxOrderNumber = item.TaxOrderNumber,
+                    //AccountFirstName = item.FirstName,
+                    //AccountLastName = item.LastName,
+                    //AccountPrivateNumber = item.PersonalID,
+                    //Basis = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
+                    //CollectorFirstName = User.Name,
+                    //CollectorLastName = User.LastName,
+                    //CollectorPrivateNumber = User.PrivateNumber
                 });
                 count++;
             }
 
-            TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), orders.ToArray());
+            //TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), orders.ToArray());
         }
 
         private void btnStats_Click(object sender, EventArgs e)

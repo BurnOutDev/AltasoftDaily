@@ -14,7 +14,7 @@ namespace AltasoftDaily.Core
             using (var db = new AltasoftDailyContext())
             {
                 var userByName = db.Users.FirstOrDefault(x => x.Username == username);
-                //
+
                 //if (userByName == null)
                 //{
                 //    authenticated = false;

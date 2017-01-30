@@ -25,14 +25,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         public MainForm()
         {
-            //Task.Run(SyncUsers);
+            //Task.Run(SyncUsers).Wait();
             
             InitializeComponent();
 
             WindowState = FormWindowState.Minimized;
         }
 
-        private void SyncUsers()
+        private async Task SyncUsers()
         {
             #region Initialize Services
             #region OrdersService

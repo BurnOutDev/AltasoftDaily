@@ -56,6 +56,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GemBox.Spreadsheet, Version=41.3.30.1033, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Spreadsheet.41.3.30.1033\lib\net30\GemBox.Spreadsheet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="KasaGE, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\KasaGE.dll</HintPath>
@@ -267,6 +271,24 @@
     <Compile Include="Forms\TakoMainForm.Designer.cs">
       <DependentUpon>TakoMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoggingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoggingForm.Designer.cs">
+      <DependentUpon>LoggingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="ProblemManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProblemManagerForm.Designer.cs">
+      <DependentUpon>ProblemManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -396,6 +418,44 @@
     <EmbeddedResource Include="Forms\TakoMainForm.resx">
       <DependentUpon>TakoMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LoggingForm.resx">
+      <DependentUpon>LoggingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.AuthenticationForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.ChangePassword.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.CollateralForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.CommentsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Controls.LoadingControl.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.CustomerForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.DailyForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.DailyPaymentsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.FilterForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.AddCommentForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.BalanceReportFilterForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.BalanceReportForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.CellViewForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.ChangePasswordForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.EditAgreementTermsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.EditEnforcementForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.EnforcementForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.EntitiesForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.OrderLogsFilterForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.OrderLogsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Forms.TakoMainForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.GridBaseForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.IdentityDocumentForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.LoadingForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.MainForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.OldPaymentsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.PaymentsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.Properties.Resources.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.PropertiesEditForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.SingleOrderForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.StatsForm.resources" />
+    <EmbeddedResource Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.ViewCollateralsForm.resources" />
+    <EmbeddedResource Include="ProblemManagerForm.resx">
+      <DependentUpon>ProblemManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -407,7 +467,18 @@
     <EmbeddedResource Include="Forms\ViewCollateralsForm.resx">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="483cb65a-0e62-46e8-bfd6-796e6518535e.xlsx" />
+    <None Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.exe.config" />
+    <None Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.vshost.exe.config" />
+    <None Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.vshost.exe.manifest" />
+    <None Include="bin\Debug\TaxOrderTemplate.xlsx" />
     <None Include="log4net.config" />
+    <None Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.csproj.GenerateResource.Cache" />
+    <None Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.csprojResolveAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\build.force" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -749,11 +820,49 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BC.ico" />
+    <Content Include="bin\Debug\AdvancedDataGridView.dll" />
+    <Content Include="bin\Debug\AdvancedDataGridView.xml" />
+    <Content Include="bin\Debug\AltasoftAPI.dll" />
+    <Content Include="bin\Debug\AltasoftAPI.pdb" />
+    <Content Include="bin\Debug\AltasoftDaily.Core.dll" />
+    <Content Include="bin\Debug\AltasoftDaily.Core.pdb" />
+    <Content Include="bin\Debug\AltasoftDaily.Domain.dll" />
+    <Content Include="bin\Debug\AltasoftDaily.Domain.pdb" />
+    <Content Include="bin\Debug\AltasoftDaily.Helpers.dll" />
+    <Content Include="bin\Debug\AltasoftDaily.Helpers.pdb" />
+    <Content Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.exe" />
+    <Content Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.pdb" />
+    <Content Include="bin\Debug\AltasoftDaily.UserInterface.WindowsForms.vshost.exe" />
+    <Content Include="bin\Debug\DocumentFormat.OpenXml.dll" />
+    <Content Include="bin\Debug\EntityFramework.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.dll" />
+    <Content Include="bin\Debug\EntityFramework.SqlServer.xml" />
+    <Content Include="bin\Debug\EntityFramework.xml" />
+    <Content Include="bin\Debug\EPPlus.dll" />
+    <Content Include="bin\Debug\fr\AdvancedDataGridView.resources.dll" />
+    <Content Include="bin\Debug\GemBox.Spreadsheet.dll" />
+    <Content Include="bin\Debug\GemBox.Spreadsheet.xml" />
+    <Content Include="bin\Debug\KasaGE.dll" />
+    <Content Include="bin\Debug\KasaGE.pdb" />
+    <Content Include="bin\Debug\MaterialDesignColors.dll" />
+    <Content Include="bin\Debug\MaterialSkin.dll" />
+    <Content Include="bin\Debug\MetroFramework.Design.dll" />
+    <Content Include="bin\Debug\MetroFramework.dll" />
+    <Content Include="bin\Debug\MetroFramework.Fonts.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
+    <Content Include="bin\Debug\ru\AdvancedDataGridView.resources.dll" />
     <Content Include="Libraries\KasaGE.dll" />
     <Content Include="Libraries\KasaGE.pdb" />
     <Content Include="Libraries\MetroFramework.Design.dll" />
     <Content Include="Libraries\MetroFramework.dll" />
     <Content Include="Libraries\MetroFramework.Fonts.dll" />
+    <Content Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.exe" />
+    <Content Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.pdb" />
+    <Content Include="obj\Debug\TempPE\Properties.Resources.Designer.cs.dll" />
+    <Content Include="obj\Debug\TempPE\Service References.AltaService.Reference.cs.dll" />
+    <Content Include="obj\Release\TempPE\Properties.Resources.Designer.cs.dll" />
     <Content Include="Resources\Loading.gif" />
     <None Include="Service References\AltaService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
@@ -772,6 +881,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AltaService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

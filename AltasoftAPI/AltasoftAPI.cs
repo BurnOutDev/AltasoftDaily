@@ -96,7 +96,7 @@ namespace AltasoftAPI.LoansAPI
         /// <remarks/>
         public LoansService()
         {
-            this.Url = "http://172.16.48.200:15005/LoansService.svc";
+            this.Url = "http://172.16.48.200:15005/lapi/LoansService.svc";
             //this.Url = "http://192.168.8.20:8022/LoansService.svc";
             this.Timeout = int.MaxValue;
         }
@@ -15987,7 +15987,7 @@ namespace AltasoftAPI.AccountsAPI
         /// <remarks/>
         public AccountsService()
         {
-            this.Url = "http://172.16.48.200:15005/AccountsService.svc";
+            this.Url = "http://172.16.48.200:15005/capi/AccountsService.svc";
             //this.Url = "http://192.168.8.20:8022/AccountsService.svc";
         }
 
@@ -20168,7 +20168,7 @@ namespace AltasoftAPI.CatalogsAPI
         /// <remarks/>
         public CatalogsService()
         {
-            this.Url = "http://172.16.48.200:15005/CatalogsService.svc";
+            this.Url = "http://172.16.48.200:15005/capi/CatalogsService.svc";
             //this.Url = "http://192.168.8.20:8022/CatalogsService.svc";
         }
 
@@ -23169,7 +23169,7 @@ namespace AltasoftAPI.CustomersAPI
         /// <remarks/>
         public CustomersService()
         {
-            this.Url = "http://172.16.48.200:15005/customersservice.svc";
+            this.Url = "http://172.16.48.200:15005/capi/CustomersService.svc";
             //this.Url = "http://192.168.8.20:8022/CustomersService.svc";
         }
 
@@ -28337,7 +28337,7 @@ namespace AltasoftAPI.OrdersAPI
         /// <remarks/>
         public OrdersService()
         {
-            this.Url = "http://172.16.48.200:15005/OrdersService.svc";
+            this.Url = "http://172.16.48.200:15005/capi/OrdersService.svc";
             //this.Url = "http://192.168.8.20:8022/OrdersService.svc";
         }
 

@@ -116,7 +116,7 @@ namespace AltasoftDaily.Core
 
         }
 
-       
+
 
         public static List<DailyPayment> UpdateCommentsInDaily(List<DailyPayment> list)
         {
@@ -163,7 +163,7 @@ namespace AltasoftDaily.Core
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
             #endregion
-
+            
             List<DailyPayment> list = new List<DailyPayment>();
             List<DailyPaymentAndLoan> data = new List<DailyPaymentAndLoan>();
 
@@ -276,11 +276,12 @@ namespace AltasoftDaily.Core
             item.ClientAccountDescrip = account.DisplayName.ValueGeo;
             item.ClientName = customer.Name.ValueGeo;//
 
-
-            item.FirstName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.FirstName.ValueGeo;
-            item.LastName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.LastName.ValueGeo;
-            item.PersonalID = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
-
+            if ((customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity) != null)
+            {
+                item.FirstName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.FirstName.ValueGeo;
+                item.LastName = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).Name.LastName.ValueGeo;
+                item.PersonalID = (customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity).PIN;
+            }
 
             item.ClientAccountBranchCode = customer.BranchId.Value.ToString();
             item.ClientAccountIban = account.IBAN;
@@ -380,11 +381,11 @@ namespace AltasoftDaily.Core
 
             #region Put Order
             o.PutOrder(new AltasoftAPI.OrdersAPI.UserAndDeptId()
-                        {
-                            DeptId = deptId,
-                            DeptIdSpecified = true,
-                            UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = userId, IdSpecified = true }
-                        }, 0, false,
+            {
+                DeptId = deptId,
+                DeptIdSpecified = true,
+                UserIdentification = new AltasoftAPI.OrdersAPI.UserIdentification() { Id = userId, IdSpecified = true }
+            }, 0, false,
                                new Guid().ToString(),
                                true, true, false, true, Order, out id, out specified);
             #endregion
@@ -545,11 +546,11 @@ namespace AltasoftDaily.Core
             l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.Basic | AltasoftAPI.LoansAPI.ApplicationControlFlags.Extensions, true, loanId, true, out n, out n2, out app);
 
             var collaterals = l.ListLinkedCollaterals(new AltasoftAPI.LoansAPI.ListLinkedCollateralsQuery()
-                {
-                    ControlFlags = AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Basic | AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Attributes,
-                    ApplicationId = app.Id.Value,
-                    ApplicationIdSpecified = app.IdSpecified
-                });
+            {
+                ControlFlags = AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Basic | AltasoftAPI.LoansAPI.LinkedCollateralControlFlags.Attributes,
+                ApplicationId = app.Id.Value,
+                ApplicationIdSpecified = app.IdSpecified
+            });
 
             //var collateral = l.ListCollaterals(new AltasoftAPI.LoansAPI.ListCollateralsQuery()
             //    {
@@ -605,12 +606,12 @@ namespace AltasoftDaily.Core
                 foreach (var item in lll)
                 {
                     list.Add(new BalanceReportModel()
-                        {
-                            Date = date,
-                            Balance = item.EndingBalanceEqu.HasValue ? item.EndingBalanceEqu.Value : item.EndingBalance,
-                            CreditAmount = item.Records.Sum(x => x.CreditAmountEqu.HasValue ? x.CreditAmountEqu.Value : x.CreditAmount.Value),
-                            DebitAmount = item.Records.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.Value)
-                        });
+                    {
+                        Date = date,
+                        Balance = item.EndingBalanceEqu.HasValue ? item.EndingBalanceEqu.Value : item.EndingBalance,
+                        CreditAmount = item.Records.Sum(x => x.CreditAmountEqu.HasValue ? x.CreditAmountEqu.Value : x.CreditAmount.Value),
+                        DebitAmount = item.Records.Sum(x => x.DebitAmountEqu.HasValue ? x.DebitAmountEqu.Value : x.DebitAmount.Value)
+                    });
                 }
             }
 
@@ -621,10 +622,10 @@ namespace AltasoftDaily.Core
             foreach (var item in list2)
             {
                 list3.Add(new BalanceReportModel()
-                    {
-                        Date = item.FirstOrDefault().Date,
-                        Balance = item.Sum(x => x.Balance)
-                    });
+                {
+                    Date = item.FirstOrDefault().Date,
+                    Balance = item.Sum(x => x.Balance)
+                });
             }
 
             #region AccountsService
@@ -1248,10 +1249,11 @@ namespace AltasoftDaily.Core
 
             var loansIds = (from x in l.ListLoans
                             (new AltasoftAPI.LoansAPI.ListLoansQuery()
-                                {
-                                    ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic,
-                                    Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current }
-                                }) select x.Id.Value).Except(localIds).ToArray();
+                            {
+                                ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic,
+                                Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current }
+                            })
+                            select x.Id.Value).Except(localIds).ToArray();
 
             var list1 = new List<EnforcementLoan>();
 
@@ -1268,7 +1270,7 @@ namespace AltasoftDaily.Core
                 AltasoftAPI.LoansAPI.Application app;
                 bool? n;
                 bool n2;
-                
+
                 l.GetApplication(AltasoftAPI.LoansAPI.ApplicationControlFlags.Basic | AltasoftAPI.LoansAPI.ApplicationControlFlags.Extensions, true, i, true, out n, out n2, out app);
 
                 var collaterals = l.ListLinkedCollaterals(new AltasoftAPI.LoansAPI.ListLinkedCollateralsQuery()

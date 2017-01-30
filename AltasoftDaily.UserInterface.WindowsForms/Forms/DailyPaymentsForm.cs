@@ -62,23 +62,23 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             //{
             //    try
             //    {
-                    var calcDate = DailyManagement.GetCalculationDate();
-            
-                    if (MessageBox.Show(this, "გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        DailyManagement.GetUpdatesByAltasoftUser(User);
-                    }
-            
-                    var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
-                    gridData.DataSource = new SortableBindingList<DailyPayment>(payments.OrderBy(x => x.ResponsibleUser).ThenBy(x => x.LoanID).ToList());
-            
-                    foreach (DataGridViewColumn col in gridData.Columns)
-                    {
-                        if (col.Name == "Payment")
-                            continue;
-            
-                        col.ReadOnly = true;
-                    }
+            var calcDate = DailyManagement.GetCalculationDate();
+
+            if (MessageBox.Show(this, "გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                DailyManagement.GetUpdatesByAltasoftUser(User);
+            }
+
+            var payments = db.DailyPayments.Where(x => x.CalculationDate == calcDate && x.LocalUserID == User.UserID).OrderBy(x => x.IsOld).ThenBy(x => x.LoanID).ToList();
+            gridData.DataSource = new SortableBindingList<DailyPayment>(payments.OrderByDescending(x => x.ResponsibleUser).ThenBy(x => x.LoanID).ToList());
+
+            foreach (DataGridViewColumn col in gridData.Columns)
+            {
+                if (col.Name == "Payment")
+                    continue;
+
+                col.ReadOnly = true;
+            }
             //    }
             //    catch (Exception ex)
             //    {
@@ -149,29 +149,31 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void pbxOrders_Click(object sender, EventArgs e)
         {
-            var list = ((SortableBindingList<DailyPayment>)gridData.DataSource).ToList();
+            var list = ((SortableBindingList<DailyPayment>)gridData.DataSource).ToList().Where(x => x.Payment > 0);
             List<TaxOrder> orders = new List<TaxOrder>();
             int count = 1;
             foreach (var item in list)
             {
-                orders.Add(new TaxOrder()
+                var ord = new TaxOrder()
                 {
-                    Date = item.CalculationDate.ToShortDateString(),
-                    TaxOrderID = item.TaxOrderNumber,
-                    TaxOrderNumber = item.TaxOrderNumber,
-                    AccountFirstName = item.FirstName,
-                    AccountLastName = item.LastName,
-                    AccountPrivateNumber = item.PersonalID,
-                    Basis = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
-                    CollectorFirstName = User.Name,
-                    CollectorLastName = User.LastName,
-                    CollectorPrivateNumber = User.PrivateNumber
-                });
+                    Date = DateTime.Now,
+                    OrderID = item.TaxOrderNumber.ToString(),
+                    ClientName = item.ClientName,
+                    ClientId = item.PersonalID,
+                    Description = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
+                    ResponsibleUser = User.Name + " " + User.LastName,
+                    ReceiverId = "ს/ნ 402000179",
+                    Amount = item.Payment.ToString("0.##"),
+                    Currency = "GEL",
+                    ReceiverName = "სს მისო ბიზნეს კრედიტი"
+                };
                 count++;
+
+              TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), ord);
             }
 
-            TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), orders.ToArray());
         }
+        
 
         private void pbxStats_Click(object sender, EventArgs e)
         {
