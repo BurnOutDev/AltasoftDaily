@@ -114,7 +114,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     DeptId = form.GetDeptId();
                     this.Text += string.Format(" ({0} {1})", User.Name, User.LastName);
 
-                    if (User.Username == "tkobalia")
+                    if (User.Username == "tkobalia" || User.Username == "mjikia")
                     {
                         takoToolStripMenuItem.Enabled = true;
                         ინკასატორიToolStripMenuItem.Enabled = false;

@@ -48,6 +48,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AltasoftDaily.Domain\AltasoftDaily.Domain.csproj">
+      <Project>{def076f5-b715-4c9c-8d22-77f94ec93efb}</Project>
+      <Name>AltasoftDaily.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

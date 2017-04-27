@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AltasoftDaily.Helpers;
+using AltasoftDaily.Domain.POCO.Logging;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {

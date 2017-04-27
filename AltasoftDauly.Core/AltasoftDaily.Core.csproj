@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AltasoftDaily.Core</RootNamespace>
     <AssemblyName>AltasoftDaily.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -47,16 +47,17 @@
     <Reference Include="EPPlus">
       <HintPath>Libraries\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="GemBox.Spreadsheet, Version=41.3.30.1038, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
-      <HintPath>..\packages\GemBox.Spreadsheet.41.3.30.1038\lib\net30\GemBox.Spreadsheet.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GemBox.Spreadsheet, Version=41.3.30.1059, Culture=neutral, PublicKeyToken=b1b72c69714d4847, processorArchitecture=MSIL">
+      <HintPath>..\packages\GemBox.Spreadsheet.41.3.30.1059\lib\net30\GemBox.Spreadsheet.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="log4net, Version=2.0.7.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.7\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -144,13 +145,24 @@
     <Compile Include="Migrations\201605250629448_AddedColumnsInEnforcementAndChangeLogModel.Designer.cs">
       <DependentUpon>201605250629448_AddedColumnsInEnforcementAndChangeLogModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702210945565_AddedScenario.cs" />
+    <Compile Include="Migrations\201702210945565_AddedScenario.Designer.cs">
+      <DependentUpon>201702210945565_AddedScenario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702241928104_CorrectedScenarioColumns.cs" />
+    <Compile Include="Migrations\201702241928104_CorrectedScenarioColumns.Designer.cs">
+      <DependentUpon>201702241928104_CorrectedScenarioColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ScenarioService.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
     <Compile Include="UserManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="log4net.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -184,6 +196,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512142137426_AddedLoanAccountNumberTable.resx">
       <DependentUpon>201512142137426_AddedLoanAccountNumberTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512150705290_AddedConnectionStringPropertyToUser.resx">
       <DependentUpon>201512150705290_AddedConnectionStringPropertyToUser.cs</DependentUpon>
@@ -223,6 +236,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605250629448_AddedColumnsInEnforcementAndChangeLogModel.resx">
       <DependentUpon>201605250629448_AddedColumnsInEnforcementAndChangeLogModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702210945565_AddedScenario.resx">
+      <DependentUpon>201702210945565_AddedScenario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702241928104_CorrectedScenarioColumns.resx">
+      <DependentUpon>201702241928104_CorrectedScenarioColumns.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using AltasoftAPI;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -17,6 +18,40 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
+            //var scenario = ScenarioService.GetScenarioByLoan(13566).FirstOrDefault(x => x.date == DateTime.Today);
+            //var scenariofull = ScenarioService.GetScenarioByLoan(13566);
+            //var scenarioPW = ScenarioService.GetScenarioPreviewByLoan(13566);
+            //var spwToday = scenarioPW.FirstOrDefault(x => x.date == DateTime.Today);
+
+            //var ScenarioBalanceInGel = (decimal)spwToday.balance;      //ნაშთი
+            //var ScenarioInterestInGel = (decimal)spwToday.interest;    //პროცენტი
+            //var ScenarioPrincipalInGel = (decimal)spwToday.principal;  //ძირი
+            //var ScenarioPenalty = (decimal)spwToday.penalty;           //ჯარიმა
+            //var ScenarioFixedPayment = (decimal)scenario.interest + (decimal)scenario.penalty + (decimal)scenario.principal;
+            //var ScenarioFixedPayment2 = (decimal)spwToday.interest + (decimal)spwToday.penalty + (decimal)spwToday.principal;
+            //var sum = ScenarioFixedPayment2 + ScenarioBalanceInGel;
+            //var prsum = ScenarioFixedPayment + (decimal)scenario.balance;
+
+            //var chamorchena = sum - prsum; //
+
+            //var paymentFixed = ScenarioFixedPayment;//
+
+            //var grafikitGanuleba = prsum;
+
+            //var realGanuleba = sum;
+
+            //Console.Read();
+
+
+            //var payments = new AltasoftDailyContext().DailyPayments.Where( x => x.CalculationDate == DateTime.Today && x.Payment > 0 && x.OrderID != null).ToList();
+            //var results = new List<string>();
+
+            //foreach (var pay in payments)
+            //    results.Add(DailyManagement.CoverLoan(pay.LoanID, pay.Payment));
+
+            //TaxOrderGenerator.ExportToExcel(new AltasoftDaily.Helpers.SortableBindingList<Domain.ExcelPayment>((from x in results select new Domain.ExcelPayment() { ClientName = x }).ToList()));
+
+            //return;
             //using (var db = new AltasoftDaily.Core.AltasoftDailyContext())
             //{
             //    var users = db.Users.Where(x => x.Username == "shkheladze" ||

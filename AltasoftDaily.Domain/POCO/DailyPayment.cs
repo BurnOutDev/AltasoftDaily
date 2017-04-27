@@ -24,6 +24,9 @@ namespace AltasoftDaily.Domain.POCO
         public decimal CurrentDebtInGel { get; set; }
         public decimal TotalDebtInGel { get; set; }
         public decimal Payment { get; set; }
+        public decimal ScenarioFixedPayment { get; set; }           //
+        public decimal ScenarioPayment { get; set; }                //
+        public decimal ScenarioWholeDebt { get; set; }              //
         public DateTime CalculationDate { get; set; }
         public string AgreementNumber { get; set; }
         public string LoanCCY { get; set; }
@@ -38,6 +41,8 @@ namespace AltasoftDaily.Domain.POCO
         public string ClientAccountDescrip { get; set; }
         public string ClientAccountBranchCode { get; set; }
         public string ClientAddressFact { get; set; }
+        public decimal ScenarioInterestInGel { get; set; }          //
+        public decimal ScenarioPenalty { get; set; }                //
         public decimal InterestPenaltyInGel { get; set; }
         public decimal PrincipalPenaltyInGel { get; set; }
         public decimal LatePrincipalInGel { get; set; }

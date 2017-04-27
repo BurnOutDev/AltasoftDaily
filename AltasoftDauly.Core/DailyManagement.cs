@@ -10,6 +10,7 @@ using AltasoftDaily.Helpers;
 using System.Net;
 using System.Configuration;
 using AltasoftAPI.AccountsAPI;
+using AltasoftAPI;
 
 namespace AltasoftDaily.Core
 {
@@ -163,7 +164,7 @@ namespace AltasoftDaily.Core
             l.RequestHeadersValue = new AltasoftAPI.LoansAPI.RequestHeaders() { ApplicationKey = "BusinessCreditClient", RequestId = Guid.NewGuid().ToString() };
             #endregion
             #endregion
-            
+
             List<DailyPayment> list = new List<DailyPayment>();
             List<DailyPaymentAndLoan> data = new List<DailyPaymentAndLoan>();
 
@@ -262,6 +263,31 @@ namespace AltasoftDaily.Core
             item.StartDate = loan.Term.Start.ToShortDateString();
             item.EndDate = loan.Term.End.ToShortDateString();
 
+            var tomorrow = item.CalculationDate.AddDays(1);
+            var scenario = ScenarioService.GetScenarioByLoan(loanId).FirstOrDefault(x => x.date == item.CalculationDate);
+            var scenarioPW = ScenarioService.GetScenarioPreviewByLoan(loanId);
+            var spwToday = scenarioPW.FirstOrDefault(x => x.date == item.CalculationDate);
+            var spwTomorrow = scenarioPW.FirstOrDefault(x => x.date == tomorrow);
+
+            if (spwToday != null)
+            {
+                if (spwToday.penalty == null)
+                {
+                    spwToday.penalty = 0;
+                }
+                item.ScenarioInterestInGel = (decimal)spwToday.interest;
+                item.ScenarioPenalty = (decimal)spwToday.penalty;           //ჯარიმა 
+            }
+            if (scenario != null)
+            {
+                if (scenario.penalty == null)
+                    scenario.penalty = 0;
+
+                item.ScenarioFixedPayment = (decimal)scenario.interest + (decimal)scenario.penalty + (decimal)scenario.principal;
+                item.ScenarioPayment = item.TotalDebtInGel - (decimal)scenario.balance;
+            }
+
+
             result.ClientID = loan.BorrowerId.Value;
             result.DeptID = loan.BranchId.Value;
 
@@ -273,7 +299,8 @@ namespace AltasoftDaily.Core
             if (customer2.ContactInfo != null)
                 item.Phone = customer2.ContactInfo.MobilePhone;
 
-            item.ClientAccountDescrip = account.DisplayName.ValueGeo;
+            if (account.DisplayName != null)
+                item.ClientAccountDescrip = account.DisplayName.ValueGeo;
             item.ClientName = customer.Name.ValueGeo;//
 
             if ((customer.Entity as AltasoftAPI.CustomersAPI.IndividualEntity) != null)
@@ -878,8 +905,9 @@ namespace AltasoftDaily.Core
             //return new SortableBindingList<BalanceReportModel>(list3);
         }
 
-        private static string CoverLoan(int loanid, decimal amount)
+        public static string CoverLoan(int loanid, decimal amount)
         {
+
             #region Initialize Services
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
