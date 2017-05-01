@@ -164,6 +164,12 @@
     <Compile Include="Forms\ChangePasswordForm.Designer.cs">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ChoosePrinterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChoosePrinterForm.Designer.cs">
+      <DependentUpon>ChoosePrinterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CollateralForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChoosePrinterForm.resx">
+      <DependentUpon>ChoosePrinterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CollateralForm.resx">
       <DependentUpon>CollateralForm.cs</DependentUpon>

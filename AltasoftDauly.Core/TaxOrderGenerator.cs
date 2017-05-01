@@ -49,45 +49,86 @@ namespace AltasoftDaily.Core
             }
         }
 
-        public static void Generate(string templatePath, TaxOrder data)
+        public static void Generate(string templatePath, string printer, TaxOrder data)
         {
             var result = new MemoryStream();
             ExcelPackage ePack = new ExcelPackage();
 
-                MemoryStream mStream = new MemoryStream();
+            MemoryStream mStream = new MemoryStream();
 
-                //FileInfo xFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @"Work\TaxOrderTemplates.xlsx"));
-                FileInfo xFile = new FileInfo(templatePath);
+            //FileInfo xFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @"Work\TaxOrderTemplates.xlsx"));
+            FileInfo xFile = new FileInfo(templatePath);
 
-                using (ExcelPackage package = new ExcelPackage(xFile))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets["TaxOrderTemplate"];
-
-
-                    worksheet.Cells["F1"].Value = worksheet.Cells["F27"].Value = string.Concat("#", data.OrderID);
-
-                    worksheet.Cells["G8"].Value = worksheet.Cells["G34"].Value =  data.ExactDate;
-                    worksheet.Cells["C5"].Value = worksheet.Cells["C31"].Value = data.ClientId;
-                    worksheet.Cells["C13"].Value = worksheet.Cells["C39"].Value = data.Description;
-                    worksheet.Cells["G10"].Value = worksheet.Cells["G36"].Value = data.Amount;
-                    worksheet.Cells["F17"].Value = worksheet.Cells["F43"].Value = data.AmountInWords;
-                    worksheet.Cells["C8"].Value = worksheet.Cells["C34"].Value = data.ReceiverName;
-                    worksheet.Cells["C10"].Value = worksheet.Cells["C36"].Value = data.ReceiverId;
-                    worksheet.Cells["G12"].Value = worksheet.Cells["G38"].Value = data.Currency;
-                    worksheet.Cells["G23"].Value = worksheet.Cells["G49"].Value = data.ResponsibleUser;
-                    worksheet.Cells["C3"].Value = worksheet.Cells["C29"].Value = data.ClientName;
+            using (ExcelPackage package = new ExcelPackage(xFile))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["TaxOrderTemplate"];
 
 
-                    ePack.Workbook.Worksheets.Add(new Random().Next().ToString(), worksheet);
+                worksheet.Cells["F1"].Value = worksheet.Cells["F27"].Value = string.Concat("#", data.OrderID);
 
-                    //package.SaveAs(new FileInfo(Path.Combine(saveFolderPath + (new Random().Next()).ToString() + "file.xlsx")));
-                }
+                worksheet.Cells["G8"].Value = worksheet.Cells["G34"].Value = data.ExactDate;
+                worksheet.Cells["C5"].Value = worksheet.Cells["C31"].Value = data.ClientId;
+                worksheet.Cells["C13"].Value = worksheet.Cells["C39"].Value = data.Description;
+                worksheet.Cells["G10"].Value = worksheet.Cells["G36"].Value = data.Amount;
+                worksheet.Cells["F17"].Value = worksheet.Cells["F43"].Value = data.AmountInWords;
+                worksheet.Cells["C8"].Value = worksheet.Cells["C34"].Value = data.ReceiverName;
+                worksheet.Cells["C10"].Value = worksheet.Cells["C36"].Value = data.ReceiverId;
+                worksheet.Cells["G12"].Value = worksheet.Cells["G38"].Value = data.Currency;
+                worksheet.Cells["G23"].Value = worksheet.Cells["G49"].Value = data.ResponsibleUser;
+                worksheet.Cells["C3"].Value = worksheet.Cells["C29"].Value = data.ClientName;
+
+
+                ePack.Workbook.Worksheets.Add(new Random().Next().ToString(), worksheet);
+
+                //package.SaveAs(new FileInfo(Path.Combine(saveFolderPath + (new Random().Next()).ToString() + "file.xlsx")));
+            }
 
             var filePath = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString() + ".xlsx");
 
             ePack.SaveAs(new FileInfo(filePath));
+            SendToPrinter(filePath, printer);
+            //Process.Start(filePath);
+        }
 
-            Process.Start(filePath);
+        public static void GenerateMultiple(string templatePath, string printer, params TaxOrder[] orders)
+        {
+            var result = new MemoryStream();
+            ExcelPackage ePack = new ExcelPackage();
+
+            MemoryStream mStream = new MemoryStream();
+
+            //FileInfo xFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), @"Work\TaxOrderTemplates.xlsx"));
+            FileInfo xFile = new FileInfo(templatePath);
+
+            using (ExcelPackage package = new ExcelPackage(xFile))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets["TaxOrderTemplate"];
+                foreach (var order in orders)
+                {
+                    worksheet.Cells["F1"].Value = worksheet.Cells["F27"].Value = string.Concat("#", order.OrderID);
+
+                    worksheet.Cells["G8"].Value = worksheet.Cells["G34"].Value = order.ExactDate;
+                    worksheet.Cells["C5"].Value = worksheet.Cells["C31"].Value = order.ClientId;
+                    worksheet.Cells["C13"].Value = worksheet.Cells["C39"].Value = order.Description;
+                    worksheet.Cells["G10"].Value = worksheet.Cells["G36"].Value = order.Amount;
+                    worksheet.Cells["F17"].Value = worksheet.Cells["F43"].Value = order.AmountInWords;
+                    worksheet.Cells["C8"].Value = worksheet.Cells["C34"].Value = order.ReceiverName;
+                    worksheet.Cells["C10"].Value = worksheet.Cells["C36"].Value = order.ReceiverId;
+                    worksheet.Cells["G12"].Value = worksheet.Cells["G38"].Value = order.Currency;
+                    worksheet.Cells["G23"].Value = worksheet.Cells["G49"].Value = order.ResponsibleUser;
+                    worksheet.Cells["C3"].Value = worksheet.Cells["C29"].Value = order.ClientName;
+
+                    ePack.Workbook.Worksheets.Add(order.ClientName, worksheet);
+                }
+
+                //package.SaveAs(new FileInfo(Path.Combine(saveFolderPath + (new Random().Next()).ToString() + "file.xlsx")));
+            }
+
+            var filePath = Path.Combine(Environment.GetEnvironmentVariable("temp"), Guid.NewGuid().ToString() + ".xlsx");
+
+            ePack.SaveAs(new FileInfo(filePath));
+            SendToPrinter(filePath, printer);
+            //Process.Start(filePath);
         }
 
         public static long GetTimestamp()
@@ -139,6 +180,23 @@ namespace AltasoftDaily.Core
             }
             //put a breakpoint here and check datatable
             return dataTable;
+        }
+
+        public static void SendToPrinter(string filePath, string printer)
+        {
+            ProcessStartInfo info = new ProcessStartInfo();
+            info.Verb = "PrintTo";
+            info.FileName = filePath;
+            info.CreateNoWindow = true;
+            info.WindowStyle = ProcessWindowStyle.Hidden;
+            if (!string.IsNullOrWhiteSpace(printer))
+                info.Arguments = "\"" + printer + "\"";
+
+            Process p = new Process();
+            p.StartInfo = info;
+            p.Start();
+
+            p.WaitForInputIdle();
         }
     }
 }

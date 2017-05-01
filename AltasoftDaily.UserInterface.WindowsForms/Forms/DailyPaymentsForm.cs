@@ -140,27 +140,35 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private void pbxOrders_Click(object sender, EventArgs e)
         {
             var list = ((SortableBindingList<DailyPayment>)gridData.DataSource).ToList().Where(x => x.IsSelected);
-            List<TaxOrder> orders = new List<TaxOrder>();
-            int count = 1;
-            foreach (var item in list)
-            {
-                var ord = new TaxOrder()
-                {
-                    Date = DateTime.Now,
-                    OrderID = item.TaxOrderNumber.ToString(),
-                    ClientName = item.ClientName,
-                    ClientId = item.PersonalID,
-                    Description = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
-                    ResponsibleUser = User.Name + " " + User.LastName,
-                    ReceiverId = "ს/ნ 402000179",
-                    Amount = string.Empty,
-                    Currency = "GEL",
-                    ReceiverName = "სს მისო ბიზნეს კრედიტი"
-                };
-                count++;
 
-                TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), ord);
-            }
+            var orders = list.Select(x =>
+            new TaxOrder()
+            {
+                Date = DateTime.Now,
+                OrderID = x.TaxOrderNumber.ToString(),
+                ClientName = x.ClientName,
+                ClientId = x.PersonalID,
+                Description = "სესხის დაფარვა სესხის ხელშ. " + x.AgreementNumber + "-ის საფუძველზე",
+                ResponsibleUser = User.Name + " " + User.LastName,
+                ReceiverId = "ს/ნ 402000179",
+                Amount = string.Empty,
+                Currency = "GEL",
+                ReceiverName = "სს მისო ბიზნეს კრედიტი"
+            }).ToArray();
+
+            var printer = string.Empty;
+            var printersList = System.Drawing.Printing.PrinterSettings.InstalledPrinters;
+            var printersToPass = new List<KeyValuePair<int, string>>();
+
+            for (int i = 0; i < printersList.Count; i++)
+                printersToPass.Add(new KeyValuePair<int, string>(i, printersList[i]));
+
+            var printerForm = new ChoosePrinterForm(printersToPass.ToArray());
+
+            if (printerForm.ShowDialog() == DialogResult.OK)
+                printer = printerForm.SelectedItem?.Value;
+
+            TaxOrderGenerator.GenerateMultiple(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), printer, orders);
         }
 
 
@@ -340,7 +348,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
 
         }
-        
+
         public override void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var grid = sender as ADGV.AdvancedDataGridView;
@@ -490,7 +498,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 var paymentID = Convert.ToInt32(row.Cells["DailyPaymentID"].Value);
                 var datasource = grid.DataSource as SortableBindingList<DailyPayment>;
                 var payment = datasource.FirstOrDefault(x => x.DailyPaymentID == paymentID);
-                
+
                 foreach (DataGridViewCell cell in row.Cells)
                 {
                     cell.Style.BackColor = payment.IsSelected ? Color.LightGreen : Color.Empty;
