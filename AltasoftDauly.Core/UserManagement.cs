@@ -11,24 +11,24 @@ namespace AltasoftDaily.Core
             {
                 var userByName = db.Users.FirstOrDefault(x => x.Username == username);
 
-                //if (userByName == null)
-                //{
-                //    authenticated = false;
-                //    message = "მომხმარებლის სახელი არასწორია!";
-                //    return null;
-                //}
-                //else if (!EncryptionManagement.Validate(userByName.Password, password, userByName.Salt))
-                //{
-                //    authenticated = false;
-                //    message = "მომხმარებლის პაროლი არასწორია!";
-                //    return null;
-                //}
-                //else if (userByName.DeptID != deptId)
-                //{
-                //    authenticated = false;
-                //    message = "მომხმარებელი ფილიალში არ მოიძებნა!";
-                //    return null;
-                //}
+                if (userByName == null)
+                {
+                    authenticated = false;
+                    message = "მომხმარებლის სახელი არასწორია!";
+                    return null;
+                }
+                else if (!EncryptionManagement.Validate(userByName.Password, password, userByName.Salt))
+                {
+                    authenticated = false;
+                    message = "მომხმარებლის პაროლი არასწორია!";
+                    return null;
+                }
+                else if (userByName.DeptID != deptId)
+                {
+                    authenticated = false;
+                    message = "მომხმარებელი ფილიალში არ მოიძებნა!";
+                    return null;
+                }
 
                 authenticated = true;
                 message = "მომხმარებელი იდენტიფიცირებულია!";

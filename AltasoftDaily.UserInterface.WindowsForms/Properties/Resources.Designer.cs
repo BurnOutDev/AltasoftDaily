@@ -111,6 +111,24 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to თქვენი პაროლი არის 123456. გთხოვთ შესვლისთანავე შეცვალოთ პაროლი..
+        /// </summary>
+        internal static string MessageContent {
+            get {
+                return ResourceManager.GetString("MessageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to True.
+        /// </summary>
+        internal static string MessageShow {
+            get {
+                return ResourceManager.GetString("MessageShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap pbxEditOrder {

@@ -18,6 +18,20 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
+            //using (var db = new AltasoftDailyContext())
+            //{
+            //    foreach (var user in db.Users)
+            //    {
+            //        var salt = EncryptionManagement.CreateSalt();
+            //        user.Salt = salt;
+            //        user.Password = EncryptionManagement.Encrypt(user.Username.Substring(0, 2).ToUpper() + "123456", salt);
+            //        user.LastPasswordChange = DateTime.Today.AddDays(-35);
+            //        user.ForceUserToChangePassword = true;
+            //    }
+
+            //    db.SaveChanges();
+            //}
+
             //DailyManagement.SubmitOrder(1133666, "GEL", DateTime.Today, "GE32AL0100000314450001", 29, "1.0000314.009", "09", 21, 1);
             //var scenario = ScenarioService.GetScenarioByLoan(13566).FirstOrDefault(x => x.date == DateTime.Today);
             //var scenariofull = ScenarioService.GetScenarioByLoan(13566);

@@ -12,6 +12,7 @@ using AltasoftDaily.Core;
 using AltasoftDaily.Domain.POCO;
 using System.Reflection;
 using AltasoftDaily.UserInterface.WindowsForms.Controls;
+using AltasoftDaily.UserInterface.WindowsForms.Properties;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -27,6 +28,15 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             tbxUsername.Text = Properties.Settings.Default.Username;
             cbxDept.SelectedIndex = Properties.Settings.Default.SelectedBranch;
 
+            try
+            {
+                var showMessage = Convert.ToBoolean(Resources.MessageShow);
+                if (showMessage)
+                {
+                    MessageBox.Show(Resources.MessageContent, "შეტყობინება", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch { }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -123,23 +133,24 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             //{
             //    try
             //    {
-                    bool authenticated;
-                    string response;
-                    _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
+            bool authenticated;
+            string response;
+            _user = UserManagement.Authenticate(tbxUsername.Text, tbxPassword.Text, cbxDept.SelectedIndex, out authenticated, out response);
 
-                    if (!authenticated)
-                    {
-                        MessageBox.Show(response);
+            if (!authenticated)
+            {
+                MessageBox.Show(response);
+                HideLoading();
 
-                        return;
-                    }
-                    LoggingManagement.LogSign(SignType.SignIn, _user);
+                return;
+            }
+            LoggingManagement.LogSign(SignType.SignIn, _user);
 
-                    Properties.Settings.Default.Username = tbxUsername.Text;
-                    Properties.Settings.Default.SelectedBranch = cbxDept.SelectedIndex;
-                    Properties.Settings.Default.Save();
+            Properties.Settings.Default.Username = tbxUsername.Text;
+            Properties.Settings.Default.SelectedBranch = cbxDept.SelectedIndex;
+            Properties.Settings.Default.Save();
 
-                    Close();
+            Close();
             //    }
             //    catch (Exception ex)
             //    {
