@@ -471,8 +471,9 @@
     <EmbeddedResource Include="Forms\ViewCollateralsForm.resx">
       <DependentUpon>ViewCollateralsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="483cb65a-0e62-46e8-bfd6-796e6518535e.xlsx" />
+    <None Include="old-order.xlsx" />
     <None Include="log4net.config" />
+    <None Include="new-order.xlsx" />
     <None Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.csproj.GenerateResource.Cache" />
     <None Include="obj\Debug\AltasoftDaily.UserInterface.WindowsForms.csprojResolveAssemblyReference.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />

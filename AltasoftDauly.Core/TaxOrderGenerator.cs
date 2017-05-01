@@ -64,18 +64,18 @@ namespace AltasoftDaily.Core
                     ExcelWorksheet worksheet = package.Workbook.Worksheets["TaxOrderTemplate"];
 
 
-                    worksheet.Cells["F6"].Value = worksheet.Cells["F32"].Value = data.OrderID;
+                    worksheet.Cells["F1"].Value = worksheet.Cells["F27"].Value = string.Concat("#", data.OrderID);
 
                     worksheet.Cells["G8"].Value = worksheet.Cells["G34"].Value =  data.ExactDate;
-                    worksheet.Cells["C10"].Value = worksheet.Cells["C36"].Value = data.ClientId;
-                    worksheet.Cells["C18"].Value = worksheet.Cells["C44"].Value = data.Description;
+                    worksheet.Cells["C5"].Value = worksheet.Cells["C31"].Value = data.ClientId;
+                    worksheet.Cells["C13"].Value = worksheet.Cells["C39"].Value = data.Description;
                     worksheet.Cells["G10"].Value = worksheet.Cells["G36"].Value = data.Amount;
                     worksheet.Cells["F17"].Value = worksheet.Cells["F43"].Value = data.AmountInWords;
-                    worksheet.Cells["C13"].Value = worksheet.Cells["C39"].Value = data.ReceiverName;
-                    worksheet.Cells["C15"].Value = worksheet.Cells["C41"].Value = data.ReceiverId;
+                    worksheet.Cells["C8"].Value = worksheet.Cells["C34"].Value = data.ReceiverName;
+                    worksheet.Cells["C10"].Value = worksheet.Cells["C36"].Value = data.ReceiverId;
                     worksheet.Cells["G12"].Value = worksheet.Cells["G38"].Value = data.Currency;
                     worksheet.Cells["G23"].Value = worksheet.Cells["G49"].Value = data.ResponsibleUser;
-                    worksheet.Cells["C8"].Value = worksheet.Cells["C34"].Value = data.ClientName;
+                    worksheet.Cells["C3"].Value = worksheet.Cells["C29"].Value = data.ClientName;
 
 
                     ePack.Workbook.Worksheets.Add(new Random().Next().ToString(), worksheet);
