@@ -18,6 +18,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         [STAThread]
         static void Main()
         {
+            //DailyManagement.SubmitOrder(1133666, "GEL", DateTime.Today, "GE32AL0100000314450001", 29, "1.0000314.009", "09", 21, 1);
             //var scenario = ScenarioService.GetScenarioByLoan(13566).FirstOrDefault(x => x.date == DateTime.Today);
             //var scenariofull = ScenarioService.GetScenarioByLoan(13566);
             //var scenarioPW = ScenarioService.GetScenarioPreviewByLoan(13566);

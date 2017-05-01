@@ -86,7 +86,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms.Forms
             //}
         }
 
-        protected override void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        public override void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.FormattingApplied)
             {

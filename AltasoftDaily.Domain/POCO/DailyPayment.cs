@@ -12,6 +12,8 @@ namespace AltasoftDaily.Domain.POCO
 
         [Key]
         public int DailyPaymentID { get; set; }
+        public int PLU { get; set; }
+        public bool IsSelected { get; set; }
         public int ClientNo { get; set; }
         public int LoanID { get; set; }
         public string ClientName { get; set; }

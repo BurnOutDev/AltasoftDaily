@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,8 @@ namespace AltasoftDaily.Domain
         {
             get
             {
-                return Date.ToShortDateString() + " " + Date.ToShortTimeString();
+                //return Date.ToShortDateString() + " " + Date.ToShortTimeString();
+                return Date.ToString("dd  MMMM  yyyy", CultureInfo.GetCultureInfo("ka-ge"));
             }
         }
         public string Amount { get; set; }

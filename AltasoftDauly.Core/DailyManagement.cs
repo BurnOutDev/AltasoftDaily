@@ -11,6 +11,7 @@ using System.Net;
 using System.Configuration;
 using AltasoftAPI.AccountsAPI;
 using AltasoftAPI;
+using System.Diagnostics;
 
 namespace AltasoftDaily.Core
 {
@@ -117,8 +118,6 @@ namespace AltasoftDaily.Core
 
         }
 
-
-
         public static List<DailyPayment> UpdateCommentsInDaily(List<DailyPayment> list)
         {
             var result = new List<DailyPayment>();
@@ -143,6 +142,9 @@ namespace AltasoftDaily.Core
 
         public static List<DailyPayment> GetDailyByUser(int altasoftUserId)
         {
+            var sw = new Stopwatch();
+            sw.Start();
+
             #region Initialize Services
             #region OrdersService
             AltasoftAPI.OrdersAPI.OrdersService o = new AltasoftAPI.OrdersAPI.OrdersService();
@@ -168,35 +170,52 @@ namespace AltasoftDaily.Core
             List<DailyPayment> list = new List<DailyPayment>();
             List<DailyPaymentAndLoan> data = new List<DailyPaymentAndLoan>();
 
-            var loansIds = (from x in l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery() { ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic, Status = new AltasoftAPI.LoansAPI.LoanStatus[] { AltasoftAPI.LoansAPI.LoanStatus.Overdue, AltasoftAPI.LoansAPI.LoanStatus.Current, AltasoftAPI.LoansAPI.LoanStatus.Late } })
-                            select x.Id.Value).ToList().OrderBy(x => x);
+            var listLoans = l.ListLoans(new AltasoftAPI.LoansAPI.ListLoansQuery()
+            {
+                ControlFlags = AltasoftAPI.LoansAPI.LoanControlFlags.Basic | AltasoftAPI.LoansAPI.LoanControlFlags.Authorities,
+                Status = new AltasoftAPI.LoansAPI.LoanStatus[]
+                {
+                    AltasoftAPI.LoansAPI.LoanStatus.Overdue,
+                    AltasoftAPI.LoansAPI.LoanStatus.Current,
+                    AltasoftAPI.LoansAPI.LoanStatus.Late
+                }
+            }).Select(x => new
+            {
+                LoanID = x.Id,
+                ClientID = x.BorrowerId,
+                DeptID = x.BranchId,
+                OperatorID = x.Authorities.LastOrDefault(i => i.Role == AltasoftAPI.LoansAPI.AuthorityRole.PrimaryResponsible).UserId.Value
+        });
 
             using (var db = new AltasoftDailyContext())
             {
                 var user = db.Users.FirstOrDefault(x => x.AltasoftUserID == altasoftUserId);
 
-
-                loansIds.Where(x => x != 2331 /*&& x != 6*/).ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x)));
-
                 try
                 {
-                    if (user.Filter.IsDeptFilterEnabled && data != null)
-                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.DeptID == x.DeptID)).ToList();
+                    if (user.Filter.IsDeptFilterEnabled && listLoans != null)
+                        listLoans = listLoans.Where(x => x != null && user.Filter.FilterData.Any(y => y.DeptID == x.DeptID)).ToList();
 
-                    if (user.Filter.IsCustomerFilterEnabled && data != null)
-                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.ClientID == x.ClientID)).ToList();
-
-                    if (user.Filter.IsOperatorFilterEnabled && data != null)
-                        data = data.Where(x => x != null && user.Filter.FilterData.Any(y => y.OperatorID == x.OperatorID)).ToList();
+                    if (user.Filter.IsCustomerFilterEnabled && listLoans != null)
+                        listLoans = listLoans.Where(x => x != null && user.Filter.FilterData.Any(y => y.ClientID == x.ClientID)).ToList();
+                    if (user.Filter.IsOperatorFilterEnabled && listLoans != null)
+                        listLoans = listLoans.Where(x => x != null && user.Filter.FilterData.Any(y => y.OperatorID == x.OperatorID)).ToList();
                 }
                 catch (NullReferenceException)
                 {
                     return new List<DailyPayment>();
                 }
 
+                listLoans.Where(x => x.LoanID != 2331 /*&& x != 6*/).ToList().ForEach(x => data.Add(GetLoanAndDailyModel(x.LoanID.Value)));
+
                 if (data != null)
                     data.ForEach(x => { if (x != null) list.Add(x.DailyPayment); });
             }
+
+            sw.Stop();
+
+            var Elapsed = sw.Elapsed;
+
             return list.OrderBy(x => x.LoanID).ToList();
         }
 
@@ -467,7 +486,9 @@ namespace AltasoftDaily.Core
             {
                 foreach (var payment in payments)
                 {
-                    db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == payment.DailyPaymentID).Payment = payment.Payment;
+                    var dbpmt = db.DailyPayments.FirstOrDefault(x => x.DailyPaymentID == payment.DailyPaymentID);
+                    dbpmt.Payment = payment.Payment;
+                    dbpmt.IsSelected = payment.IsSelected;
                 }
                 db.SaveChanges();
             }
@@ -495,15 +516,17 @@ namespace AltasoftDaily.Core
                 var newPayments = lmsPayments.Where(x => newPaymentsIds.Contains(x.LoanID));
                 var oldPayments = localPayments.Where(x => oldPaymentsIds.Contains(x.LoanID));
 
-                int count = 0;
-                if (localPayments.Count > 0)
-                    count = localPayments.Max(x => x.TaxOrderNumber);
+                var pluCount = 0;
 
+                if (localPayments.Count > 0)
+                {
+                    pluCount = localPayments.Max(x => x.PLU);
+                }
                 foreach (var item in newPayments)
                 {
-                    count++;
                     item.LocalUserID = user.UserID;
-                    item.TaxOrderNumber = int.Parse(user.DeptID + user.AltasoftUserID.ToString() + count);
+                    item.TaxOrderNumber = int.Parse(user.DeptID + user.AltasoftUserID.ToString() + item.LoanID);
+                    item.PLU = ++pluCount;
                 }
 
                 if (newPaymentsIds.Count > 0)

@@ -112,6 +112,7 @@
             this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
             this.gridData.ColumnHeaderMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseDoubleClick);
             this.gridData.SelectionChanged += new System.EventHandler(this.gridData_SelectionChanged);
+            this.gridData.VisibleChanged += new System.EventHandler(this.gridData_VisibleChanged);
             // 
             // splitContainer1
             // 
@@ -199,6 +200,7 @@
             this.loadingControl1.Name = "loadingControl1";
             this.loadingControl1.Size = new System.Drawing.Size(690, 344);
             this.loadingControl1.TabIndex = 3;
+            this.loadingControl1.Visible = false;
             // 
             // GridBaseForm
             // 

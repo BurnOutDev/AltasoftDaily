@@ -27,6 +27,7 @@ namespace AltasoftDaily.Domain
         {
             return new ExcelPayment()
             {
+                N = v.PLU,
                 BusinessAddress = v.BusinessAddress,
                 StartDate = DateTime.Parse(v.StartDate),
                 ClientName = v.ClientName,

@@ -148,6 +148,8 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         protected virtual void gridData_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e) { }
 
-        protected virtual void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) { }
+        public virtual void gridData_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) { }
+
+        public virtual void gridData_VisibleChanged(object sender, EventArgs e) { }
     }
 }

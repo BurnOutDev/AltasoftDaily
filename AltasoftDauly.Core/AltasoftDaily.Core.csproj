@@ -153,6 +153,14 @@
     <Compile Include="Migrations\201702241928104_CorrectedScenarioColumns.Designer.cs">
       <DependentUpon>201702241928104_CorrectedScenarioColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704302116503_AddedPLU.cs" />
+    <Compile Include="Migrations\201704302116503_AddedPLU.Designer.cs">
+      <DependentUpon>201704302116503_AddedPLU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704302313028_Added_IsSelected_column.cs" />
+    <Compile Include="Migrations\201704302313028_Added_IsSelected_column.Designer.cs">
+      <DependentUpon>201704302313028_Added_IsSelected_column.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ScenarioService.cs" />
     <Compile Include="TaxOrderGenerator.cs" />
@@ -242,6 +250,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702241928104_CorrectedScenarioColumns.resx">
       <DependentUpon>201702241928104_CorrectedScenarioColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704302116503_AddedPLU.resx">
+      <DependentUpon>201704302116503_AddedPLU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704302313028_Added_IsSelected_column.resx">
+      <DependentUpon>201704302313028_Added_IsSelected_column.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

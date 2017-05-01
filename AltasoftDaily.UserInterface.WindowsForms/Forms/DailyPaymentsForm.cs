@@ -17,6 +17,7 @@ using KasaGE.Commands;
 using KasaGE.Responses;
 using KasaGE;
 using System.IO.Ports;
+using System.Diagnostics;
 
 namespace AltasoftDaily.UserInterface.WindowsForms
 {
@@ -57,7 +58,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         private async void GG_Load(object sender, EventArgs e)
         {
             loadingControl1.ShowLoading();
-            
+
             var calcDate = DailyManagement.GetCalculationDate();
 
             if (MessageBox.Show(this, "გსურთ მონაცემების განახლება?", "", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -75,8 +76,6 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
                 col.ReadOnly = true;
             }
-
-            
 
             loadingControl1.HideLoading();
         }
@@ -140,7 +139,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
 
         private void pbxOrders_Click(object sender, EventArgs e)
         {
-            var list = ((SortableBindingList<DailyPayment>)gridData.DataSource).ToList().Where(x => x.Payment > 0);
+            var list = ((SortableBindingList<DailyPayment>)gridData.DataSource).ToList().Where(x => x.IsSelected);
             List<TaxOrder> orders = new List<TaxOrder>();
             int count = 1;
             foreach (var item in list)
@@ -154,17 +153,16 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     Description = "სესხის დაფარვა სესხის ხელშ. " + item.AgreementNumber + "-ის საფუძველზე",
                     ResponsibleUser = User.Name + " " + User.LastName,
                     ReceiverId = "ს/ნ 402000179",
-                    Amount = item.Payment.ToString("0.##"),
+                    Amount = string.Empty,
                     Currency = "GEL",
                     ReceiverName = "სს მისო ბიზნეს კრედიტი"
                 };
                 count++;
 
-              TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), ord);
+                TaxOrderGenerator.Generate(Path.Combine(Environment.CurrentDirectory, "TaxOrderTemplate.xlsx"), ord);
             }
-
         }
-        
+
 
         private void pbxStats_Click(object sender, EventArgs e)
         {
@@ -342,9 +340,21 @@ namespace AltasoftDaily.UserInterface.WindowsForms
         {
 
         }
-
+        
         public override void gridData_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            var grid = sender as ADGV.AdvancedDataGridView;
+            var cells = grid.Rows[e.RowIndex].Cells;
+            var paymentID = Convert.ToInt32(cells["DailyPaymentID"].Value);
+            var datasource = grid.DataSource as SortableBindingList<DailyPayment>;
+            var payment = datasource.FirstOrDefault(x => x.DailyPaymentID == paymentID);
+
+            payment.IsSelected = !payment.IsSelected;
+            foreach (DataGridViewCell cell in cells)
+            {
+                cell.Style.BackColor = payment.IsSelected ? Color.LightGreen : Color.Empty;
+            }
+
             //var form = new ViewCollateralsForm(int.Parse(gridData.Rows[e.RowIndex].Cells["LoanID"].Value.ToString()));
             //form.Show();
         }
@@ -386,15 +396,14 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                 if (MessageBox.Show("ნამდვილად გსურთ ჩაწერა?", "საქონლის ჩაწერა", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     if (MessageBox.Show("ამოიბეჭდოს Z ანგარიში?", "განულება", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
                         Ecr.PrintReport(ReportType.Z);
-                    }
+
                     Ecr.DeleteItems(1, 10000);
 
                     var list = new SortableBindingList<object>();
 
-                    for (int i = 1; i <= data.Count; i++)
-                        list.Add(Ecr.ProgramItem(data[i - 1].LoanID + "/" + data[i - 1].PersonalID + " " + data[i - 1].LastName, i, KasaGE.Commands.TaxGr.A, 1, 1, 1));
+                    foreach (var item in data)
+                        list.Add(Ecr.ProgramItem(item.LoanID + " #" + item.TaxOrderNumber + " " + item.LastName, item.PLU, KasaGE.Commands.TaxGr.A, 1, 1, 1));
 
                     TaxOrderGenerator.ExportToExcel(list, typeof(ProgramItemResponse));
 
@@ -438,7 +447,7 @@ namespace AltasoftDaily.UserInterface.WindowsForms
                     {
                         if (pay.CommandPassed)
                         {
-                            data.FirstOrDefault(x => x.LoanID == int.Parse(pay.Name.Substring(0, pay.Name.IndexOf("/")))).Payment = pay.Turnover;
+                            data.FirstOrDefault(x => x.LoanID == int.Parse(pay.Name.Substring(0, pay.Name.IndexOf(" ")))).Payment = pay.Turnover;
                         }
                     }
                 }
@@ -469,6 +478,23 @@ namespace AltasoftDaily.UserInterface.WindowsForms
             {
                 _ecr = null;
                 throw;
+            }
+        }
+
+        public override void gridData_VisibleChanged(object sender, EventArgs e)
+        {
+            var grid = sender as ADGV.AdvancedDataGridView;
+
+            foreach (DataGridViewRow row in grid.Rows)
+            {
+                var paymentID = Convert.ToInt32(row.Cells["DailyPaymentID"].Value);
+                var datasource = grid.DataSource as SortableBindingList<DailyPayment>;
+                var payment = datasource.FirstOrDefault(x => x.DailyPaymentID == paymentID);
+                
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    cell.Style.BackColor = payment.IsSelected ? Color.LightGreen : Color.Empty;
+                }
             }
         }
     }
